@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { IState } from '../../../store/reducers';
 
-interface IPropsFromState {
+export interface IPropsFromState {
   userId: string;
 }
 

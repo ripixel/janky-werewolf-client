@@ -1,16 +1,15 @@
 import * as React from 'react';
 
-import connector from './connector';
+import connector, { IPropsFromState } from './connector';
 
 import styles from './styles.scss';
 
-export interface IProps {
-  userId: string;
+export type TProps = IPropsFromState & {
   compiler: string;
   framework: string;
-}
+};
 
-export const Hello = (props: IProps): JSX.Element => (
+export const Hello = (props: TProps): JSX.Element => (
   <React.Fragment>
     <h1 className={styles.helloTitle}>
       Hello from {props.compiler} and {props.framework}!
