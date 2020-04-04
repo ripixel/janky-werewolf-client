@@ -1,14 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Sentry from '@sentry/browser';
 
 import { Hello } from './components/Hello';
+import { initLogger } from './utils/logger';
 
-if (process.env.SENTRY_DSN) {
-	Sentry.init({ dsn: process.env.SENTRY_DSN });
-}
+initLogger();
 
 ReactDOM.render(
-	<Hello compiler='TypeScript' framework='React' />,
-	document.getElementById('root')
+  <Hello compiler='TypeScript' framework='React' />,
+  document.getElementById('root')
 );
