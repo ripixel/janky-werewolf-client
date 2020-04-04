@@ -4,10 +4,10 @@ A broser-based version of the Ultimate Werewolf 🐺 card game. This is the clie
 
 The backend lives elsewhere... 👻
 
-|         |                                                                                                        Circle                                                                                                         |
-| ------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|  Master |        [![CircleCI](https://circleci.com/gh/DVELP/janky-werewolf-client.svg?style=svg&circle-token=a390c0fd42a210a17a26f9858e98e5e111225abe)](https://circleci.com/gh/DVELP/janky-werewolf-client/tree/master)        |
-| Staging | [![CircleCI](https://circleci.com/gh/DVELP/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=a390c0fd42a210a17a26f9858e98e5e111225abe)](https://circleci.com/gh/DVELP/janky-werewolf-client/tree/staging) |
+|         |                                                                                                               Circle                                                                                                                |
+| ------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|  Master |        [![CircleCI](https://circleci.com/gh/ripixelcodes/janky-werewolf-client.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/master)        |
+| Staging | [![CircleCI](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/staging) |
 
 ## What does it use?
 
@@ -25,7 +25,7 @@ This project leverages:
 
 ...amongst some other bits which aren't headline-worthy.
 
-## Contributing to this base repo
+## Contributing to this repo
 
 ### Adding Code
 
