@@ -14,6 +14,7 @@ describe('store > reducers > user', () => {
 
     it('generates an ID if non exists', () => {
       expect(userReducer(undefined, action)).toEqual({ id: 'test-guid-id' });
+      expect(window.localStorage.getItem('userId')).toEqual('test-guid-id');
     });
 
     it('uses one if already exists', () => {

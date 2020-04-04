@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import Hello from './components/Hello';
 import { initLogger } from './utils/logger';
-import { store } from './store';
+import store from './store';
 
 initLogger();
 
