@@ -46,12 +46,16 @@ enum PLAYER_TEAM {
   EVIL = 'EVIL',
 }
 
+interface IPlayerAttributes {
+  role: PLAYER_ROLE;
+  team: PLAYER_TEAM;
+  alive: boolean;
+}
+
 interface IPlayer {
   id: string; // *NOT* a user ID, is a *player* ID
   name: string;
-  role?: PLAYER_ROLE; // Optional, as moderator will not have it
-  team?: PLAYER_TEAM; // Optional, as moderator will not have it
-  alive?: boolean; // Optional, as moderator will not have it
+  attributes?: IPlayerAttributes; // Optional, as moderator will not have it
 }
 ```
 
