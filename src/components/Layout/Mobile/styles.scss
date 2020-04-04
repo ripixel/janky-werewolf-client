@@ -1,0 +1,25 @@
+.header {
+  background: #fff;
+  color: #333;
+  min-width: 100%;
+  padding: 1.5em;
+  text-align: center;
+
+  h1 {
+    font-size: 2em;
+  }
+}
+
+.content {
+  color: #fff;
+  min-width: 100%;
+  min-height: 100%;
+  padding: 5em;
+  text-align: center;
+}
+
+.layout {
+  position: relative;
+  min-height: 100vh;
+  background: #333;
+}
