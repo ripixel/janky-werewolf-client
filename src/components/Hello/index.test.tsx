@@ -2,11 +2,13 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 
-import Hello from '.';
+import { Hello } from '.';
 
 describe('<Hello>', () => {
   it('should render correctly', () => {
-    const result = render(<Hello compiler='TypeScript' framework='React' />);
+    const result = render(
+      <Hello compiler='TypeScript' framework='React' userId='123' />
+    );
 
     const helloFrom = result.getByText('Hello from TypeScript and React!');
     expect(helloFrom).toBeInTheDocument();
@@ -17,5 +19,9 @@ describe('<Hello>', () => {
     );
     expect(envText).toBeInTheDocument();
     expect(envText.tagName).toBe('P');
+
+    const idText = result.getByText('Your user Id is 123');
+    expect(idText).toBeInTheDocument();
+    expect(idText.tagName).toBe('P');
   });
 });

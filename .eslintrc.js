@@ -1,13 +1,15 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'prettier', 'react-hooks', 'jest'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended',
+    'plugin:jest/style',
   ],
   parserOptions: {
     ecmaFeatures: {

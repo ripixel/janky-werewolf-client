@@ -1,4 +1,4 @@
-enum PHASE_NAME {
+export enum PHASE_NAME {
   LOBBY = 'LOBBY',
   WELCOME = 'WELCOME',
   AFTERNOON = 'AFTERNOON',

@@ -18,12 +18,12 @@ const getOrGenerateId = (): string => {
   return newId;
 };
 
-const initialState: IUserState = {
+const getInitialState = (): IUserState => ({
   id: getOrGenerateId(),
-};
+});
 
 export const userReducer = (
-  state: IUserState = initialState,
+  state: IUserState = getInitialState(),
   action: Action
 ): IUserState => {
   switch (action.type) {

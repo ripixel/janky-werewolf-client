@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
-import { IState } from '../../store/reducers';
+import { IState } from '../../../store/reducers';
 
 interface IPropsFromState {
   userId: string;
 }
 
-const mapStateToProps = (state: IState): IPropsFromState => ({
+export const mapStateToProps = (state: IState): IPropsFromState => ({
   userId: state.user.id,
 });
 
