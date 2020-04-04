@@ -1,0 +1,78 @@
+{
+	"name": "janky-werewolf-client",
+	"description": "A broser-based version of the Ultimate Werewolf 🐺 card game. This is the client code only!",
+	"scripts": {
+		"build": "env NODE_ENV=production webpack",
+		"build:dev": "env NODE_ENV=development webpack",
+		"build:staging": "env NODE_ENV=staging webpack",
+		"dev": "env NODE_ENV=development webpack-dev-server",
+		"test": "jest",
+		"test:ci": "jest --ci --silent --runInBand --coverage --reporters=default --reporters=jest-junit --reports=json-summary",
+		"lint": "eslint \"src/**/*{.js,.jsx,.ts,.tsx}\"",
+		"lint:ci": "eslint \"src/**/*{.js,.jsx,.ts,.tsx}\" --format junit -o reports/eslint/results.xml",
+		"audit": "npm audit --audit-level=high --only=prod",
+		"audit:ci": "npm run audit ; mkdir -p ~/tmp/reports/audit && touch ~/tmp/reports/audit/npm.json && npm run audit -- --json > ~/tmp/reports/audit/npm.json"
+	},
+	"author": "James King <ripixel@gmail.com>",
+	"engines": {
+		"node": "12.x.x"
+	},
+	"dependencies": {
+		"@sentry/browser": "^5.15.4",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.1.1",
+		"@testing-library/react": "^9.4.0",
+		"@types/jest": "^24.0.15",
+		"@types/node": "^13.9.8",
+		"@types/prettier": "^1.16.4",
+		"@types/react": "^16.8.24",
+		"@types/react-dom": "^16.9.6",
+		"@types/testing-library__dom": "^6.12.1",
+		"@types/testing-library__react": "^9.1.2",
+		"@types/webpack": "^4.4.35",
+		"@typescript-eslint/eslint-plugin": "^2.19.2",
+		"@typescript-eslint/parser": "^2.19.2",
+		"clean-webpack-plugin": "^3.0.0",
+		"css-loader": "^3.4.2",
+		"dotenv": "^8.2.0",
+		"dotenv-flow-webpack": "^1.0.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-react": "^7.19.0",
+		"html-webpack-plugin": "^4.0.4",
+		"husky": "^4.2.3",
+		"identity-obj-proxy": "^3.0.0",
+		"jest": "^24.8.0",
+		"jest-junit": "^10.0.0",
+		"jsdom": "^16.2.0",
+		"jsdom-global": "^3.0.2",
+		"node-sass": "^4.13.1",
+		"prettier": "^1.17.0",
+		"pretty-quick": "^2.0.1",
+		"sass-loader": "^8.0.2",
+		"source-map-loader": "^0.2.4",
+		"style-loader": "^1.1.3",
+		"ts-jest": "^24.0.2",
+		"ts-loader": "^6.0.4",
+		"ts-node": "^8.6.2",
+		"tslint": "^5.16.0",
+		"typed-css-modules-webpack-plugin": "^0.1.3",
+		"typescript": "^3.5.3",
+		"webpack": "^4.36.1",
+		"webpack-cli": "^3.3.6",
+		"webpack-dev-server": "^3.10.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-push": "pretty-quick --staged && npm run audit"
+		}
+	},
+	"jest-junit": {
+		"outputDirectory": "reports/jest",
+		"outputName": "results.xml"
+	}
+}
