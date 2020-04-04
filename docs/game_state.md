@@ -69,9 +69,9 @@ enum PHASE_NAME {
   END = 'END',
 }
 
-interface IPhase {
+interface IPhase<T> {
   name: PHASE_NAME;
-  data: ILobbyData | IWelcomeData | ...etc; // will be defined on an each-phase basis
+  data: T; // will be defined on an each-phase basis, ie ILobbyData | IWelcomeData | ...etc;
 }
 ```
 
