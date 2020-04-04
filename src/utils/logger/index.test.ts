@@ -18,7 +18,7 @@ jest.mock('../sentry');
 
 const envVars: Record<string, string> = {
   SENTRY_DSN: 'test_dummy_dsn',
-  NODE_ENV: 'development', // supresses console.errors
+  NODE_ENV: 'test_env', // supresses console.errors
 };
 
 const setEnvVars = (): void => {
