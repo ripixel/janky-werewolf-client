@@ -1,24 +1,24 @@
 {
-	"compilerOptions": {
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"declaration": true,
-		"strict": true,
-		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"noEmitOnError": true,
-		"newLine": "lf",
-		"outDir": "./dist/",
-		"sourceMap": true,
-		"module": "commonjs",
-		"target": "esnext",
-		"jsx": "react",
-		"lib": ["dom", "esnext"],
-		"allowSyntheticDefaultImports": true,
-		"noUnusedLocals": true
-	},
-	"include": ["./src/**/*"],
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "strict": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true,
+    "newLine": "lf",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
 }

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
-import { IState } from '../../../store/reducers';
+import { IState } from '../../../../store/reducers';
 
 export interface IPropsFromState {
-  userId: string;
+  phaseName?: string;
 }
 
 export const mapStateToProps = (state: IState): IPropsFromState => ({
-  userId: state.user.id,
+  phaseName: state.game?.phase.name,
 });
 
 export default connect(mapStateToProps);

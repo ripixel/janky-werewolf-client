@@ -12,6 +12,12 @@ jest.mock('./Desktop', () => (props: any): JSX.Element => (
 jest.mock('./Mobile', () => (props: any): JSX.Element => (
   <div data-testid='mobile-layout'>{props.children}</div>
 ));
+// Mock the ViewController with testid
+jest.mock('../Views/Controller', () => (props: any): JSX.Element => (
+  <div data-testid='view-controller'>
+    {props.isMobile ? 'Mobile' : 'Desktop'}
+  </div>
+));
 
 const setUserAgent = (userAgent: string): void => {
   Object.defineProperty(navigator, 'userAgent', {
@@ -31,9 +37,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Mobile')).toBeInTheDocument();
     });
 
     it('on iPhone', () => {
@@ -41,9 +46,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Mobile')).toBeInTheDocument();
     });
 
     it('on iPod', () => {
@@ -51,9 +55,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Mobile')).toBeInTheDocument();
     });
 
     it('on android', () => {
@@ -61,9 +64,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Mobile')).toBeInTheDocument();
     });
 
     it('on webOS', () => {
@@ -71,9 +73,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Mobile')).toBeInTheDocument();
     });
 
     it('on desktop', () => {
@@ -81,9 +82,8 @@ describe('<Layout>', () => {
       const result = render(<Layout />);
 
       expect(result.getByTestId('desktop-layout')).toBeInTheDocument();
-      expect(
-        result.getByText('Here is where the ViewController will go')
-      ).toBeInTheDocument();
+      expect(result.getByTestId('view-controller')).toBeInTheDocument();
+      expect(result.getByText('Desktop')).toBeInTheDocument();
     });
   });
 });
