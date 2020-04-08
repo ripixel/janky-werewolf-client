@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react';
 
 import { MobileNoPhaseView } from '.';
+import { VillageServiceContextProvider } from '../../../../context/VillageService';
 
 describe('<MobileNoPhaseView>', () => {
   it('renders as expected', () => {
-    const mockOnClick = jest.fn();
-    const result = render(
-      <MobileNoPhaseView onJoinVillageClick={mockOnClick} />
-    );
+    const result = render(<MobileNoPhaseView />);
 
     const nameInput = result.getByPlaceholderText('Player Name');
     expect(nameInput).toBeInTheDocument();
@@ -22,9 +21,14 @@ describe('<MobileNoPhaseView>', () => {
   });
 
   it('handles create button click correctly', async () => {
-    const mockOnClick = jest.fn();
+    const mockVillageService: any = {
+      joinVillage: jest.fn(),
+    };
+
     const result = render(
-      <MobileNoPhaseView onJoinVillageClick={mockOnClick} />
+      <VillageServiceContextProvider value={mockVillageService}>
+        <MobileNoPhaseView />
+      </VillageServiceContextProvider>
     );
 
     const nameInput = result.getByPlaceholderText('Player Name');
@@ -39,7 +43,7 @@ describe('<MobileNoPhaseView>', () => {
 
     fireEvent.click(button);
 
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-    expect(mockOnClick).toHaveBeenCalledWith('Dave', '123');
+    expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(1);
+    expect(mockVillageService.joinVillage).toHaveBeenCalledWith('Dave', '123');
   });
 });

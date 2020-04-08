@@ -6,7 +6,7 @@ jest.mock('uuid', () => ({
 
 describe('store > reducers > user', () => {
   describe('initial state', () => {
-    const action = { type: 'UNKNOWN' };
+    const action = { type: 'UNKNOWN', payload: undefined };
 
     afterEach(() => {
       window.localStorage.removeItem('userId');
@@ -26,7 +26,7 @@ describe('store > reducers > user', () => {
   });
 
   describe('with an unknown action', () => {
-    const action = { type: 'UNKNOWN' };
+    const action = { type: 'UNKNOWN', payload: undefined };
     const state: IUserState = {
       id: '123',
     };

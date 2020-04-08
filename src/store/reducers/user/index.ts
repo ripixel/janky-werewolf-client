@@ -1,5 +1,6 @@
-import { Action } from 'redux';
 import { v4 as uuidv4 } from 'uuid';
+
+import { IAction } from '../../actions/types';
 
 export interface IUserState {
   id: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
@@ -24,7 +25,7 @@ const getInitialState = (): IUserState => ({
 
 export const userReducer = (
   state: IUserState = getInitialState(),
-  action: Action
+  action: IAction
 ): IUserState => {
   switch (action.type) {
     default:

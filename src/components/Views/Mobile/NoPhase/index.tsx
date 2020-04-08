@@ -1,14 +1,16 @@
 import * as React from 'react';
 import TextInput from '../../../Input/Text';
 import Button from '../../../Button';
+import { VillageServiceContext } from '../../../../context/VillageService';
 
-interface IProps {
-  onJoinVillageClick: (playerName: string, gameCode: string) => void; // will come from redux dispatch connect
-}
-
-export const MobileNoPhaseView = (props: IProps): JSX.Element => {
+export const MobileNoPhaseView = (): JSX.Element => {
   const [playerName, setPlayerName] = React.useState('');
   const [gameCode, setGameCode] = React.useState('');
+  const villageService = React.useContext(VillageServiceContext);
+
+  const onClick = async (): Promise<void> => {
+    await villageService.joinVillage(playerName, gameCode);
+  };
 
   return (
     <React.Fragment>
@@ -22,11 +24,7 @@ export const MobileNoPhaseView = (props: IProps): JSX.Element => {
         onChange={setGameCode}
         placeholder='Game Code'
       />
-      <Button
-        onClick={(): void => props.onJoinVillageClick(playerName, gameCode)}
-      >
-        Join Village
-      </Button>
+      <Button onClick={onClick}>Join Village</Button>
     </React.Fragment>
   );
 };

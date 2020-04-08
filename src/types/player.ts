@@ -1,11 +1,11 @@
-enum PLAYER_ROLE {
+export enum PLAYER_ROLE {
   UNKNOWN = 'UNKNOWN',
   VILLAGER = 'VILLAGER',
   SEER = 'SEER',
   WEREWOLF = 'WEREWOLF',
 }
 
-enum PLAYER_TEAM {
+export enum PLAYER_TEAM {
   UNKNOWN = 'UNKNOWN',
   GOOD = 'GOOD',
   EVIL = 'EVIL',
