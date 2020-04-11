@@ -1,6 +1,10 @@
 import { IPlayer } from '../../../types/player';
 import { TPhases } from '../../../types/phase';
-import { GAME_ACTION_TYPES, TInitGameAction } from '../../actions/game';
+import {
+  GAME_ACTION_TYPES,
+  TInitGameAction,
+  TUpdateGameAction,
+} from '../../actions/game';
 import { IAction } from '../../actions/types';
 
 export interface IGameState {
@@ -18,6 +22,12 @@ export const gameReducer = (
   switch (action.type) {
     case GAME_ACTION_TYPES.INIT_GAME:
       return state ? state : { ...(action as TInitGameAction).payload };
+    case GAME_ACTION_TYPES.UPDATE_GAME:
+      if (!state) {
+        throw new Error('No game exists to update - needs init first');
+      }
+
+      return (action as TUpdateGameAction).payload;
     default:
       return state;
   }

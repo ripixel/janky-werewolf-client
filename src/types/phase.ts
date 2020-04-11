@@ -13,5 +13,6 @@ export interface IPhase<T extends PHASE_NAME, U> {
 }
 
 type TLobbyPhase = IPhase<PHASE_NAME.LOBBY, undefined>;
+type TWelcomePhase = IPhase<PHASE_NAME.WELCOME, undefined>;
 
-export type TPhases = TLobbyPhase;
+export type TPhases = TLobbyPhase | TWelcomePhase;

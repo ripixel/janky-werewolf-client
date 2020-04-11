@@ -37,4 +37,20 @@ describe('store > reducers > game', () => {
       expect(gameReducer(mockGameState, mockAction)).toEqual(mockGameState);
     });
   });
+
+  describe(`with ${GAME_ACTION_TYPES.INIT_GAME} action`, () => {
+    const mockAction: TInitGameAction = {
+      type: GAME_ACTION_TYPES.UPDATE_GAME,
+      payload: { ...mockGameState, villageName: 'Another Village' },
+    };
+    it('throws as expected on null state', () => {
+      expect(() => gameReducer(null, mockAction)).toThrow();
+    });
+
+    it('overwrites existing game state', () => {
+      expect(gameReducer(mockGameState, mockAction)).toEqual(
+        mockAction.payload
+      );
+    });
+  });
 });

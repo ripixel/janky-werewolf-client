@@ -9,7 +9,9 @@ jest.mock('../../store/actions/game', () => ({
 describe('StoreInteractorService', () => {
   const mockStore: any = {
     dispatch: jest.fn(),
-    getState: (): any => ({ user: { id: 'testUserId' } }),
+    getState: (): any => ({
+      user: { id: 'testUserId', name: 'test-user-name' },
+    }),
   };
   const mockGame: any = {
     some: 'game-state',
@@ -37,11 +39,14 @@ describe('StoreInteractorService', () => {
     });
   });
 
-  describe('getUserId', () => {
+  describe('getUser', () => {
     it('returns as expected', () => {
       const service = new StoreInteractorService(mockStore);
 
-      expect(service.getUserId()).toBe('testUserId');
+      expect(service.getUser()).toEqual({
+        id: 'testUserId',
+        name: 'test-user-name',
+      });
     });
   });
 });

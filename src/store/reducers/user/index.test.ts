@@ -1,4 +1,5 @@
 import userReducer, { IUserState } from '.';
+import { USER_ACTION_TYPES } from '../../actions/user';
 
 jest.mock('uuid', () => ({
   v4: (): string => 'test-guid-id',
@@ -33,6 +34,20 @@ describe('store > reducers > user', () => {
 
     it('has no effect on state', () => {
       expect(userReducer(state, action)).toEqual(state);
+    });
+  });
+
+  describe(`with ${USER_ACTION_TYPES.SET_NAME} action`, () => {
+    const action = { type: USER_ACTION_TYPES.SET_NAME, payload: 'dave' };
+    const state: IUserState = {
+      id: '123',
+    };
+
+    it('updates the state as expected', () => {
+      expect(userReducer(state, action)).toEqual({
+        id: '123',
+        name: 'dave',
+      });
     });
   });
 });
