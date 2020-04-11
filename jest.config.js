@@ -7,6 +7,8 @@ module.exports = {
     '!**/node_modules/**',
     '!src/index.tsx',
     '!src/types/**',
+    '!types.ts',
+    '!src/provider/Village/Dev/index.ts',
   ],
   coverageThreshold: {
     'src/**/*.{js,jsx,ts,tsx}': {

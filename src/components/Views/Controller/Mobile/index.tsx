@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import MobileNoPhaseView from '../../Mobile/NoPhase';
+import MobileLobbyView from '../../Mobile/Lobby';
+import { PHASE_NAME } from '../../../../types/phase';
 
 interface IProps {
   phaseName?: string;
@@ -8,19 +10,10 @@ interface IProps {
 
 export const MobileViewController = (props: IProps): JSX.Element => {
   switch (props.phaseName) {
+    case PHASE_NAME.LOBBY:
+      return <MobileLobbyView />;
     default:
-      return (
-        // eslint disable temporary until connected up to dispatch
-        <MobileNoPhaseView
-          onJoinVillageClick={(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            _playerName: string,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            _gameCode: string
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-          ): void => {}}
-        />
-      );
+      return <MobileNoPhaseView />;
   }
 };
 

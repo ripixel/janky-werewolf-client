@@ -9,6 +9,9 @@ jest.mock('./reducers', () => 'rootReducer');
 describe('store', () => {
   it('inits correctly', () => {
     expect(createStore as jest.Mock).toHaveBeenCalledTimes(1);
-    expect(createStore as jest.Mock).toHaveBeenCalledWith('rootReducer');
+    expect(createStore as jest.Mock).toHaveBeenCalledWith(
+      'rootReducer',
+      undefined // Redux devtools
+    );
   });
 });

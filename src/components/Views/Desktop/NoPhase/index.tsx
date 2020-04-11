@@ -1,13 +1,16 @@
 import * as React from 'react';
+
 import TextInput from '../../../Input/Text';
 import Button from '../../../Button';
+import { VillageServiceContext } from '../../../../context/VillageService';
 
-interface IProps {
-  onCreateVillageClick: (villageName: string) => void; // will come from redux dispatch connect
-}
-
-export const DesktopNoPhaseView = (props: IProps): JSX.Element => {
+export const DesktopNoPhaseView = (): JSX.Element => {
   const [villageName, setVillageName] = React.useState('');
+  const villageService = React.useContext(VillageServiceContext);
+
+  const onClick = async (): Promise<void> => {
+    await villageService.createVillage(villageName);
+  };
 
   return (
     <React.Fragment>
@@ -16,9 +19,7 @@ export const DesktopNoPhaseView = (props: IProps): JSX.Element => {
         onChange={setVillageName}
         placeholder='Village Name'
       />
-      <Button onClick={(): void => props.onCreateVillageClick(villageName)}>
-        Create Village
-      </Button>
+      <Button onClick={onClick}>Create Village</Button>
     </React.Fragment>
   );
 };
