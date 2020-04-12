@@ -1,18 +1,35 @@
+import { PLAYER_TEAM } from './player';
+
 export enum PHASE_NAME {
-  LOBBY = 'LOBBY',
-  WELCOME = 'WELCOME',
-  AFTERNOON = 'AFTERNOON',
-  NIGHT = 'NIGHT',
-  MORNING = 'MORNING',
-  END = 'END',
+  LOBBY = 'Lobby',
+  DAY = 'Day',
+  SEER = 'Seer',
+  WEREWOLF = 'Werewolf',
+  END = 'End',
 }
 
-export interface IPhase<T extends PHASE_NAME, U> {
+export interface IPhase<T extends PHASE_NAME, U = undefined> {
   name: T;
-  data: U;
+  data?: U;
 }
 
-type TLobbyPhase = IPhase<PHASE_NAME.LOBBY, undefined>;
-type TWelcomePhase = IPhase<PHASE_NAME.WELCOME, undefined>;
+export interface IWerewolfPhaseData {
+  [key: string]: string;
+}
 
-export type TPhases = TLobbyPhase | TWelcomePhase;
+export interface IEndPhaseData {
+  winner: PLAYER_TEAM.EVIL | PLAYER_TEAM.GOOD;
+}
+
+type TLobbyPhase = IPhase<PHASE_NAME.LOBBY>;
+type TDayPhase = IPhase<PHASE_NAME.DAY>;
+type TSeerPhase = IPhase<PHASE_NAME.SEER>;
+type TWerewolfPhase = IPhase<PHASE_NAME.WEREWOLF, IWerewolfPhaseData>;
+type TEndPhase = IPhase<PHASE_NAME.END, IEndPhaseData>;
+
+export type TPhases =
+  | TLobbyPhase
+  | TDayPhase
+  | TSeerPhase
+  | TWerewolfPhase
+  | TEndPhase;

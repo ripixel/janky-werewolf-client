@@ -6,8 +6,8 @@ import {
   setContext,
 } from '@sentry/browser';
 import {
-  configureSentryUserId,
-  configureSentryGameCode,
+  configureSentryuserSecret,
+  configureSentryLobbyId,
   initSentry,
   captureException as localCaptureException,
   ICustomHttpError,
@@ -36,12 +36,12 @@ describe('Sentry Utility', () => {
     });
   });
 
-  describe('configureSentryUserId', () => {
+  describe('configureSentryuserSecret', () => {
     beforeEach(() => {
       (setUser as jest.Mock).mockReset();
     });
     it('should call sentry with proper data', () => {
-      configureSentryUserId('12345');
+      configureSentryuserSecret('12345');
 
       expect(setUser as jest.Mock).toHaveBeenCalledWith({
         id: '12345',
@@ -56,10 +56,10 @@ describe('Sentry Utility', () => {
     });
 
     it('should call sentry with proper data', () => {
-      configureSentryGameCode('its-a-guid');
+      configureSentryLobbyId('its-a-guid');
 
       expect(setContext as jest.Mock).toHaveBeenCalledTimes(1);
-      expect(setContext as jest.Mock).toHaveBeenCalledWith('gameCode', {
+      expect(setContext as jest.Mock).toHaveBeenCalledWith('lobbyId', {
         code: 'its-a-guid',
       });
     });

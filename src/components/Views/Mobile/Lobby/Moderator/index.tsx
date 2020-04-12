@@ -14,8 +14,8 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
   const seersCount = 1; // can't be changed in this version
   const villageService = React.useContext(VillageServiceContext);
 
-  const onClick = async (): Promise<void> => {
-    await villageService.startGame(villagersCount, werewolvesCount, seersCount);
+  const onClick = (): void => {
+    villageService.startGame(werewolvesCount);
   };
 
   const startGameDisabled: boolean =
@@ -30,7 +30,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
     <React.Fragment>
       <h2>You are the Moderator</h2>
       <h2>Join {props.villageName} using:</h2>
-      <p>{props.gameCode}</p>
+      <p>{props.lobbyId}</p>
 
       <h2>Players</h2>
       {props.players.map((player) => (

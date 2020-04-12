@@ -4,12 +4,12 @@ import { IAction } from '../../actions/types';
 import { USER_ACTION_TYPES, TSetNameAction } from '../../actions/user';
 
 export interface IUserState {
-  id: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
+  secret: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
   name?: string; // defined when joining a game
 }
 
 const getOrGenerateId = (): string => {
-  const KEY = 'userId';
+  const KEY = 'userSecret';
   const idFromStorage = window.localStorage.getItem(KEY);
   if (idFromStorage) {
     return idFromStorage;
@@ -21,7 +21,7 @@ const getOrGenerateId = (): string => {
 };
 
 const getInitialState = (): IUserState => ({
-  id: getOrGenerateId(),
+  secret: getOrGenerateId(),
 });
 
 export const userReducer = (

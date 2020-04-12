@@ -2,8 +2,8 @@
 
 import {
   captureException,
-  configureSentryUserId,
-  configureSentryGameCode,
+  configureSentryuserSecret,
+  configureSentryLobbyId,
   initSentry,
   ICustomHttpError,
 } from '../sentry';
@@ -20,15 +20,15 @@ export const initLogger = (): void => {
   }
 };
 
-export const configureLoggerUserId = (userId: string): void => {
+export const configureLoggeruserSecret = (userSecret: string): void => {
   if (useSentry()) {
-    configureSentryUserId(userId);
+    configureSentryuserSecret(userSecret);
   }
 };
 
-export const configureLoggerGameCode = (code: string): void => {
+export const configureLoggerLobbyId = (code: string): void => {
   if (useSentry()) {
-    configureSentryGameCode(code);
+    configureSentryLobbyId(code);
   }
 };
 

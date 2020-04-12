@@ -15,7 +15,7 @@ import { IPlayer } from '../../../../../types/player';
 describe('<MobileLobbyModeratorView>', () => {
   const baseProps = {
     villageName: 'Test Village',
-    gameCode: '12test34',
+    lobbyId: '12test34',
   };
 
   describe('renders as expected', () => {
@@ -144,6 +144,7 @@ describe('<MobileLobbyModeratorView>', () => {
       fireEvent.click(result.getByText('Start Game'));
 
       expect(mockVillageService.startGame).toHaveBeenCalledTimes(1);
+      expect(mockVillageService.startGame).toHaveBeenCalledWith(1);
     });
 
     describe('does not function when deck setup is incorrect', () => {

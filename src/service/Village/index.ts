@@ -4,13 +4,13 @@ import { IStoreInteractorService } from '../StoreInteractor';
 import { logError } from '../../utils/logger';
 
 export interface IVillageService {
-  createVillage: (villageName: string, playerName: string) => Promise<void>;
-  joinVillage: (playerName: string, gameCode: string) => Promise<void>;
-  startGame: (
-    villagersCount: number,
-    werewolvesCount: number,
-    seersCount: number
-  ) => Promise<void>;
+  createVillage: (userName: string) => void;
+  joinVillage: (userName: string, lobbyId: string) => void;
+  startGame: (werewolves: number) => void;
+  werewolfVoteForPlayer: (playerName: string) => void;
+  seerInspectPlayer: (playerName: string) => void;
+  lynchPlayer: (playerName: string) => void;
+  sleepNow: () => void;
 }
 
 export class VillageService implements IVillageService {
@@ -23,49 +23,69 @@ export class VillageService implements IVillageService {
   ) {
     this.villageProvider = villageProvider;
     this.storeInteractor = storeInteractor;
+    this.villageProvider.setInteractor(storeInteractor);
   }
 
-  async createVillage(villageName: string, playerName: string): Promise<void> {
+  createVillage(userName: string): void {
     try {
-      this.storeInteractor.setUserName(playerName);
-      this.storeInteractor.initGame(
-        await this.villageProvider.createVillage(
-          villageName,
-          playerName,
-          this.storeInteractor.getUser().id
-        )
-      );
+      this.storeInteractor.setUserName(userName);
+      this.villageProvider.createVillage({
+        userName,
+        userSecret: this.storeInteractor.getUser().secret,
+      });
     } catch (error) {
       this.onError(error);
     }
   }
 
-  async joinVillage(playerName: string, gameCode: string): Promise<void> {
+  joinVillage(userName: string, lobbyId: string): void {
     try {
-      this.storeInteractor.setUserName(playerName);
-      this.storeInteractor.initGame(
-        await this.villageProvider.joinVillage(
-          playerName,
-          gameCode,
-          this.storeInteractor.getUser().id
-        )
-      );
+      this.storeInteractor.setUserName(userName);
+      this.villageProvider.joinVillage({
+        lobbyId,
+        userName,
+        userSecret: this.storeInteractor.getUser().secret,
+      });
     } catch (error) {
       this.onError(error);
     }
   }
 
-  async startGame(
-    villagersCount: number,
-    werewolvesCount: number,
-    seersCount: number
-  ): Promise<void> {
+  startGame(werewolves: number): void {
     try {
-      await this.villageProvider.startGame(
-        villagersCount,
-        werewolvesCount,
-        seersCount
-      );
+      this.villageProvider.startGame({ werewolves });
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  werewolfVoteForPlayer(playerName: string): void {
+    try {
+      this.villageProvider.werewolfVoteForPlayer({ playerName });
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  seerInspectPlayer(playerName: string): void {
+    try {
+      this.villageProvider.seerInspectPlayer({ playerName });
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  lynchPlayer(playerName: string): void {
+    try {
+      this.villageProvider.lynchPlayer({ playerName });
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  sleepNow(): void {
+    try {
+      this.villageProvider.sleepNow();
     } catch (error) {
       this.onError(error);
     }

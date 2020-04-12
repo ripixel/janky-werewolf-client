@@ -1,19 +1,31 @@
-import { IGameState } from '../../store/reducers/game';
+import { IStoreInteractorService } from '../../service/StoreInteractor';
+
+export interface ICreateVillageData {
+  userName: string;
+  userSecret: string;
+}
+
+export interface IJoinVillageData {
+  userName: string;
+  lobbyId: string;
+  userSecret: string;
+}
+
+export interface IStartGameData {
+  werewolves: number;
+}
+
+export interface IVoteData {
+  playerName: string;
+}
 
 export interface IVillageProvider {
-  createVillage: (
-    villageName: string,
-    playerName: string,
-    userId: string
-  ) => Promise<IGameState>;
-  joinVillage: (
-    playerName: string,
-    gameCode: string,
-    userId: string
-  ) => Promise<IGameState>;
-  startGame: (
-    villagersCount: number,
-    werewolvesCount: number,
-    seersCount: number
-  ) => Promise<IGameState>;
+  setInteractor: (interactor: IStoreInteractorService) => void;
+  createVillage: (createVillageData: ICreateVillageData) => void;
+  joinVillage: (joinVillageData: IJoinVillageData) => void;
+  startGame: (startGameData: IStartGameData) => void;
+  werewolfVoteForPlayer: (voteData: IVoteData) => void;
+  seerInspectPlayer: (voteData: IVoteData) => void;
+  lynchPlayer: (voteData: IVoteData) => void;
+  sleepNow: () => void;
 }

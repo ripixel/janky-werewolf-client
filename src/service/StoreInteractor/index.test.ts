@@ -10,7 +10,7 @@ describe('StoreInteractorService', () => {
   const mockStore: any = {
     dispatch: jest.fn(),
     getState: (): any => ({
-      user: { id: 'testUserId', name: 'test-user-name' },
+      user: { id: 'testuserSecret', name: 'test-user-name' },
     }),
   };
   const mockGame: any = {
@@ -44,7 +44,7 @@ describe('StoreInteractorService', () => {
       const service = new StoreInteractorService(mockStore);
 
       expect(service.getUser()).toEqual({
-        id: 'testUserId',
+        id: 'testuserSecret',
         name: 'test-user-name',
       });
     });

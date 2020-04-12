@@ -13,8 +13,8 @@ describe('<MobileNoPhaseView>', () => {
     const nameInput = result.getByPlaceholderText('Player Name');
     expect(nameInput).toBeInTheDocument();
 
-    const gameCodeInput = result.getByPlaceholderText('Game Code');
-    expect(gameCodeInput).toBeInTheDocument();
+    const lobbyIdInput = result.getByPlaceholderText('Game Code');
+    expect(lobbyIdInput).toBeInTheDocument();
 
     const button = result.getByText('Create Village');
     expect(button).toBeInTheDocument();
@@ -34,10 +34,10 @@ describe('<MobileNoPhaseView>', () => {
       );
 
       const nameInput = result.getByPlaceholderText('Player Name');
-      const gameCodeInput = result.getByPlaceholderText('Game Code');
+      const lobbyIdInput = result.getByPlaceholderText('Game Code');
 
       fireEvent.change(nameInput, { target: { value: 'Dave' } });
-      fireEvent.change(gameCodeInput, { target: { value: '123' } });
+      fireEvent.change(lobbyIdInput, { target: { value: '123' } });
 
       await result.findByDisplayValue('123');
 
@@ -73,10 +73,7 @@ describe('<MobileNoPhaseView>', () => {
 
       expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(0);
       expect(mockVillageService.createVillage).toHaveBeenCalledTimes(1);
-      expect(mockVillageService.createVillage).toHaveBeenCalledWith(
-        'Janktown',
-        'Dave'
-      );
+      expect(mockVillageService.createVillage).toHaveBeenCalledWith('Dave');
     });
 
     it('does not function without a player name', () => {

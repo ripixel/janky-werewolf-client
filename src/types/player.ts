@@ -1,14 +1,15 @@
 export enum PLAYER_ROLE {
-  UNKNOWN = 'UNKNOWN',
-  VILLAGER = 'VILLAGER',
-  SEER = 'SEER',
-  WEREWOLF = 'WEREWOLF',
+  UNKNOWN = 'Unknown',
+  VILLAGER = 'Villager',
+  SEER = 'Seer',
+  WEREWOLF = 'Werewolf',
+  MODERATOR = 'Mod',
 }
 
 export enum PLAYER_TEAM {
-  UNKNOWN = 'UNKNOWN',
-  GOOD = 'GOOD',
-  EVIL = 'EVIL',
+  UNKNOWN = 'Unknown',
+  GOOD = 'Good',
+  EVIL = 'Evil',
 }
 
 interface IPlayerAttributes {
@@ -20,5 +21,5 @@ interface IPlayerAttributes {
 export interface IPlayer {
   id: string; // *NOT* a user ID, is a *player* ID
   name: string;
-  attributes?: IPlayerAttributes; // Optional, as moderator will not have it
+  attributes: IPlayerAttributes; // Optional, as moderator will not have it
 }
