@@ -18,7 +18,8 @@ describe('VillageService', () => {
   };
   const mockInteractor: any = {
     initGame: jest.fn(),
-    getUserId: jest.fn(() => 'test-user-id'),
+    setUserName: jest.fn((name) => name),
+    getUser: jest.fn(() => ({ id: 'test-user-id', name: 'test-user-name' })),
   };
 
   beforeEach(() => {
@@ -34,12 +35,15 @@ describe('VillageService', () => {
     it('requests store initGame correctly', async () => {
       const service = new VillageService(mockProvider, mockInteractor);
 
-      await service.createVillage('test village');
+      await service.createVillage('test village', 'test name');
 
-      expect(mockInteractor.getUserId).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.getUser).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.setUserName).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.setUserName).toHaveBeenCalledWith('test name');
       expect(mockProvider.createVillage).toHaveBeenCalledTimes(1);
       expect(mockProvider.createVillage).toHaveBeenCalledWith(
         'test village',
+        'test name',
         'test-user-id'
       );
       expect(mockInteractor.initGame).toHaveBeenCalledTimes(1);
@@ -55,7 +59,7 @@ describe('VillageService', () => {
       });
       const service = new VillageService(mockProvider, mockInteractor);
 
-      await service.createVillage('this should throw');
+      await service.createVillage('this should throw', 'oh yes it should');
 
       expect(logError as jest.Mock).toHaveBeenCalledTimes(1);
       expect(logError as jest.Mock).toHaveBeenCalledWith(error);
@@ -66,12 +70,14 @@ describe('VillageService', () => {
     it('requests store initGame correctly', async () => {
       const service = new VillageService(mockProvider, mockInteractor);
 
-      await service.joinVillage('test player', '12code34');
+      await service.joinVillage('test name', '12code34');
 
-      expect(mockInteractor.getUserId).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.getUser).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.setUserName).toHaveBeenCalledTimes(1);
+      expect(mockInteractor.setUserName).toHaveBeenCalledWith('test name');
       expect(mockProvider.joinVillage).toHaveBeenCalledTimes(1);
       expect(mockProvider.joinVillage).toHaveBeenCalledWith(
-        'test player',
+        'test name',
         '12code34',
         'test-user-id'
       );

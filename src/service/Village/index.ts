@@ -4,8 +4,13 @@ import { IStoreInteractorService } from '../StoreInteractor';
 import { logError } from '../../utils/logger';
 
 export interface IVillageService {
-  createVillage: (villageName: string) => Promise<void>;
+  createVillage: (villageName: string, playerName: string) => Promise<void>;
   joinVillage: (playerName: string, gameCode: string) => Promise<void>;
+  startGame: (
+    villagersCount: number,
+    werewolvesCount: number,
+    seersCount: number
+  ) => Promise<void>;
 }
 
 export class VillageService implements IVillageService {
@@ -20,12 +25,14 @@ export class VillageService implements IVillageService {
     this.storeInteractor = storeInteractor;
   }
 
-  async createVillage(villageName: string): Promise<void> {
+  async createVillage(villageName: string, playerName: string): Promise<void> {
     try {
+      this.storeInteractor.setUserName(playerName);
       this.storeInteractor.initGame(
         await this.villageProvider.createVillage(
           villageName,
-          this.storeInteractor.getUserId()
+          playerName,
+          this.storeInteractor.getUser().id
         )
       );
     } catch (error) {
@@ -35,12 +42,29 @@ export class VillageService implements IVillageService {
 
   async joinVillage(playerName: string, gameCode: string): Promise<void> {
     try {
+      this.storeInteractor.setUserName(playerName);
       this.storeInteractor.initGame(
         await this.villageProvider.joinVillage(
           playerName,
           gameCode,
-          this.storeInteractor.getUserId()
+          this.storeInteractor.getUser().id
         )
+      );
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  async startGame(
+    villagersCount: number,
+    werewolvesCount: number,
+    seersCount: number
+  ): Promise<void> {
+    try {
+      await this.villageProvider.startGame(
+        villagersCount,
+        werewolvesCount,
+        seersCount
       );
     } catch (error) {
       this.onError(error);

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { IAction } from '../../actions/types';
+import { USER_ACTION_TYPES, TSetNameAction } from '../../actions/user';
 
 export interface IUserState {
   id: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
@@ -28,6 +29,8 @@ export const userReducer = (
   action: IAction
 ): IUserState => {
   switch (action.type) {
+    case USER_ACTION_TYPES.SET_NAME:
+      return { ...state, name: (action as TSetNameAction).payload };
     default:
       return state;
   }

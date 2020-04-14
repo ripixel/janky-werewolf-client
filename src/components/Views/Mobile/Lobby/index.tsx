@@ -1,5 +1,13 @@
 import * as React from 'react';
 
-export const MobileLobbyView = (): JSX.Element => <p>Mobile Lobby</p>;
+import MobileLobbyPlayerView from './Player';
+import MobileLobbyModeratorView from './Moderator';
 
-export default MobileLobbyView;
+import connector, { IPropsFromState } from './connector';
+
+type TProps = IPropsFromState;
+
+export const MobileLobbyView = (props: TProps): JSX.Element =>
+  props.isModerator ? <MobileLobbyModeratorView /> : <MobileLobbyPlayerView />;
+
+export default connector(MobileLobbyView);

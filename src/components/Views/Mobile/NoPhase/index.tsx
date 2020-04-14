@@ -9,7 +9,11 @@ export const MobileNoPhaseView = (): JSX.Element => {
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = async (): Promise<void> => {
-    await villageService.joinVillage(playerName, gameCode);
+    if (gameCode) {
+      await villageService.joinVillage(playerName, gameCode);
+    } else {
+      await villageService.createVillage('Janktown', playerName);
+    }
   };
 
   return (
@@ -24,7 +28,9 @@ export const MobileNoPhaseView = (): JSX.Element => {
         onChange={setGameCode}
         placeholder='Game Code'
       />
-      <Button onClick={onClick}>Join Village</Button>
+      <Button onClick={onClick} disabled={!playerName}>
+        {!gameCode ? 'Create' : 'Join'} Village
+      </Button>
     </React.Fragment>
   );
 };

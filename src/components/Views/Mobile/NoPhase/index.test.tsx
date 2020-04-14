@@ -16,34 +16,85 @@ describe('<MobileNoPhaseView>', () => {
     const gameCodeInput = result.getByPlaceholderText('Game Code');
     expect(gameCodeInput).toBeInTheDocument();
 
-    const button = result.getByText('Join Village');
+    const button = result.getByText('Create Village');
     expect(button).toBeInTheDocument();
   });
 
-  it('handles create button click correctly', async () => {
-    const mockVillageService: any = {
-      joinVillage: jest.fn(),
-    };
+  describe('handles button click correctly', () => {
+    it('with game code', async () => {
+      const mockVillageService: any = {
+        joinVillage: jest.fn(),
+        createVillage: jest.fn(),
+      };
 
-    const result = render(
-      <VillageServiceContextProvider value={mockVillageService}>
-        <MobileNoPhaseView />
-      </VillageServiceContextProvider>
-    );
+      const result = render(
+        <VillageServiceContextProvider value={mockVillageService}>
+          <MobileNoPhaseView />
+        </VillageServiceContextProvider>
+      );
 
-    const nameInput = result.getByPlaceholderText('Player Name');
-    const gameCodeInput = result.getByPlaceholderText('Game Code');
+      const nameInput = result.getByPlaceholderText('Player Name');
+      const gameCodeInput = result.getByPlaceholderText('Game Code');
 
-    const button = result.getByText('Join Village');
+      fireEvent.change(nameInput, { target: { value: 'Dave' } });
+      fireEvent.change(gameCodeInput, { target: { value: '123' } });
 
-    fireEvent.change(nameInput, { target: { value: 'Dave' } });
-    fireEvent.change(gameCodeInput, { target: { value: '123' } });
+      await result.findByDisplayValue('123');
 
-    await result.findByDisplayValue('123');
+      fireEvent.click(result.getByText('Join Village'));
 
-    fireEvent.click(button);
+      expect(mockVillageService.createVillage).toHaveBeenCalledTimes(0);
+      expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(1);
+      expect(mockVillageService.joinVillage).toHaveBeenCalledWith(
+        'Dave',
+        '123'
+      );
+    });
 
-    expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(1);
-    expect(mockVillageService.joinVillage).toHaveBeenCalledWith('Dave', '123');
+    it('with no game code', async () => {
+      const mockVillageService: any = {
+        joinVillage: jest.fn(),
+        createVillage: jest.fn(),
+      };
+
+      const result = render(
+        <VillageServiceContextProvider value={mockVillageService}>
+          <MobileNoPhaseView />
+        </VillageServiceContextProvider>
+      );
+
+      const nameInput = result.getByPlaceholderText('Player Name');
+
+      fireEvent.change(nameInput, { target: { value: 'Dave' } });
+
+      await result.findByDisplayValue('Dave');
+
+      fireEvent.click(result.getByText('Create Village'));
+
+      expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(0);
+      expect(mockVillageService.createVillage).toHaveBeenCalledTimes(1);
+      expect(mockVillageService.createVillage).toHaveBeenCalledWith(
+        'Janktown',
+        'Dave'
+      );
+    });
+
+    it('does not function without a player name', () => {
+      const mockVillageService: any = {
+        joinVillage: jest.fn(),
+        createVillage: jest.fn(),
+      };
+
+      const result = render(
+        <VillageServiceContextProvider value={mockVillageService}>
+          <MobileNoPhaseView />
+        </VillageServiceContextProvider>
+      );
+
+      fireEvent.click(result.getByText('Create Village'));
+
+      expect(mockVillageService.createVillage).toHaveBeenCalledTimes(0);
+      expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(0);
+    });
   });
 });
