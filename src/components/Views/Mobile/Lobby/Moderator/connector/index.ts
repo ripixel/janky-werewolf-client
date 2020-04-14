@@ -21,9 +21,11 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
     moderator: state.game.players.find(
       (player) => player.attributes.role === PLAYER_ROLE.MODERATOR
     ),
-    players: state.game.players.filter(
-      (player) => player.attributes.role !== PLAYER_ROLE.MODERATOR
-    ),
+    players: state.game.players
+      .filter((player) => player.attributes.role !== PLAYER_ROLE.MODERATOR)
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
+      ),
   };
 };
 

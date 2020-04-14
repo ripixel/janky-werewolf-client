@@ -1,0 +1,32 @@
+.wrapper {
+  min-width: 100%;
+  min-height: 100%;
+
+  p {
+    margin-bottom: 1.5em;
+  }
+}
+
+.selfInfo {
+  padding: 1em;
+}
+
+.selfInfo--team-Good {
+  background: blue;
+}
+
+.selfInfo--team-Evil {
+  background: red;
+}
+
+.content {
+  padding: 3em;
+}
+
+.instructions {
+  padding: 1em;
+}
+
+.players {
+  padding: 1em;
+}

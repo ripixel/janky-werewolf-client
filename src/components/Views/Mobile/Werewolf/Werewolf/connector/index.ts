@@ -18,7 +18,12 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
   }
 
   const playerNames = state.game.players
-    .filter((player) => player.attributes.role !== PLAYER_ROLE.MODERATOR)
+    .filter(
+      (player) =>
+        player.attributes.role !== PLAYER_ROLE.MODERATOR &&
+        player.attributes.role !== PLAYER_ROLE.WEREWOLF &&
+        player.attributes.alive
+    )
     .map((player) => player.name);
 
   const phaseData = state.game.phase.data as IWerewolfPhaseData;

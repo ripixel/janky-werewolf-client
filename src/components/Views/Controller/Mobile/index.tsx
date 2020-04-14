@@ -7,26 +7,41 @@ import MobileDayView from '../../Mobile/Day';
 import MobileWerewolfPhaseView from '../../Mobile/Werewolf';
 import MobileSeerPhaseView from '../../Mobile/Seer';
 import MobileEndView from '../../Mobile/End';
+import PlayerWrapper from '../../../PlayerWrapper';
 
 interface IProps {
   phaseName?: string;
 }
 
 export const MobileViewController = (props: IProps): JSX.Element => {
+  let view = <MobileNoPhaseView />;
   switch (props.phaseName) {
     case PHASE_NAME.END:
-      return <MobileEndView />;
+      view = <MobileEndView />;
+      break;
     case PHASE_NAME.WEREWOLF:
-      return <MobileWerewolfPhaseView />;
+      view = <MobileWerewolfPhaseView />;
+      break;
     case PHASE_NAME.SEER:
-      return <MobileSeerPhaseView />;
+      view = <MobileSeerPhaseView />;
+      break;
     case PHASE_NAME.DAY:
-      return <MobileDayView />;
+      view = <MobileDayView />;
+      break;
     case PHASE_NAME.LOBBY:
-      return <MobileLobbyView />;
+      view = <MobileLobbyView />;
+      break;
     default:
-      return <MobileNoPhaseView />;
+      // do nothing;
+      break;
   }
+
+  if (!props.phaseName || props.phaseName === PHASE_NAME.LOBBY) {
+    // don't wrap in PlayerWrapper for no phase or Lobby phase
+    return view;
+  }
+
+  return <PlayerWrapper>{view}</PlayerWrapper>;
 };
 
 export default MobileViewController;

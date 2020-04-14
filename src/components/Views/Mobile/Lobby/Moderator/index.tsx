@@ -5,6 +5,7 @@ import NumberInput from '../../../../Input/Number';
 import Button from '../../../../Button';
 
 import connector, { IPropsFromState } from './connector';
+import { logInfo } from '../../../../../utils/logger';
 
 type TProps = IPropsFromState;
 
@@ -28,32 +29,35 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
 
   return (
     <React.Fragment>
-      <h2>You are the Moderator</h2>
       <h2>Join {props.villageName} using:</h2>
       <p>{props.lobbyId}</p>
 
       <h2>Players</h2>
       {props.players.map((player) => (
-        <p key={player.id}>{player.name}</p>
+        <p key={player.name}>{player.name}</p>
       ))}
 
-      <h2>Moderator</h2>
-      <p>{props.moderator ? props.moderator.name : 'Not set'}</p>
-
       <h2>Deck Setup</h2>
-
-      <h3>Good</h3>
-      <p>Villagers:</p>
+      <label htmlFor='Villagers'>Villagers:</label>
       <NumberInput
+        name='Villagers'
         placeholder='Villagers'
         value={villagersCount}
         onChange={setVillagersCount}
       />
-      <p>Seers: 1 (cannot change in this version!)</p>
-
-      <h3>Evil</h3>
-      <p>Werewolves:</p>
+      <label htmlFor='Seers'>Seers:</label>
       <NumberInput
+        name='Seers'
+        placeholder='Seers'
+        value={seersCount}
+        onChange={(): void =>
+          logInfo("Can't change number of Seers in this version")
+        }
+        disabled={true}
+      />
+      <label htmlFor='Werewolves'>Werewolves:</label>
+      <NumberInput
+        name='Werewolves'
         placeholder='Werewolves'
         value={werewolvesCount}
         onChange={setWerewolvesCount}

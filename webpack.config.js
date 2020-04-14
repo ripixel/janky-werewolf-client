@@ -42,6 +42,19 @@ module.exports = {
         ],
       },
       {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+              outputPath: 'dist/',
+              useRelativePaths: true,
+            },
+          },
+        ],
+      },
+      {
         enforce: 'pre',
         test: /\.js$/,
         exclude: /node_modules/,

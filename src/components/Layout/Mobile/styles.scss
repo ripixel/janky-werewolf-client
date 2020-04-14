@@ -1,25 +1,43 @@
 .header {
-  background: #fff;
-  color: #333;
+  color: #fff;
   min-width: 100%;
-  padding: 1.5em;
+  padding: 1em;
   text-align: center;
 
   h1 {
-    font-size: 2em;
+    font-size: 1em;
   }
 }
 
 .content {
+  padding: 2em;
   color: #fff;
   min-width: 100%;
   min-height: 100%;
-  padding: 5em;
   text-align: center;
+  background-image: url('../../../../public/assets/wood-tile.jpg');
+  background-repeat: repeat;
+
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: bold;
+  }
+
+  input,
+  button {
+    padding: 0.5em;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
 }
 
 .layout {
   position: relative;
   min-height: 100vh;
   background: #333;
+  height: 1px; // fucking Webkit bug
 }
