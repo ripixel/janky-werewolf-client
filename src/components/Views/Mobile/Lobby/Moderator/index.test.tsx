@@ -10,7 +10,7 @@ import {
 
 import { MobileLobbyModeratorView } from '.';
 import { VillageServiceContextProvider } from '../../../../../context/VillageService';
-import { IPlayer } from '../../../../../types/player';
+import { IPlayer, PLAYER_ROLE, PLAYER_TEAM } from '../../../../../types/player';
 
 describe('<MobileLobbyModeratorView>', () => {
   const baseProps = {
@@ -52,6 +52,11 @@ describe('<MobileLobbyModeratorView>', () => {
             {
               id: '123',
               name: 'Test Player',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
           ]}
         />
@@ -70,10 +75,20 @@ describe('<MobileLobbyModeratorView>', () => {
             {
               id: '123',
               name: 'Test Player 1',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
             {
               id: '456',
               name: 'Test Player 2',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
           ]}
         />
@@ -93,6 +108,11 @@ describe('<MobileLobbyModeratorView>', () => {
           moderator={{
             id: '123',
             name: 'Matt',
+            attributes: {
+              alive: true,
+              role: PLAYER_ROLE.MODERATOR,
+              team: PLAYER_TEAM.UNKNOWN,
+            },
           }}
         />
       );
@@ -109,6 +129,11 @@ describe('<MobileLobbyModeratorView>', () => {
         .toString(36)
         .substring(7),
       name: 'Test Player',
+      attributes: {
+        alive: true,
+        role: PLAYER_ROLE.UNKNOWN,
+        team: PLAYER_TEAM.UNKNOWN,
+      },
     });
 
     it('functions when deck setup is correct', async () => {

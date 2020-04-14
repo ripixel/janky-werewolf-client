@@ -21,5 +21,5 @@ interface IPlayerAttributes {
 export interface IPlayer {
   id: string; // *NOT* a user ID, is a *player* ID
   name: string;
-  attributes: IPlayerAttributes; // Optional, as moderator will not have it
+  attributes: IPlayerAttributes;
 }
