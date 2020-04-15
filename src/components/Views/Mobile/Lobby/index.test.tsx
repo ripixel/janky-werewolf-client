@@ -20,7 +20,6 @@ describe('<MobileLobbyView>', () => {
       const result = render(
         <MobileLobbyView
           self={{
-            id: 'test',
             name: 'Matt',
             attributes: {
               alive: true,
@@ -38,7 +37,6 @@ describe('<MobileLobbyView>', () => {
       const result = render(
         <MobileLobbyView
           self={{
-            id: 'test',
             name: 'James',
             attributes: {
               alive: true,

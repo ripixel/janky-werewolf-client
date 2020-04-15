@@ -12,9 +12,7 @@ describe('<MobileLayout>', () => {
       </MobileLayout>
     );
 
-    expect(
-      result.getByText('Janky Werewolf - Mobile Device')
-    ).toBeInTheDocument();
+    expect(result.getByText('Janky Werewolf')).toBeInTheDocument();
     expect(result.getByText('Test')).toBeInTheDocument();
   });
 });
