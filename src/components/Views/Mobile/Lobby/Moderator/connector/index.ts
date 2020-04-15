@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import { IPlayer } from '../../../../../../types/player';
+import { IPlayer, PLAYER_ROLE } from '../../../../../../types/player';
 import { IState } from '../../../../../../store/reducers';
 
 export interface IPropsFromState {
   villageName: string;
-  gameCode: string;
+  lobbyId: string;
   moderator?: IPlayer;
   players: IPlayer[];
 }
@@ -17,9 +17,15 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
 
   return {
     villageName: state.game.villageName,
-    gameCode: state.game.gameCode,
-    moderator: state.game.moderator,
-    players: state.game.players,
+    lobbyId: state.game.lobbyId,
+    moderator: state.game.players.find(
+      (player) => player.attributes.role === PLAYER_ROLE.MODERATOR
+    ),
+    players: state.game.players
+      .filter((player) => player.attributes.role !== PLAYER_ROLE.MODERATOR)
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
+      ),
   };
 };
 

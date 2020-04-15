@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
 import { IState } from '../../../../../store/reducers';
+import { IPlayer } from '../../../../../types/player';
 
 export interface IPropsFromState {
-  isModerator: boolean;
+  self: IPlayer;
 }
 
 export const mapStateToProps = (state: IState): IPropsFromState => {
@@ -11,8 +12,16 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
     throw new Error('No game yet initialised!');
   }
 
+  const self = state.game.players.find(
+    (player) => player.name === state.user.name
+  );
+
+  if (!self) {
+    throw new Error('Could not find self in player list - something funky!');
+  }
+
   return {
-    isModerator: state.game.moderator?.name === state.user.name,
+    self,
   };
 };
 

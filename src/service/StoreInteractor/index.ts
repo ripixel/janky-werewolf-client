@@ -2,7 +2,7 @@ import { Store } from 'redux';
 
 import { IState } from '../../store/reducers';
 import { IGameState } from '../../store/reducers/game';
-import { initGame } from '../../store/actions/game';
+import { initGame, updateGame } from '../../store/actions/game';
 import { IAction } from '../../store/actions/types';
 import { IUserState } from '../../store/reducers/user';
 import { setName } from '../../store/actions/user';
@@ -26,7 +26,7 @@ export class StoreInteractorService implements IStoreInteractorService {
   }
 
   updateGame(gameState: IGameState): void {
-    this.store.dispatch(initGame(gameState));
+    this.store.dispatch(updateGame(gameState));
   }
 
   setUserName(name: string): void {

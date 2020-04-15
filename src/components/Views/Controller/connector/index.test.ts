@@ -7,7 +7,7 @@ describe('<ViewController> connector', () => {
     it('returns as expected when no phase', () => {
       const state: IState = {
         user: {
-          id: '123',
+          secret: '123',
         },
         game: null,
       };
@@ -18,10 +18,10 @@ describe('<ViewController> connector', () => {
     it('returns as expected when phase present', () => {
       const state: IState = {
         user: {
-          id: '123',
+          secret: '123',
         },
         game: {
-          gameCode: '456',
+          lobbyId: '456',
           villageName: '789',
           phase: {
             name: PHASE_NAME.LOBBY,

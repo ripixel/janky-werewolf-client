@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 interface IProps {
+  name?: string;
   value: number;
   onChange: (value: number) => void;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export const NumberInput = (props: IProps): JSX.Element => {
@@ -13,10 +15,12 @@ export const NumberInput = (props: IProps): JSX.Element => {
 
   return (
     <input
+      name={props.name}
       type='number'
       value={props.value.toString()}
       onChange={onChange}
       placeholder={props.placeholder}
+      disabled={props.disabled}
     />
   );
 };

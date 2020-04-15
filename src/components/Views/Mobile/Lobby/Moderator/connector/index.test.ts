@@ -9,7 +9,7 @@ describe('<MobileLobbyModeratorView> connector', () => {
     it('throws as expected when no game', () => {
       const state: IState = {
         user: {
-          id: '123',
+          secret: '123',
         },
         game: null,
       };
@@ -20,10 +20,10 @@ describe('<MobileLobbyModeratorView> connector', () => {
     it('returns as expected when game present', () => {
       const state: IState = {
         user: {
-          id: '123',
+          secret: '123',
         },
         game: {
-          gameCode: '456',
+          lobbyId: '456',
           villageName: '789',
           phase: {
             name: PHASE_NAME.LOBBY,
@@ -35,8 +35,7 @@ describe('<MobileLobbyModeratorView> connector', () => {
 
       expect(mapStateToProps(state)).toEqual({
         villageName: state.game!.villageName,
-        gameCode: state.game!.gameCode,
-        moderator: state.game!.moderator,
+        lobbyId: state.game!.lobbyId,
         players: state.game!.players,
       });
     });

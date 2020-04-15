@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 
 import { MobileLobbyView } from '.';
+import { PLAYER_ROLE, PLAYER_TEAM } from '../../../../types/player';
 
 // Mock the sub-views with testids
 jest.mock('./Moderator', () => (): JSX.Element => (
@@ -16,13 +17,35 @@ jest.mock('./Player', () => (): JSX.Element => (
 describe('<MobileLobbyView>', () => {
   describe('should render correctly', () => {
     it('as moderator', () => {
-      const result = render(<MobileLobbyView isModerator={true} />);
+      const result = render(
+        <MobileLobbyView
+          self={{
+            name: 'Matt',
+            attributes: {
+              alive: true,
+              role: PLAYER_ROLE.MODERATOR,
+              team: PLAYER_TEAM.UNKNOWN,
+            },
+          }}
+        />
+      );
 
       expect(result.getByTestId('moderator-view')).toBeInTheDocument();
     });
 
     it('as player', () => {
-      const result = render(<MobileLobbyView isModerator={false} />);
+      const result = render(
+        <MobileLobbyView
+          self={{
+            name: 'James',
+            attributes: {
+              alive: true,
+              role: PLAYER_ROLE.UNKNOWN,
+              team: PLAYER_TEAM.UNKNOWN,
+            },
+          }}
+        />
+      );
 
       expect(result.getByTestId('player-view')).toBeInTheDocument();
     });

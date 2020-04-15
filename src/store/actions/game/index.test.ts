@@ -5,7 +5,7 @@ import { initGame, updateGame, GAME_ACTION_TYPES } from '.';
 describe('Game Actions', () => {
   describe('initGame', () => {
     const mockGameState: IGameState = {
-      gameCode: '12test34',
+      lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,
         data: undefined,
@@ -24,7 +24,7 @@ describe('Game Actions', () => {
 
   describe('updateGame', () => {
     const mockGameState: IGameState = {
-      gameCode: '12test34',
+      lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,
         data: undefined,

@@ -1,16 +1,16 @@
 /* eslint-disable jest/no-commented-out-tests */
 import {
   captureException,
-  configureSentryUserId,
-  configureSentryGameCode,
+  configureSentryuserSecret,
+  configureSentryLobbyId,
   initSentry,
   ICustomHttpError,
 } from '../sentry';
 
 import {
   initLogger,
-  configureLoggerUserId,
-  configureLoggerGameCode,
+  configureLoggeruserSecret,
+  configureLoggerLobbyId,
   logError,
 } from '.';
 
@@ -51,36 +51,36 @@ const runTests = (withSentry: boolean): void => {
     }
   });
 
-  describe('configureLoggerUserId()', () => {
+  describe('configureLoggeruserSecret()', () => {
     if (withSentry) {
       it('configures sentry', () => {
-        configureLoggerUserId('123');
+        configureLoggeruserSecret('123');
 
-        expect(configureSentryUserId).toHaveBeenCalledTimes(1);
-        expect(configureSentryUserId).toHaveBeenCalledWith('123');
+        expect(configureSentryuserSecret).toHaveBeenCalledTimes(1);
+        expect(configureSentryuserSecret).toHaveBeenCalledWith('123');
       });
     } else {
       it('does not configure sentry', () => {
-        configureLoggerUserId('123');
+        configureLoggeruserSecret('123');
 
-        expect(configureSentryUserId).toHaveBeenCalledTimes(0);
+        expect(configureSentryuserSecret).toHaveBeenCalledTimes(0);
       });
     }
   });
 
-  describe('configureLoggerGameCode()', () => {
+  describe('configureLoggerLobbyId()', () => {
     if (withSentry) {
       it('configures sentry', () => {
-        configureLoggerGameCode('its-a-guid');
+        configureLoggerLobbyId('its-a-guid');
 
-        expect(configureSentryGameCode).toHaveBeenCalledTimes(1);
-        expect(configureSentryGameCode).toHaveBeenCalledWith('its-a-guid');
+        expect(configureSentryLobbyId).toHaveBeenCalledTimes(1);
+        expect(configureSentryLobbyId).toHaveBeenCalledWith('its-a-guid');
       });
     } else {
       it('does not configure sentry', () => {
-        configureLoggerGameCode('its-a-guid');
+        configureLoggerLobbyId('its-a-guid');
 
-        expect(configureSentryGameCode).toHaveBeenCalledTimes(0);
+        expect(configureSentryLobbyId).toHaveBeenCalledTimes(0);
       });
     }
   });
@@ -136,8 +136,8 @@ const runTests = (withSentry: boolean): void => {
 describe('Logger Utility', () => {
   beforeEach(() => {
     (captureException as jest.Mock).mockReset();
-    (configureSentryUserId as jest.Mock).mockReset();
-    (configureSentryGameCode as jest.Mock).mockReset();
+    (configureSentryuserSecret as jest.Mock).mockReset();
+    (configureSentryLobbyId as jest.Mock).mockReset();
     (initSentry as jest.Mock).mockReset();
 
     setEnvVars();

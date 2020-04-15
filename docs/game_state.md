@@ -86,7 +86,7 @@ Main game state.
 ```typescript
 // will be null/undefined prior to joining a game
 interface IGameState {
-  gameCode: string; // the game join code used
+  lobbyId: string; // the game join code used
   villageName: string;
   moderator?: IPlayer; // optional as initially there will not be a moderator until one is promoted
   players: IPlayer[];

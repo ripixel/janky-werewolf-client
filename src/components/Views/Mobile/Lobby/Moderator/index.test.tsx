@@ -10,26 +10,22 @@ import {
 
 import { MobileLobbyModeratorView } from '.';
 import { VillageServiceContextProvider } from '../../../../../context/VillageService';
-import { IPlayer } from '../../../../../types/player';
+import { IPlayer, PLAYER_ROLE, PLAYER_TEAM } from '../../../../../types/player';
 
 describe('<MobileLobbyModeratorView>', () => {
   const baseProps = {
     villageName: 'Test Village',
-    gameCode: '12test34',
+    lobbyId: '12test34',
   };
 
   describe('renders as expected', () => {
     const expectStandard = (result: RenderResult<typeof queries>): void => {
-      expect(result.getByText('You are the Moderator')).toBeInTheDocument();
-
       expect(result.getByText('Join Test Village using:')).toBeInTheDocument();
       expect(result.getByText('12test34')).toBeInTheDocument();
 
       expect(result.getByPlaceholderText('Villagers')).toHaveValue(0);
       expect(result.getByPlaceholderText('Werewolves')).toHaveValue(0);
-      expect(
-        result.getByText('Seers: 1 (cannot change in this version!)')
-      ).toBeInTheDocument();
+      expect(result.getByPlaceholderText('Seers')).toHaveValue(1);
 
       expect(result.getByText('Start Game')).toBeInTheDocument();
     };
@@ -50,8 +46,12 @@ describe('<MobileLobbyModeratorView>', () => {
           {...baseProps}
           players={[
             {
-              id: '123',
               name: 'Test Player',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
           ]}
         />
@@ -68,12 +68,20 @@ describe('<MobileLobbyModeratorView>', () => {
           {...baseProps}
           players={[
             {
-              id: '123',
               name: 'Test Player 1',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
             {
-              id: '456',
               name: 'Test Player 2',
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.UNKNOWN,
+                team: PLAYER_TEAM.UNKNOWN,
+              },
             },
           ]}
         />
@@ -84,31 +92,20 @@ describe('<MobileLobbyModeratorView>', () => {
       expect(result.getByText('Test Player 1')).toBeInTheDocument();
       expect(result.getByText('Test Player 2')).toBeInTheDocument();
     });
-
-    it('with a moderator', () => {
-      const result = render(
-        <MobileLobbyModeratorView
-          {...baseProps}
-          players={[]}
-          moderator={{
-            id: '123',
-            name: 'Matt',
-          }}
-        />
-      );
-
-      expectStandard(result);
-
-      expect(result.getByText('Matt')).toBeInTheDocument();
-    });
   });
 
   describe('Start Game button', () => {
     const getTestPlayer = (): IPlayer => ({
-      id: Math.random()
-        .toString(36)
-        .substring(7),
-      name: 'Test Player',
+      name:
+        'Test Player ' +
+        Math.random()
+          .toString(36)
+          .substring(7),
+      attributes: {
+        alive: true,
+        role: PLAYER_ROLE.UNKNOWN,
+        team: PLAYER_TEAM.UNKNOWN,
+      },
     });
 
     it('functions when deck setup is correct', async () => {
@@ -134,7 +131,6 @@ describe('<MobileLobbyModeratorView>', () => {
       fireEvent.change(result.getByPlaceholderText('Werewolves'), {
         target: { value: '1' },
       });
-      await result.findByDisplayValue('1');
 
       fireEvent.change(result.getByPlaceholderText('Villagers'), {
         target: { value: '2' },
@@ -144,6 +140,7 @@ describe('<MobileLobbyModeratorView>', () => {
       fireEvent.click(result.getByText('Start Game'));
 
       expect(mockVillageService.startGame).toHaveBeenCalledTimes(1);
+      expect(mockVillageService.startGame).toHaveBeenCalledWith(1);
     });
 
     describe('does not function when deck setup is incorrect', () => {
@@ -169,7 +166,6 @@ describe('<MobileLobbyModeratorView>', () => {
         fireEvent.change(result.getByPlaceholderText('Werewolves'), {
           target: { value: '1' },
         });
-        await result.findByDisplayValue('1');
 
         fireEvent.change(result.getByPlaceholderText('Villagers'), {
           target: { value: '2' },
@@ -199,7 +195,6 @@ describe('<MobileLobbyModeratorView>', () => {
         fireEvent.change(result.getByPlaceholderText('Werewolves'), {
           target: { value: '1' },
         });
-        await result.findByDisplayValue('1');
 
         fireEvent.change(result.getByPlaceholderText('Villagers'), {
           target: { value: '2' },
@@ -234,7 +229,6 @@ describe('<MobileLobbyModeratorView>', () => {
         fireEvent.change(result.getByPlaceholderText('Werewolves'), {
           target: { value: '1' },
         });
-        await result.findByDisplayValue('1');
 
         fireEvent.change(result.getByPlaceholderText('Villagers'), {
           target: { value: '3' },
@@ -334,15 +328,14 @@ describe('<MobileLobbyModeratorView>', () => {
           </VillageServiceContextProvider>
         );
 
+        fireEvent.change(result.getByPlaceholderText('Villagers'), {
+          target: { value: '1' },
+        });
+
         fireEvent.change(result.getByPlaceholderText('Werewolves'), {
           target: { value: '3' },
         });
         await result.findByDisplayValue('3');
-
-        fireEvent.change(result.getByPlaceholderText('Villagers'), {
-          target: { value: '1' },
-        });
-        await result.findByDisplayValue('1');
 
         fireEvent.click(result.getByText('Start Game'));
 

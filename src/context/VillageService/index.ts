@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { IVillageService, VillageService } from '../../service/Village';
-import { DevVillageProvider } from '../../provider/Village/Dev';
+import WebSocketVillageProvider from '../../provider/Village/WebSocket';
 import { StoreInteractorService } from '../../service/StoreInteractor';
 import store from '../../store';
 
 export const initVillageServiceContext = (): IVillageService =>
   new VillageService(
-    new DevVillageProvider(),
+    new WebSocketVillageProvider(),
     new StoreInteractorService(store)
   );
 

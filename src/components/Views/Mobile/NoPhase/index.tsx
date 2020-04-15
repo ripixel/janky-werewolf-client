@@ -4,32 +4,32 @@ import Button from '../../../Button';
 import { VillageServiceContext } from '../../../../context/VillageService';
 
 export const MobileNoPhaseView = (): JSX.Element => {
-  const [playerName, setPlayerName] = React.useState('');
-  const [gameCode, setGameCode] = React.useState('');
+  const [userName, setUserName] = React.useState('');
+  const [lobbyId, setLobbyId] = React.useState('');
   const villageService = React.useContext(VillageServiceContext);
 
-  const onClick = async (): Promise<void> => {
-    if (gameCode) {
-      await villageService.joinVillage(playerName, gameCode);
+  const onClick = (): void => {
+    if (lobbyId) {
+      villageService.joinVillage(userName, lobbyId);
     } else {
-      await villageService.createVillage('Janktown', playerName);
+      villageService.createVillage(userName);
     }
   };
 
   return (
     <React.Fragment>
       <TextInput
-        value={playerName}
-        onChange={setPlayerName}
+        value={userName}
+        onChange={setUserName}
         placeholder='Player Name'
       />
       <TextInput
-        value={gameCode}
-        onChange={setGameCode}
+        value={lobbyId}
+        onChange={setLobbyId}
         placeholder='Game Code'
       />
-      <Button onClick={onClick} disabled={!playerName}>
-        {!gameCode ? 'Create' : 'Join'} Village
+      <Button onClick={onClick} disabled={!userName}>
+        {!lobbyId ? 'Create' : 'Join'} Village
       </Button>
     </React.Fragment>
   );

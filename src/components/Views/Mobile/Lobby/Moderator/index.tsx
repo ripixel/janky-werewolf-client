@@ -5,6 +5,9 @@ import NumberInput from '../../../../Input/Number';
 import Button from '../../../../Button';
 
 import connector, { IPropsFromState } from './connector';
+import { logInfo } from '../../../../../utils/logger';
+
+import styles from './styles.scss';
 
 type TProps = IPropsFromState;
 
@@ -14,8 +17,8 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
   const seersCount = 1; // can't be changed in this version
   const villageService = React.useContext(VillageServiceContext);
 
-  const onClick = async (): Promise<void> => {
-    await villageService.startGame(villagersCount, werewolvesCount, seersCount);
+  const onClick = (): void => {
+    villageService.startGame(werewolvesCount);
   };
 
   const startGameDisabled: boolean =
@@ -28,36 +31,47 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
 
   return (
     <React.Fragment>
-      <h2>You are the Moderator</h2>
       <h2>Join {props.villageName} using:</h2>
-      <p>{props.gameCode}</p>
+      <p className={styles.joinCode}>{props.lobbyId}</p>
 
       <h2>Players</h2>
       {props.players.map((player) => (
-        <p key={player.id}>{player.name}</p>
+        <p key={player.name}>{player.name}</p>
       ))}
 
-      <h2>Moderator</h2>
-      <p>{props.moderator ? props.moderator.name : 'Not set'}</p>
-
       <h2>Deck Setup</h2>
+      <div>
+        <label htmlFor='Villagers'>Villagers:</label>
+        <NumberInput
+          name='Villagers'
+          placeholder='Villagers'
+          value={villagersCount}
+          onChange={setVillagersCount}
+        />
+      </div>
 
-      <h3>Good</h3>
-      <p>Villagers:</p>
-      <NumberInput
-        placeholder='Villagers'
-        value={villagersCount}
-        onChange={setVillagersCount}
-      />
-      <p>Seers: 1 (cannot change in this version!)</p>
+      <div>
+        <label htmlFor='Seers'>Seers:</label>
+        <NumberInput
+          name='Seers'
+          placeholder='Seers'
+          value={seersCount}
+          onChange={(): void =>
+            logInfo("Can't change number of Seers in this version")
+          }
+          disabled={true}
+        />
+      </div>
 
-      <h3>Evil</h3>
-      <p>Werewolves:</p>
-      <NumberInput
-        placeholder='Werewolves'
-        value={werewolvesCount}
-        onChange={setWerewolvesCount}
-      />
+      <div>
+        <label htmlFor='Werewolves'>Werewolves:</label>
+        <NumberInput
+          name='Werewolves'
+          placeholder='Werewolves'
+          value={werewolvesCount}
+          onChange={setWerewolvesCount}
+        />
+      </div>
 
       <Button disabled={startGameDisabled} onClick={onClick}>
         Start Game

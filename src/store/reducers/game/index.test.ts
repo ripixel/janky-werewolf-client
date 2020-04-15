@@ -4,7 +4,7 @@ import gameReducer, { IGameState } from '.';
 
 describe('store > reducers > game', () => {
   const mockGameState: IGameState = {
-    gameCode: '123',
+    lobbyId: '123',
     villageName: 'Test Village',
     players: [],
     phase: {

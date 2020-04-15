@@ -19,12 +19,12 @@ export const initSentry = (dsn: string, environment: string): void => {
   });
 };
 
-export const configureSentryUserId = (userId: string): void => {
-  setUser({ id: userId });
+export const configureSentryuserSecret = (userSecret: string): void => {
+  setUser({ id: userSecret });
 };
 
-export const configureSentryGameCode = (code: string): void => {
-  setContext('gameCode', {
+export const configureSentryLobbyId = (code: string): void => {
+  setContext('lobbyId', {
     code,
   });
 };
