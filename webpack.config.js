@@ -2,6 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const DotenvFlow = require('dotenv-flow-webpack');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
 
 module.exports = {
@@ -75,6 +76,7 @@ module.exports = {
     new TypedCssModulesPlugin({
       globPattern: 'src/**/*.scss',
     }),
+    new FaviconsWebpackPlugin('./public/assets/favicon.png'),
   ],
   output: {
     filename: '[name].bundle.js',

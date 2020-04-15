@@ -42,6 +42,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
       <h2>Deck Setup</h2>
       <div>
         <label htmlFor='Villagers'>Villagers:</label>
+        <br />
         <NumberInput
           name='Villagers'
           placeholder='Villagers'
@@ -52,6 +53,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
 
       <div>
         <label htmlFor='Seers'>Seers:</label>
+        <br />
         <NumberInput
           name='Seers'
           placeholder='Seers'
@@ -65,6 +67,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
 
       <div>
         <label htmlFor='Werewolves'>Werewolves:</label>
+        <br />
         <NumberInput
           name='Werewolves'
           placeholder='Werewolves'

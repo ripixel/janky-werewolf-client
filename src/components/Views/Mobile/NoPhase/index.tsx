@@ -18,6 +18,13 @@ export const MobileNoPhaseView = (): JSX.Element => {
 
   return (
     <React.Fragment>
+      <h3>
+        Welcome to
+        <br />
+        Janky Werewolf
+      </h3>
+      <p>To create a game, enter your Player Name and leave Game Code blank</p>
+      <p>To join a game, enter your Player Name and a Game Code</p>
       <TextInput
         value={userName}
         onChange={setUserName}
