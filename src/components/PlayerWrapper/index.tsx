@@ -41,6 +41,8 @@ export const PlayerWrapper = (props: TProps): JSX.Element => {
       props.self.attributes.team === PLAYER_TEAM.GOOD,
     [styles['selfInfo--team-Evil']]:
       props.self.attributes.team === PLAYER_TEAM.EVIL,
+    [styles['selfInfo--team-Unknown']]:
+      props.self.attributes.team === PLAYER_TEAM.UNKNOWN,
   });
 
   return (
@@ -64,6 +66,12 @@ export const PlayerWrapper = (props: TProps): JSX.Element => {
       <div className={styles.players}>
         <h3>Players</h3>
         <table>
+          <tr>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Role</th>
+            <th>Alive</th>
+          </tr>
           {props.players.map((player) => (
             <tr key={player.name}>
               <td>{player.name}</td>

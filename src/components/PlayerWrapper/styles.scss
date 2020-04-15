@@ -3,12 +3,17 @@
   min-height: 100%;
 
   p {
-    margin-bottom: 1.5em;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
   }
 }
 
 .selfInfo {
-  padding: 1em;
+  padding: 1rem;
+
+  h3 {
+    margin-top: 0;
+  }
 }
 
 .selfInfo--team-Good {
@@ -19,14 +24,37 @@
   background: red;
 }
 
+.selfInfo--team-Unknown {
+  background: #333;
+}
+
 .content {
-  padding: 3em;
+  padding: 1rem;
 }
 
 .instructions {
-  padding: 1em;
+  padding: 1rem;
 }
 
 .players {
-  padding: 1em;
+  padding: 1rem;
+
+  table {
+    position: relative;
+    min-width: 100%;
+    width: 1px;
+
+    tr {
+      min-width: 100%;
+
+      th {
+        font-weight: bold;
+      }
+
+      td,
+      th {
+        padding: 0.25rem;
+      }
+    }
+  }
 }

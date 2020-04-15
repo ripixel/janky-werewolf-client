@@ -5,6 +5,7 @@ declare const styles: {
   readonly "selfInfo": string;
   readonly "selfInfo--team-Evil": string;
   readonly "selfInfo--team-Good": string;
+  readonly "selfInfo--team-Unknown": string;
   readonly "wrapper": string;
 };
 export = styles;

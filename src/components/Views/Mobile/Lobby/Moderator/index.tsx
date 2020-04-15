@@ -7,6 +7,8 @@ import Button from '../../../../Button';
 import connector, { IPropsFromState } from './connector';
 import { logInfo } from '../../../../../utils/logger';
 
+import styles from './styles.scss';
+
 type TProps = IPropsFromState;
 
 export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
@@ -30,7 +32,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
   return (
     <React.Fragment>
       <h2>Join {props.villageName} using:</h2>
-      <p>{props.lobbyId}</p>
+      <p className={styles.joinCode}>{props.lobbyId}</p>
 
       <h2>Players</h2>
       {props.players.map((player) => (
@@ -38,30 +40,38 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
       ))}
 
       <h2>Deck Setup</h2>
-      <label htmlFor='Villagers'>Villagers:</label>
-      <NumberInput
-        name='Villagers'
-        placeholder='Villagers'
-        value={villagersCount}
-        onChange={setVillagersCount}
-      />
-      <label htmlFor='Seers'>Seers:</label>
-      <NumberInput
-        name='Seers'
-        placeholder='Seers'
-        value={seersCount}
-        onChange={(): void =>
-          logInfo("Can't change number of Seers in this version")
-        }
-        disabled={true}
-      />
-      <label htmlFor='Werewolves'>Werewolves:</label>
-      <NumberInput
-        name='Werewolves'
-        placeholder='Werewolves'
-        value={werewolvesCount}
-        onChange={setWerewolvesCount}
-      />
+      <div>
+        <label htmlFor='Villagers'>Villagers:</label>
+        <NumberInput
+          name='Villagers'
+          placeholder='Villagers'
+          value={villagersCount}
+          onChange={setVillagersCount}
+        />
+      </div>
+
+      <div>
+        <label htmlFor='Seers'>Seers:</label>
+        <NumberInput
+          name='Seers'
+          placeholder='Seers'
+          value={seersCount}
+          onChange={(): void =>
+            logInfo("Can't change number of Seers in this version")
+          }
+          disabled={true}
+        />
+      </div>
+
+      <div>
+        <label htmlFor='Werewolves'>Werewolves:</label>
+        <NumberInput
+          name='Werewolves'
+          placeholder='Werewolves'
+          value={werewolvesCount}
+          onChange={setWerewolvesCount}
+        />
+      </div>
 
       <Button disabled={startGameDisabled} onClick={onClick}>
         Start Game
