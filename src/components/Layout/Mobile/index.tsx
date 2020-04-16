@@ -4,11 +4,13 @@ import { ILayoutProps } from '..';
 
 import styles from './styles.scss';
 
+import favicon from '../../../../public/assets/favicon.png';
+
 export const MobileLayout = (props: ILayoutProps): JSX.Element => (
   <div className={styles.layout}>
     <div className={styles.header}>
       <h1>
-        <img src='../../../../public/assets/favicon.png' /> Janky Werewolf
+        <img src={favicon} /> Janky Werewolf
       </h1>
     </div>
     <div className={styles.content}>{props.children}</div>

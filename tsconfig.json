@@ -19,6 +19,6 @@
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./typings"],
   "exclude": ["node_modules", "./src/**/*.test.tsx", "./src/**/*.test.ts"]
 }
