@@ -92,18 +92,18 @@ jobs: # a collection of steps
             - ~/tmp/dist
 
   deploy_to_production: # deploy the project to prod - SHOULD ONLY BE RUN ON MASTER BRANCH
-  executor: google-cloud
-  steps:
-    - restore_cache:
-        key: dist-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-    - run:
-        name: Auth with GCP
-        command: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-    - run:
-        name: Deploy to App Engine
-        command: cd /home/circleci && gsutil rsync -R dist gs://www.jankywerewolf.co.uk
+    executor: google-cloud
+    steps:
+      - restore_cache:
+          key: dist-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - run:
+          name: Auth with GCP
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+      - run:
+          name: Deploy to App Engine
+          command: cd /home/circleci/tmp && gsutil rsync -R dist gs://www.jankywerewolf.co.uk
 
 workflows:
   version: 2
@@ -123,11 +123,11 @@ workflows:
           requires:
             - checkout_and_install_deps
       - deploy_to_production:
-        filters:
-          branches:
-            only: master
-        requires:
-          - audit
-          - test
-          - lint
-          - build
+          filters:
+            branches:
+              only: master
+          requires:
+            - audit
+            - test
+            - lint
+            - build
