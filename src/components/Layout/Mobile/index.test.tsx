@@ -4,6 +4,8 @@ import { render } from '@testing-library/react';
 
 import MobileLayout from '.';
 
+jest.mock('../../../../public/assets/favicon.png', () => 'favicon/path.png');
+
 describe('<MobileLayout>', () => {
   it('renders as expected', () => {
     const result = render(
