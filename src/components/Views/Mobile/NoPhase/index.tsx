@@ -27,15 +27,27 @@ export const MobileNoPhaseView = (): JSX.Element => {
       <p>To join a game, enter your Player Name and a Game Code</p>
       <TextInput
         value={userName}
-        onChange={setUserName}
+        onChange={(userName: string): void =>
+          setUserName(userName.substr(0, 12))
+        }
         placeholder='Player Name'
       />
       <TextInput
         value={lobbyId}
-        onChange={setLobbyId}
+        onChange={(lobbyId: string): void =>
+          setLobbyId(
+            lobbyId
+              .toUpperCase()
+              .replace(/[^A-Z]/g, '')
+              .substr(0, 4)
+          )
+        }
         placeholder='Game Code'
       />
-      <Button onClick={onClick} disabled={!userName}>
+      <Button
+        onClick={onClick}
+        disabled={!userName || (!!lobbyId && lobbyId.length !== 4)}
+      >
         {!lobbyId ? 'Create' : 'Join'} Village
       </Button>
     </React.Fragment>

@@ -37,9 +37,9 @@ describe('<MobileNoPhaseView>', () => {
       const lobbyIdInput = result.getByPlaceholderText('Game Code');
 
       fireEvent.change(nameInput, { target: { value: 'Dave' } });
-      fireEvent.change(lobbyIdInput, { target: { value: '123' } });
+      fireEvent.change(lobbyIdInput, { target: { value: 'abcd' } });
 
-      await result.findByDisplayValue('123');
+      await result.findByDisplayValue('ABCD');
 
       fireEvent.click(result.getByText('Join Village'));
 
@@ -47,7 +47,7 @@ describe('<MobileNoPhaseView>', () => {
       expect(mockVillageService.joinVillage).toHaveBeenCalledTimes(1);
       expect(mockVillageService.joinVillage).toHaveBeenCalledWith(
         'Dave',
-        '123'
+        'ABCD'
       );
     });
 

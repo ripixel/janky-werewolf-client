@@ -35,6 +35,7 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
       <p className={styles.joinCode}>{props.lobbyId}</p>
 
       <h2>Players</h2>
+      {props.players.length === 0 && <p>Waiting for players to join...</p>}
       {props.players.map((player) => (
         <p key={player.name}>{player.name}</p>
       ))}
