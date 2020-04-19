@@ -5,10 +5,6 @@ executors:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:12.12.0
-  google-cloud:
-    working_directory: ~/tmp
-    docker:
-      - image: google/cloud-sdk
 
 jobs: # a collection of steps
   checkout_and_install_deps: # install npm deps
@@ -19,7 +15,8 @@ jobs: # a collection of steps
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install NPM Dependencies
-          command: npm ci
+          command: npm i
+      - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ~/tmp/node_modules
@@ -90,20 +87,21 @@ jobs: # a collection of steps
           key: dist-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
             - ~/tmp/dist
+            - ~/tmp/.firebaserc
+            - ~/tmp/firebase.json
+            - ~/tmp/package.json
+            - ~/tmp/package-lock.json
 
-  deploy_to_production: # deploy the project to prod - SHOULD ONLY BE RUN ON MASTER BRANCH
-    executor: google-cloud
+  deploy_to_firebase: # deploy the project to prod - SHOULD ONLY BE RUN ON MASTER BRANCH
+    executor: node-project
     steps:
-      - restore_cache:
+      - restore_cache: # restore the /dist folder and associated deploy files
           key: dist-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
-          name: Auth with GCP
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-      - run:
-          name: Deploy to App Engine
-          command: cd /home/circleci/tmp && gsutil rsync -R dist gs://www.jankywerewolf.co.uk
+          name: Deploy to Firebase Hosting
+          command: firebase deploy --token "$FIREBASE_TOKEN"
 
 workflows:
   version: 2
@@ -122,7 +120,7 @@ workflows:
       - build:
           requires:
             - checkout_and_install_deps
-      - deploy_to_production:
+      - deploy_to_firebase:
           filters:
             branches:
               only: master
