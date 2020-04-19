@@ -67,3 +67,6 @@ reports/
 
 # Some auto-generated public files
 public/api-docs.html
+
+# Firebase cache
+.firebase/
