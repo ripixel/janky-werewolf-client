@@ -75,11 +75,11 @@ jobs: # a collection of steps
           name: Build
           command: |
             if [ $CIRCLE_BRANCH = 'master' ]; then
-            npm run build
+            env BUILD_NUM=$CIRCLE_BUILD_NUM npm run build
             elif [ $CIRCLE_BRANCH = 'staging' ]; then
-            npm run build:staging
+            env BUILD_NUM=$CIRCLE_BUILD_NUM npm run build:staging
             else
-            npm run build:dev
+            env BUILD_NUM=$CIRCLE_BUILD_NUM npm run build:dev
             fi
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: dist
