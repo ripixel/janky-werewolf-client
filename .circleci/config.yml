@@ -92,7 +92,7 @@ jobs: # a collection of steps
             - ~/tmp/firebase.json
             - ~/tmp/package-lock.json
 
-  deploy_to_firebase: # deploy the project to prod - SHOULD ONLY BE RUN ON MASTER BRANCH
+  deploy_to_firebase_staging: # deploy the project to staging - SHOULD ONLY BE RUN ON STAGING BRANCH
     executor: node-project
     steps:
       - restore_cache: # restore the /dist folder and associated deploy files
@@ -101,7 +101,18 @@ jobs: # a collection of steps
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Deploy to Firebase Hosting
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only hosting:staging
+
+  deploy_to_firebase_production: # deploy the project to prod - SHOULD ONLY BE RUN ON MASTER BRANCH
+    executor: node-project
+    steps:
+      - restore_cache: # restore the /dist folder and associated deploy files
+          key: dist-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Deploy to Firebase Hosting
+          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN" --only hosting:production
 
 workflows:
   version: 2
@@ -120,7 +131,16 @@ workflows:
       - build:
           requires:
             - checkout_and_install_deps
-      - deploy_to_firebase:
+      - deploy_to_firebase_staging:
+          filters:
+            branches:
+              only: staging
+          requires:
+            - audit
+            - test
+            - lint
+            - build
+      - deploy_to_firebase_production:
           filters:
             branches:
               only: master
