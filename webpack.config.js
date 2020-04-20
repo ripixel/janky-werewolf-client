@@ -10,7 +10,9 @@ const mode =
   process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
 if (mode === 'production') {
-  const { stdout: lastTag } = execa.commandSync('git describe --abbrev=0');
+  const { stdout: lastTag } = execa.commandSync(
+    'git describe --tags `git rev-list --tags --max-count=1`'
+  );
   process.env.VERSION = lastTag + '-' + process.env.NODE_ENV;
 }
 
