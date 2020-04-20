@@ -88,5 +88,6 @@
   "jest-junit": {
     "outputDirectory": "reports/jest",
     "outputName": "results.xml"
-  }
+  },
+  "version": "19.0.0"
 }
