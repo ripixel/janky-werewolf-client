@@ -24,12 +24,13 @@ jest.mock('@sentry/browser', () => ({
 describe('Sentry Utility', () => {
   describe('initSentry', () => {
     it('should initialize', () => {
-      initSentry('test_dummy_dsn', 'test_env');
+      initSentry('test_dummy_dsn', 'test_env', 'test_version');
 
       expect(init as jest.Mock).toHaveBeenCalledTimes(1);
       expect(init as jest.Mock).toHaveBeenCalledWith({
         dsn: 'test_dummy_dsn',
         environment: 'test_env',
+        release: 'test_version',
         maxBreadcrumbs: 50,
         attachStacktrace: true,
       });

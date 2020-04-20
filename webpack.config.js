@@ -4,16 +4,13 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const DotenvFlow = require('dotenv-flow-webpack');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
-const execa = require('execa');
 
 const mode =
   process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
-if (mode === 'production') {
-  const { stdout: lastTag } = execa.commandSync(
-    'git describe --tags `git rev-list --tags --max-count=1`'
-  );
-  process.env.VERSION = lastTag + '-' + process.env.NODE_ENV;
+if (mode === 'production' && process.env.BUILD_NUM) {
+  process.env.VERSION =
+    'v' + process.env.BUILD_NUM + '-' + process.env.NODE_ENV;
 }
 
 module.exports = {

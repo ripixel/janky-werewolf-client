@@ -10,10 +10,15 @@ export interface ICustomHttpError extends Error {
   statusCode?: number;
 }
 
-export const initSentry = (dsn: string, environment: string): void => {
+export const initSentry = (
+  dsn: string,
+  environment: string,
+  release: string
+): void => {
   init({
     dsn,
     environment,
+    release,
     maxBreadcrumbs: 50,
     attachStacktrace: true,
   });

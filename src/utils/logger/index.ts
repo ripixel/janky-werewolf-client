@@ -15,7 +15,8 @@ export const initLogger = (): void => {
   if (useSentry()) {
     initSentry(
       process.env.SENTRY_DSN as string,
-      process.env.NODE_ENV as string
+      process.env.NODE_ENV as string,
+      process.env.VERSION as string
     );
   }
 };
