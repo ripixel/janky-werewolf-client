@@ -13,7 +13,10 @@ export const MobileLayout = (props: ILayoutProps): JSX.Element => (
         <img src={favicon} /> Janky Werewolf
       </h1>
     </div>
-    <div className={styles.content}>{props.children}</div>
+    <div className={styles.content}>
+      <p className={styles.version}>{process.env.VERSION}</p>
+      {props.children}
+    </div>
   </div>
 );
 
