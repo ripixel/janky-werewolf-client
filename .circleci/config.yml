@@ -68,8 +68,12 @@ jobs: # a collection of steps
   build: # build the project - requires dependencies to have been installed
     executor: node-project
     steps:
-      - restore_cache:
-          key: code-with-deps-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - checkout
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Bump Package Version and Push
+          command: npm version major && git push --tags --no-verify
       - run: # run build
           name: Build
           command: |
