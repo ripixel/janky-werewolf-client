@@ -8,6 +8,7 @@ export const DesktopLayout = (props: ILayoutProps): JSX.Element => (
   <div className={styles.layout}>
     <div className={styles.header}>
       <h1>Janky Werewolf - Desktop Host</h1>
+      <p>{process.env.VERSION}</p>
     </div>
     <div className={styles.content}>{props.children}</div>
   </div>

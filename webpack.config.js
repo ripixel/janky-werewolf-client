@@ -4,9 +4,18 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const DotenvFlow = require('dotenv-flow-webpack');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
+const execa = require('execa');
+
+const mode =
+  process.env.NODE_ENV === 'development' ? 'development' : 'production';
+
+if (mode === 'production') {
+  const { stdout: lastTag } = execa.commandSync('git describe --abbrev=0');
+  process.env.VERSION = lastTag + '-' + process.env.NODE_ENV;
+}
 
 module.exports = {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: mode,
   entry: './src',
   devtool: 'source-map',
   devServer: {
