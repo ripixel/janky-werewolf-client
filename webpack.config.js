@@ -51,6 +51,18 @@ module.exports = {
         ],
       },
       {
+        test: /\.css$/i,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: process.env.NODE_ENV === 'development',
+            },
+          },
+        ],
+      },
+      {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
