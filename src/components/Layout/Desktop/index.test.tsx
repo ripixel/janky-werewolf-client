@@ -4,6 +4,8 @@ import { render } from '@testing-library/react';
 
 import DesktopLayout from '.';
 
+jest.mock('../../../../public/assets/favicon.png', () => 'favicon/path.png');
+
 describe('<DesktopLayout>', () => {
   it('renders as expected', () => {
     const result = render(
@@ -12,9 +14,7 @@ describe('<DesktopLayout>', () => {
       </DesktopLayout>
     );
 
-    expect(
-      result.getByText('Janky Werewolf - Desktop Host')
-    ).toBeInTheDocument();
+    expect(result.getByText('Janky Werewolf')).toBeInTheDocument();
     expect(result.getByText('Test')).toBeInTheDocument();
   });
 });
