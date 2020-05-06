@@ -17,6 +17,7 @@ enum SOCKET_ACTIONS {
   START = 'start',
   WEREWOLF = 'werewolf',
   SEER = 'seer',
+  BODYGUARD = 'bodyguard',
   LYNCH = 'lynch',
   SLEEP = 'sleep',
 }
@@ -67,6 +68,14 @@ type TSeer = ISocketMessage<
   }
 >;
 
+type TBodyguard = ISocketMessage<
+  SOCKET_ACTIONS.BODYGUARD,
+  {
+    code: string;
+    player: string;
+  }
+>;
+
 type TLynch = ISocketMessage<
   SOCKET_ACTIONS.LYNCH,
   {
@@ -88,6 +97,7 @@ type TSocketMessages =
   | TStartMessage
   | TWerewolf
   | TSeer
+  | TBodyguard
   | TLynch
   | TSleep;
 
@@ -167,6 +177,16 @@ export class WebSocketVillageProvider implements IVillageProvider {
         player: playerName,
       },
     } as TSeer);
+  }
+
+  bodyguardSavePlayer({ playerName }: IVoteData): void {
+    this.sendSocketMessage({
+      action: SOCKET_ACTIONS.BODYGUARD,
+      data: {
+        code: this.getLobbyId(),
+        player: playerName,
+      },
+    } as TBodyguard);
   }
 
   lynchPlayer({ playerName }: IVoteData): void {
