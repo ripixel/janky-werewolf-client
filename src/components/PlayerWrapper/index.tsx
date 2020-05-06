@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import connector, { IPropsFromState } from './connector';
-import { PLAYER_ROLE, PLAYER_TEAM } from '../../types/player';
+import { PLAYER_ROLE, PLAYER_TEAM, IPlayer } from '../../types/player';
 
 import styles from './styles.scss';
 
@@ -30,7 +30,60 @@ const teamText = {
     'You should never see this. If you do, tell James/Mike',
 };
 
+const alertOnPlayerStateChanges = (
+  oldPlayers: IPlayer[],
+  newPlayers: IPlayer[]
+): void => {
+  if (oldPlayers.length === 0) {
+    return;
+  }
+
+  const changes: string[] = [];
+
+  oldPlayers.forEach((oldPlayer) => {
+    const newPlayer = newPlayers.find(
+      (player) => player.name === oldPlayer.name
+    );
+
+    if (!newPlayer) {
+      return;
+    }
+
+    if (newPlayer.attributes.alive !== oldPlayer.attributes.alive) {
+      changes.push(
+        `${newPlayer.name} is now dead! They were a ${newPlayer.attributes.role}.`
+      );
+    } else if (newPlayer.attributes.team !== oldPlayer.attributes.team) {
+      changes.push(
+        `[ONLY TO YOU] You now know that ${newPlayer.name} is ${newPlayer.attributes.team}.`
+      );
+    }
+
+    if (changes.length > 0) {
+      alert(changes.join('\n'));
+    }
+  });
+};
+
 export const PlayerWrapper = (props: TProps): JSX.Element => {
+  /**
+   * This section is a dirty, dirty hack - but it will do for a quick and easy last-changed alert
+   */
+
+  if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
+    alertOnPlayerStateChanges(
+      JSON.parse(
+        window.localStorage.getItem('previousPlayersState') ?? '[]'
+      ) as IPlayer[],
+      props.players
+    );
+
+    window.localStorage.setItem(
+      'previousPlayersState',
+      JSON.stringify(props.players)
+    );
+  }
+
   let aliveStatus = '';
   if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
     aliveStatus = props.self.attributes.alive ? ' - Alive' : ' - Dead';
