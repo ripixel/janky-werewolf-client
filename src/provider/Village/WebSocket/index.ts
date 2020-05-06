@@ -137,13 +137,14 @@ export class WebSocketVillageProvider implements IVillageProvider {
     } as TJoinMessage);
   }
 
-  startGame({ werewolves, seer }: IStartGameData): void {
+  startGame({ werewolves, seer, bodyguard }: IStartGameData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.START,
       data: {
         code: this.getLobbyId(),
         werewolves,
         seer,
+        bodyguard,
       },
     } as TStartMessage);
   }
