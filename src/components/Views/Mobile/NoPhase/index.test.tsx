@@ -7,6 +7,10 @@ import { MobileNoPhaseView } from '.';
 import { VillageServiceContextProvider } from '../../../../context/VillageService';
 
 describe('<MobileNoPhaseView>', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   it('renders as expected', () => {
     const result = render(<MobileNoPhaseView />);
 
