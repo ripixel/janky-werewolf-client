@@ -6,6 +6,7 @@ import MobileLobbyView from '../../Mobile/Lobby';
 import MobileDayView from '../../Mobile/Day';
 import MobileWerewolfPhaseView from '../../Mobile/Werewolf';
 import MobileSeerPhaseView from '../../Mobile/Seer';
+import MobileBodyguardPhaseView from '../../Mobile/Bodyguard';
 import MobileEndView from '../../Mobile/End';
 import PlayerWrapper from '../../../PlayerWrapper';
 
@@ -24,6 +25,9 @@ export const MobileViewController = (props: IProps): JSX.Element => {
       break;
     case PHASE_NAME.SEER:
       view = <MobileSeerPhaseView />;
+      break;
+    case PHASE_NAME.BODYGUARD:
+      view = <MobileBodyguardPhaseView />;
       break;
     case PHASE_NAME.DAY:
       view = <MobileDayView />;

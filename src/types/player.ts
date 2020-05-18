@@ -4,6 +4,7 @@ export enum PLAYER_ROLE {
   SEER = 'Seer',
   WEREWOLF = 'Werewolf',
   MODERATOR = 'Mod',
+  BODYGUARD = 'Bodyguard',
 }
 
 export enum PLAYER_TEAM {

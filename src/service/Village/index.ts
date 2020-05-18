@@ -6,9 +6,10 @@ import { logError } from '../../utils/logger';
 export interface IVillageService {
   createVillage: (userName: string) => void;
   joinVillage: (userName: string, lobbyId: string) => void;
-  startGame: (werewolves: number, seer: boolean) => void;
+  startGame: (werewolves: number, seer: boolean, bodyguard: boolean) => void;
   werewolfVoteForPlayer: (playerName: string) => void;
   seerInspectPlayer: (playerName: string) => void;
+  bodyguardSavePlayer: (playerName: string) => void;
   lynchPlayer: (playerName: string) => void;
   sleepNow: () => void;
 }
@@ -51,9 +52,9 @@ export class VillageService implements IVillageService {
     }
   }
 
-  startGame(werewolves: number, seer: boolean): void {
+  startGame(werewolves: number, seer: boolean, bodyguard: boolean): void {
     try {
-      this.villageProvider.startGame({ werewolves, seer });
+      this.villageProvider.startGame({ werewolves, seer, bodyguard });
     } catch (error) {
       this.onError(error);
     }
@@ -70,6 +71,14 @@ export class VillageService implements IVillageService {
   seerInspectPlayer(playerName: string): void {
     try {
       this.villageProvider.seerInspectPlayer({ playerName });
+    } catch (error) {
+      this.onError(error);
+    }
+  }
+
+  bodyguardSavePlayer(playerName: string): void {
+    try {
+      this.villageProvider.bodyguardSavePlayer({ playerName });
     } catch (error) {
       this.onError(error);
     }

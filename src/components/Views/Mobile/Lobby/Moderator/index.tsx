@@ -15,21 +15,27 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
   const [villagersCount, setVillagersCount] = React.useState(0);
   const [werewolvesCount, setWerewolvesCount] = React.useState(0);
   const [seerEnabled, setSeerEnabled] = React.useState(true);
+  const [bodyguardEnabled, setBodyguardEnabled] = React.useState(false);
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = (): void => {
-    villageService.startGame(werewolvesCount, seerEnabled);
+    villageService.startGame(werewolvesCount, seerEnabled, bodyguardEnabled);
   };
 
+  const bodyguardsCount = bodyguardEnabled ? 1 : 0;
   const seersCount = seerEnabled ? 1 : 0;
+
+  const goodCount = villagersCount + seersCount + bodyguardsCount;
+  const evilCount = werewolvesCount;
+  const totalCount = goodCount + evilCount;
 
   const startGameDisabled: boolean =
     !props.moderator ||
     props.players.length === 0 ||
-    villagersCount + werewolvesCount + seersCount !== props.players.length ||
-    villagersCount + seersCount === 0 ||
-    werewolvesCount === 0 ||
-    werewolvesCount >= villagersCount + seersCount;
+    totalCount !== props.players.length ||
+    goodCount === 0 ||
+    evilCount === 0 ||
+    evilCount >= goodCount;
 
   return (
     <React.Fragment>
@@ -72,6 +78,15 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
             name='Seers'
             checked={seerEnabled}
             onChange={setSeerEnabled}
+          />
+        </div>
+
+        <div className={styles.flexTogether}>
+          <label htmlFor='Bodyguards'>Bodyguard:</label>
+          <CheckboxInput
+            name='Bodyguards'
+            checked={bodyguardEnabled}
+            onChange={setBodyguardEnabled}
           />
         </div>
       </div>

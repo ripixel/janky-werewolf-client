@@ -14,6 +14,7 @@ export interface IJoinVillageData {
 export interface IStartGameData {
   werewolves: number;
   seer: boolean;
+  bodyguard: boolean;
 }
 
 export interface IVoteData {
@@ -27,6 +28,7 @@ export interface IVillageProvider {
   startGame: (startGameData: IStartGameData) => void;
   werewolfVoteForPlayer: (voteData: IVoteData) => void;
   seerInspectPlayer: (voteData: IVoteData) => void;
+  bodyguardSavePlayer: (voteData: IVoteData) => void;
   lynchPlayer: (voteData: IVoteData) => void;
   sleepNow: () => void;
 }

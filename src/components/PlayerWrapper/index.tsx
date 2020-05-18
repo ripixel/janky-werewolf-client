@@ -14,6 +14,8 @@ const roleText = {
   [PLAYER_ROLE.VILLAGER]: 'No special powers',
   [PLAYER_ROLE.SEER]:
     "Each night, choose someone and find out if they're good or evil",
+  [PLAYER_ROLE.BODYGUARD]:
+    'Each night, choose someone to protect. If the werewolves try to kill them, they will be saved. You cannot guard the same person on consecutive nights.',
   [PLAYER_ROLE.WEREWOLF]:
     'Each night, choose someone to kill. All werewolves must agree.',
   [PLAYER_ROLE.MODERATOR]:
