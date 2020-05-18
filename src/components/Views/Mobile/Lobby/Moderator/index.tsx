@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { VillageServiceContext } from '../../../../../context/VillageService';
 import NumberInput from '../../../../Input/Number';
+import CheckboxInput from '../../../../Input/Checkbox';
 import Button from '../../../../Button';
 
 import connector, { IPropsFromState } from './connector';
-import { logInfo } from '../../../../../utils/logger';
 
 import styles from './styles.scss';
 
@@ -14,12 +14,14 @@ type TProps = IPropsFromState;
 export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
   const [villagersCount, setVillagersCount] = React.useState(0);
   const [werewolvesCount, setWerewolvesCount] = React.useState(0);
-  const seersCount = 1; // can't be changed in this version
+  const [seerEnabled, setSeerEnabled] = React.useState(true);
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = (): void => {
-    villageService.startGame(werewolvesCount);
+    villageService.startGame(werewolvesCount, seerEnabled);
   };
+
+  const seersCount = seerEnabled ? 1 : 0;
 
   const startGameDisabled: boolean =
     !props.moderator ||
@@ -53,20 +55,6 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
       </div>
 
       <div>
-        <label htmlFor='Seers'>Seers:</label>
-        <br />
-        <NumberInput
-          name='Seers'
-          placeholder='Seers'
-          value={seersCount}
-          onChange={(): void =>
-            logInfo("Can't change number of Seers in this version")
-          }
-          disabled={true}
-        />
-      </div>
-
-      <div>
         <label htmlFor='Werewolves'>Werewolves:</label>
         <br />
         <NumberInput
@@ -75,6 +63,17 @@ export const MobileLobbyModeratorView = (props: TProps): JSX.Element => {
           value={werewolvesCount}
           onChange={setWerewolvesCount}
         />
+      </div>
+
+      <div className={styles.flex}>
+        <div className={styles.flexTogether}>
+          <label htmlFor='Seers'>Seer:</label>
+          <CheckboxInput
+            name='Seers'
+            checked={seerEnabled}
+            onChange={setSeerEnabled}
+          />
+        </div>
       </div>
 
       <Button disabled={startGameDisabled} onClick={onClick}>

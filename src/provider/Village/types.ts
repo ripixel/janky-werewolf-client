@@ -13,6 +13,7 @@ export interface IJoinVillageData {
 
 export interface IStartGameData {
   werewolves: number;
+  seer: boolean;
 }
 
 export interface IVoteData {

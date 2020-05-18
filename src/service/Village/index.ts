@@ -6,7 +6,7 @@ import { logError } from '../../utils/logger';
 export interface IVillageService {
   createVillage: (userName: string) => void;
   joinVillage: (userName: string, lobbyId: string) => void;
-  startGame: (werewolves: number) => void;
+  startGame: (werewolves: number, seer: boolean) => void;
   werewolfVoteForPlayer: (playerName: string) => void;
   seerInspectPlayer: (playerName: string) => void;
   lynchPlayer: (playerName: string) => void;
@@ -51,9 +51,9 @@ export class VillageService implements IVillageService {
     }
   }
 
-  startGame(werewolves: number): void {
+  startGame(werewolves: number, seer: boolean): void {
     try {
-      this.villageProvider.startGame({ werewolves });
+      this.villageProvider.startGame({ werewolves, seer });
     } catch (error) {
       this.onError(error);
     }

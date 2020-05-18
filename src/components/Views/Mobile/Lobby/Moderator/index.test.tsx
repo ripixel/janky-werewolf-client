@@ -25,7 +25,7 @@ describe('<MobileLobbyModeratorView>', () => {
 
       expect(result.getByPlaceholderText('Villagers')).toHaveValue(0);
       expect(result.getByPlaceholderText('Werewolves')).toHaveValue(0);
-      expect(result.getByPlaceholderText('Seers')).toHaveValue(1);
+      expect(result.getByRole('checkbox', { name: 'Seers' })).toBeChecked();
 
       expect(result.getByText('Start Game')).toBeInTheDocument();
     };
@@ -140,7 +140,7 @@ describe('<MobileLobbyModeratorView>', () => {
       fireEvent.click(result.getByText('Start Game'));
 
       expect(mockVillageService.startGame).toHaveBeenCalledTimes(1);
-      expect(mockVillageService.startGame).toHaveBeenCalledWith(1);
+      expect(mockVillageService.startGame).toHaveBeenCalledWith(1, true);
     });
 
     describe('does not function when deck setup is incorrect', () => {
