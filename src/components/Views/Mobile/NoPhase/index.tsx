@@ -4,12 +4,18 @@ import Button from '../../../Button';
 import { VillageServiceContext } from '../../../../context/VillageService';
 
 export const MobileNoPhaseView = (): JSX.Element => {
-  const [userName, setUserName] = React.useState('');
-  const [lobbyId, setLobbyId] = React.useState('');
+  const [userName, setUserName] = React.useState(
+    window.localStorage.getItem('lastName') ?? ''
+  );
+  const [lobbyId, setLobbyId] = React.useState(
+    window.localStorage.getItem('lastLobbyId') ?? ''
+  );
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = (): void => {
+    window.localStorage.setItem('lastName', userName);
     if (lobbyId) {
+      window.localStorage.setItem('lastLobbyId', lobbyId);
       villageService.joinVillage(userName, lobbyId);
     } else {
       villageService.createVillage(userName);
