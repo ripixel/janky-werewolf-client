@@ -34,7 +34,12 @@ export const MobileNoPhaseView = (): JSX.Element => {
       <TextInput
         value={userName}
         onChange={(userName: string): void =>
-          setUserName(userName.substr(0, 12))
+          setUserName(
+            userName
+              .replace(/[^0-9a-zA-z\s]/g, '')
+              .trimStart()
+              .substr(0, 12)
+          )
         }
         placeholder='Player Name'
       />
