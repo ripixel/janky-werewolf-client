@@ -60,11 +60,11 @@ const alertOnPlayerStateChanges = (
         `[ONLY TO YOU] You now know that ${newPlayer.name} is ${newPlayer.attributes.team}.`
       );
     }
-
-    if (changes.length > 0) {
-      alert(changes.join('\n'));
-    }
   });
+
+  if (changes.length > 0) {
+    alert(changes.join('\n'));
+  }
 };
 
 export const PlayerWrapper = (props: TProps): JSX.Element => {
