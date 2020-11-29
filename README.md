@@ -4,10 +4,10 @@ A broser-based version of the Ultimate Werewolf 🐺 card game. This is the clie
 
 The backend lives elsewhere... 👻
 
-|         |                                                                                                              CI Status                                                                                                              | Site                                 |
-| ------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------- |
-|  Master |        [![CircleCI](https://circleci.com/gh/ripixelcodes/janky-werewolf-client.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/master)        | https://www.jankywerewolf.co.uk/     |
-| Staging | [![CircleCI](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixelcodes/janky-werewolf-client/tree/staging) | https://staging.jankywerewolf.co.uk/ |
+|         |                                                                                                         CI Status                                                                                                         | Site                                 |
+| ------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------- |
+|  Master |        [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/master)        | https://www.jankywerewolf.co.uk/     |
+| Staging | [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging) | https://staging.jankywerewolf.co.uk/ |
 
 ## What does it use?
 
@@ -66,7 +66,7 @@ Currently uses NPM Audit with a level of `high` or `critical` causing a build fa
 To run this locally, first install the dependencies:
 
 ```bash
-npm i
+npm ci
 ```
 
 Then all you do is:
