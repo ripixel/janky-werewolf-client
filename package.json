@@ -82,7 +82,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "pretty-quick --staged && npm run audit && npm run test"
+      "pre-push": "npm run lint && npm run audit && npm run test"
     }
   },
   "jest-junit": {
