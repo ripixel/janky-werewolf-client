@@ -11,7 +11,7 @@ type TProps = IPropsFromState & {
   children: React.ReactNode;
 };
 
-const roleText = {
+const ROLE_TEXT = {
   [PLAYER_ROLE.VILLAGER]: 'No special powers',
   [PLAYER_ROLE.SEER]:
     "Each night, choose someone and find out if they're good or evil",
@@ -25,7 +25,7 @@ const roleText = {
     'You should never see this. If you do, tell James/Mike',
 };
 
-const teamText = {
+const TEAM_TEXT = {
   [PLAYER_TEAM.EVIL]:
     'You win when the number of good players is equal to or less than the number of werewolves alive',
   [PLAYER_TEAM.GOOD]: 'You win when all the evil players are dead',
@@ -122,10 +122,10 @@ export const PlayerWrapper: React.FC<TProps> = (props) => {
       </div>
       <div className={styles.instructions}>
         <h3>Instructions</h3>
-        <p>{roleText[props.self.attributes.role]}</p>
+        <p>{ROLE_TEXT[props.self.attributes.role]}</p>
         <p>
           {props.self.attributes.role !== PLAYER_ROLE.MODERATOR &&
-            teamText[props.self.attributes.team]}
+            TEAM_TEXT[props.self.attributes.team]}
         </p>
       </div>
       <div className={styles.players}>
