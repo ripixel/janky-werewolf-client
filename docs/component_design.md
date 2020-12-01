@@ -34,10 +34,10 @@ To be able to define for what state what functionality is required, there will b
 import Settings from './settings';
 import WaitingToStart from './waitingToStart';
 
-const MATRIX_CONFIG = {
-  [STAGE.LOBBY]: {
-    [ROLE.MOD]: Settings,
-    [ROLE.UNKNOWN]: WaitingToStart,
+const COMPONENT_MATRIX = {
+  [PHASE_NAME.LOBBY]: {
+    [PLAER_ROLE.MODERATOR]: Settings,
+    [PLAER_ROLE.UNKNOWN]: WaitingToStart,
   },
 };
 ```
@@ -45,7 +45,7 @@ const MATRIX_CONFIG = {
 For the render, we can simply then do:
 
 ```javascript
-const MatrixComponent = MATRIX_CONFIG[stage][role];
+const MatrixComponent = COMPONENT_MATRIX[stage][role];
 return <MatrixComponent />;
 ```
 
