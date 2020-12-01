@@ -1,89 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars, react/display-name */
-import * as React from 'react';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 
-import Layout from '.';
+import { Layout } from '.';
 
-// Mock the layouts with testids
-jest.mock('./Desktop', () => (props: any): JSX.Element => (
-  <div data-testid='desktop-layout'>{props.children}</div>
-));
-jest.mock('./Mobile', () => (props: any): JSX.Element => (
-  <div data-testid='mobile-layout'>{props.children}</div>
-));
-// Mock the ViewController with testid
-jest.mock('../Views/Controller', () => (props: any): JSX.Element => (
-  <div data-testid='view-controller'>
-    {props.isMobile ? 'Mobile' : 'Desktop'}
-  </div>
-));
-
-const setUserAgent = (userAgent: string): void => {
-  Object.defineProperty(navigator, 'userAgent', {
-    value: userAgent,
-    configurable: true,
-  });
-};
+jest.mock('../../../public/assets/favicon.png', () => 'favicon/path.png');
 
 describe('<Layout>', () => {
-  describe('renders as expected', () => {
-    beforeEach(() => {
-      setUserAgent('');
-    });
+  it('renders as expected', () => {
+    const result = render(
+      <Layout>
+        <p>Test</p>
+      </Layout>
+    );
 
-    it('on iPad', () => {
-      setUserAgent('SomeUserAgent.v1243String.iPad 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Mobile')).toBeInTheDocument();
-    });
-
-    it('on iPhone', () => {
-      setUserAgent('SomeUserAgent.v1243String.iPhone 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Mobile')).toBeInTheDocument();
-    });
-
-    it('on iPod', () => {
-      setUserAgent('SomeUserAgent.v1243String.iPod 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Mobile')).toBeInTheDocument();
-    });
-
-    it('on android', () => {
-      setUserAgent('SomeUserAgent.v1243String.android 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Mobile')).toBeInTheDocument();
-    });
-
-    it('on webOS', () => {
-      setUserAgent('SomeUserAgent.v1243String.webOS 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('mobile-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Mobile')).toBeInTheDocument();
-    });
-
-    it('on desktop', () => {
-      setUserAgent('SomeUserAgent.v1243String.Mozilla 123v48');
-      const result = render(<Layout />);
-
-      expect(result.getByTestId('desktop-layout')).toBeInTheDocument();
-      expect(result.getByTestId('view-controller')).toBeInTheDocument();
-      expect(result.getByText('Desktop')).toBeInTheDocument();
-    });
+    expect(result.getByText('Janky Werewolf')).toBeInTheDocument();
+    expect(result.getByText('Test')).toBeInTheDocument();
   });
 });

@@ -1,9 +1,8 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'react-hooks', 'jest'],
+  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jest'],
   extends: [
-    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -30,4 +29,12 @@ module.exports = {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 };

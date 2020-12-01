@@ -1,25 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 
-import DesktopLayout from './Desktop';
-import MobileLayout from './Mobile';
-import ViewController from '../Views/Controller';
+import styles from './styles.scss';
 
-export interface ILayoutProps {
-  children: React.ReactNode;
-}
+import favicon from '../../../public/assets/favicon.png';
 
-export const Layout = (): JSX.Element => {
-  const isMobile = Boolean(
-    navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
-  );
-
-  const Layout = isMobile ? MobileLayout : DesktopLayout;
-
-  return (
-    <Layout>
-      <ViewController isMobile={isMobile} />
-    </Layout>
-  );
-};
+export const Layout: React.FC = (props) => (
+  <div className={styles.layout}>
+    <div className={styles.header}>
+      <h1>
+        <img src={favicon} /> Janky Werewolf
+      </h1>
+    </div>
+    <div className={styles.content}>
+      <p className={styles.version}>{process.env.VERSION}</p>
+      {props.children}
+    </div>
+  </div>
+);
 
 export default Layout;

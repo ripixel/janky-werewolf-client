@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
 
 import { IState } from '../../../store/reducers';
+import { PHASE_NAME } from '../../../types/phase';
 import { IPlayer, PLAYER_ROLE } from '../../../types/player';
+import { logError } from '../../../utils/logger';
 
 export interface IPropsFromState {
   self: IPlayer;
   players: IPlayer[];
+  phaseName: PHASE_NAME;
 }
 
 export const mapStateToProps = (state: IState): IPropsFromState => {
@@ -18,7 +21,11 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
   );
 
   if (!self) {
-    throw new Error('Could not find self in player list - something funky!');
+    logError(
+      new Error('Could not find self in player list - something funky!')
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return {} as any;
   }
 
   return {
@@ -32,6 +39,7 @@ export const mapStateToProps = (state: IState): IPropsFromState => {
       .sort((a, b) =>
         a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
       ),
+    phaseName: state.game.phase.name,
   };
 };
 

@@ -11,8 +11,8 @@ export const initVillageServiceContext = (): IVillageService =>
   );
 
 export const VillageServiceContext = React.createContext<IVillageService>(
-  // always set something to shut TypeScript up
-  initVillageServiceContext()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  {} as any
 );
 
 export const VillageServiceContextProvider = VillageServiceContext.Provider;
