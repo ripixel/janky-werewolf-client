@@ -2,12 +2,13 @@
 
 A broser-based version of the Ultimate Werewolf 🐺 card game. This is the client code only!
 
-The backend lives elsewhere... 👻
+The backend lives in its own repo, created by the magic McGoddard: [mcgoddard/janky_werewolf_backend](https://github.com/mcgoddard/janky_werewolf_backend)
 
-|         |                                                                                                         CI Status                                                                                                         | Site                                 |
-| ------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------- |
-|  Master |        [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/master)        | https://www.jankywerewolf.co.uk/     |
-| Staging | [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging) | https://staging.jankywerewolf.co.uk/ |
+|                      |                                                                                                          Status                                                                                                           | Link                                                                              |
+| -------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------- |
+|   Circle CI `master` |        [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/master)        | https://www.jankywerewolf.co.uk/                                                  |
+|  Circle CI `staging` | [![CircleCI](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging.svg?style=svg&circle-token=c9e20d61c33eb4d1cc9bb6d77dd22128f0a27b1d)](https://circleci.com/gh/ripixel/janky-werewolf-client/tree/staging) | https://staging.jankywerewolf.co.uk/                                              |
+| Snyk Vulnerabilities |        [![Known Vulnerabilities](https://snyk.io/test/github/ripixel/janky-werewolf-client/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ripixel/janky-werewolf-client?targetFile=package.json)         | https://app.snyk.io/org/ripixelcodes/project/c0909e52-0df4-4868-8b70-b4dc768da8a1 |
 
 ## What does it use?
 
