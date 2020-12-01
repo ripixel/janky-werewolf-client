@@ -1,16 +1,17 @@
-import * as React from 'react';
+import React from 'react';
 import classnames from 'classnames';
 
 import connector, { IPropsFromState } from './connector';
 import { PLAYER_ROLE, PLAYER_TEAM, IPlayer } from '../../types/player';
 
 import styles from './styles.scss';
+import { PHASE_NAME } from '../../types/phase';
 
 type TProps = IPropsFromState & {
   children: React.ReactNode;
 };
 
-const roleText = {
+const ROLE_TEXT = {
   [PLAYER_ROLE.VILLAGER]: 'No special powers',
   [PLAYER_ROLE.SEER]:
     "Each night, choose someone and find out if they're good or evil",
@@ -24,7 +25,7 @@ const roleText = {
     'You should never see this. If you do, tell James/Mike',
 };
 
-const teamText = {
+const TEAM_TEXT = {
   [PLAYER_TEAM.EVIL]:
     'You win when the number of good players is equal to or less than the number of werewolves alive',
   [PLAYER_TEAM.GOOD]: 'You win when all the evil players are dead',
@@ -67,7 +68,7 @@ const alertOnPlayerStateChanges = (
   }
 };
 
-export const PlayerWrapper = (props: TProps): JSX.Element => {
+export const PlayerWrapper: React.FC<TProps> = (props) => {
   /**
    * This section is a dirty, dirty hack - but it will do for a quick and easy last-changed alert
    */
@@ -100,6 +101,9 @@ export const PlayerWrapper = (props: TProps): JSX.Element => {
       props.self.attributes.team === PLAYER_TEAM.UNKNOWN,
   });
 
+  const shouldRenderChildren =
+    props.self.attributes.alive || props.phaseName === PHASE_NAME.END;
+
   return (
     <div className={styles.wrapper}>
       <div className={selfInfoClasses}>
@@ -109,13 +113,19 @@ export const PlayerWrapper = (props: TProps): JSX.Element => {
           {aliveStatus}
         </h4>
       </div>
-      <div className={styles.content}>{props.children}</div>
+      <div className={styles.content}>
+        {shouldRenderChildren ? (
+          props.children
+        ) : (
+          <p>You&apos;re dead! Ghosts can&apos;t talk, be quiet!</p>
+        )}
+      </div>
       <div className={styles.instructions}>
         <h3>Instructions</h3>
-        <p>{roleText[props.self.attributes.role]}</p>
+        <p>{ROLE_TEXT[props.self.attributes.role]}</p>
         <p>
           {props.self.attributes.role !== PLAYER_ROLE.MODERATOR &&
-            teamText[props.self.attributes.team]}
+            TEAM_TEXT[props.self.attributes.team]}
         </p>
       </div>
       <div className={styles.players}>

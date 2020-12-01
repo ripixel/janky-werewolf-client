@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import store from '../../store';
@@ -10,11 +10,14 @@ import {
 
 import './reset.scss';
 import './styles.scss';
+import ViewController from '../ViewController';
 
-export const App = (): JSX.Element => (
+export const App: React.FC = () => (
   <VillageServiceContextProvider value={initVillageServiceContext()}>
     <ReduxProvider store={store}>
-      <Layout />
+      <Layout>
+        <ViewController />
+      </Layout>
     </ReduxProvider>
   </VillageServiceContextProvider>
 );

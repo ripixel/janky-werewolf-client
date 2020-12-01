@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 interface IProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface IProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export const Button = (props: IProps): JSX.Element => {
+export const Button: React.FC<IProps> = (props) => {
   return (
     <button onClick={props.onClick} disabled={props.disabled} type={props.type}>
       {props.children}

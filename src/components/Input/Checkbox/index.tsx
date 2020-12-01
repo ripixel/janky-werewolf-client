@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 interface IProps {
   name?: string;
@@ -7,7 +7,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export const CheckboxInput = (props: IProps): JSX.Element => {
+export const CheckboxInput: React.FC<IProps> = (props) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (!props.disabled) {
       props.onChange(event.target.checked);

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 interface IProps {
   value: string;
@@ -6,7 +6,7 @@ interface IProps {
   placeholder?: string;
 }
 
-export const TextInput = (props: IProps): JSX.Element => {
+export const TextInput: React.FC<IProps> = (props) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     props.onChange(event.target.value);
   };
