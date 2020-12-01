@@ -27,6 +27,14 @@ This project leverages:
 
 ## Contributing to this repo
 
+### Documentation
+
+See the [docs](docs) folder for various pieces of documentation on how to add to this repository.
+
+Some useful links:
+
+- [Adding a New Role](docs/adding_a_new_role.md)
+
 ### Adding Code
 
 See [Local Development](#local-development) for how to contribute code to this repository.
