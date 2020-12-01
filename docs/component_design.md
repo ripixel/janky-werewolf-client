@@ -60,8 +60,8 @@ As a slight reversion to the previous way of doing things, we will therefore cre
 ```javascript
 const PickNoVote = ({ availablePlayers, actionToTake }) => { ... };
 
-export const SeerPickNoVote = () => seerConnector(PickNoVote);
-export const BodyguardPickNoVote = () => bodyguardConnector(PickNoVote);
+export const SeerPickNoVote = seerConnector(PickNoVote);
+export const BodyguardPickNoVote = bodyguardConnector(PickNoVote);
 ```
 
 In the example above, `seerConnector` and `bodyguardConnector` are Redux connectors similar to those already in use.
