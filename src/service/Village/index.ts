@@ -25,6 +25,7 @@ export class VillageService implements AbstractVillageService {
     this.villageProvider = villageProvider;
     this.storeInteractor = storeInteractor;
     this.villageProvider.setInteractor(storeInteractor);
+    this.onError.bind(this);
   }
 
   createVillage(userName: string): void {

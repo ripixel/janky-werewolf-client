@@ -19,7 +19,7 @@ export const LynchPickSinglePlayer: React.FC<Props> = ({ players }) => {
       title='You are the Moderator'
       instructions='Click on a player to lynch them'
       players={players.filter((player) => player.attributes.alive)}
-      onPlayerPick={villageService.seerInspectPlayer}
+      onPlayerPick={villageService.lynchPlayer}
       onSkipPlayerPick={villageService.sleepNow}
       skipPlayerPickText='Sleep Without Lynching'
     />

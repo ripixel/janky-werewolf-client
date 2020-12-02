@@ -34,7 +34,9 @@ export const PickSinglePlayer: React.FC<Props> = ({
       ))}
 
       {onSkipPlayerPick && skipPlayerPickText && (
-        <Button onClick={onSkipPlayerPick}>{skipPlayerPickText}</Button>
+        <Button onClick={(): void => onSkipPlayerPick()}>
+          {skipPlayerPickText}
+        </Button>
       )}
     </React.Fragment>
   );
