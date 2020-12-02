@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface IProps {
+interface Props {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
 }
 
-export const TextInput: React.FC<IProps> = (props) => {
+export const TextInput: React.FC<Props> = (props) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     props.onChange(event.target.value);
   };

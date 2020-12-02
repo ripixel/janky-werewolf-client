@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface IProps {
+interface Props {
   name?: string;
   value: number;
   onChange: (value: number) => void;
@@ -8,7 +8,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-export const NumberInput: React.FC<IProps> = (props) => {
+export const NumberInput: React.FC<Props> = (props) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     props.onChange(parseInt(event.target.value, 10));
   };

@@ -1,13 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import connector, { IPropsFromState } from './connector';
+import connector, { PropsFromState } from './connector';
 import { PLAYER_ROLE, PLAYER_TEAM, IPlayer } from '../../types/player';
 
 import styles from './styles.scss';
 import { PHASE_NAME } from '../../types/phase';
 
-type TProps = IPropsFromState & {
+type Props = PropsFromState & {
   children: React.ReactNode;
 };
 
@@ -68,7 +68,7 @@ const alertOnPlayerStateChanges = (
   }
 };
 
-export const PlayerWrapper: React.FC<TProps> = (props) => {
+export const PlayerWrapper: React.FC<Props> = (props) => {
   /**
    * This section is a dirty, dirty hack - but it will do for a quick and easy last-changed alert
    */

@@ -1,17 +1,5 @@
 import React from 'react';
 
-import DayModeratorView from '../Views/Day/Moderator';
-import DayPlayerView from '../Views/Day/Player';
-import LobbyModeratorView from '../Views/Lobby/Moderator';
-import LobbyPlayerView from '../Views/Lobby/Player';
-import NoPhaseView from '../Views/NoPhase';
-import SeerPhaseNonSeerView from '../Views/Seer/NonSeer';
-import SeerPhaseSeerView from '../Views/Seer/Seer';
-import BodyguardPhaseBodyguardView from '../Views/Bodyguard/Bodyguard';
-import BodyguaredPhaseNonBodyguardView from '../Views/Bodyguard/NonBodyguard';
-import WerewolfPhaseNonWerewolfView from '../Views/Werewolf/NonWerewolf';
-import WerewolfPhaseWerewolfView from '../Views/Werewolf/Werewolf';
-import EndView from '../Views/End';
 import PlayerWrapper from '../PlayerWrapper';
 
 import { PHASE_NAME } from '../../types/phase';
@@ -19,60 +7,72 @@ import { PLAYER_ROLE } from '../../types/player';
 
 import { logError } from '../../utils/logger';
 
-import connector, { IPropsFromState } from './connector';
+import connector, { PropsFromState } from './connector';
+
+import Setup from '../Views/Setup';
+import WaitingForStartTextOnly from '../Views/TextOnly/WaitingForStart';
+import DaytimeTextOnly from '../Views/TextOnly/Daytime';
+import LynchPickSinglePlayer from '../Views/PickSinglePlayer/Lynch';
+import SeerPickSinglePlayer from '../Views/PickSinglePlayer/Seer';
+import NonSeerTextOnly from '../Views/TextOnly/NonSeer';
+import NonBodyguardTextOnly from '../Views/TextOnly/NonBodyguard';
+import BodyguardPickSinglePlayer from '../Views/PickSinglePlayer/Bodyguard';
+import NonWerewolfTextOnly from '../Views/TextOnly/NonWerewolf';
+import WerewolfVoteSinglePlayer from '../Views/VoteSinglePlayer/Werewolf';
+import WinLoss from '../Views/WinLoss';
+import JoinOrCreate from '../Views/JoinOrCreate';
 
 const COMPONENT_MATRIX: {
   [key in PHASE_NAME]: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key in PLAYER_ROLE]?: React.FC<any>;
+    [key in PLAYER_ROLE]?: React.FC<{}>;
   };
 } = {
   [PHASE_NAME.LOBBY]: {
-    [PLAYER_ROLE.MODERATOR]: LobbyModeratorView,
-    [PLAYER_ROLE.UNKNOWN]: LobbyPlayerView,
+    [PLAYER_ROLE.MODERATOR]: Setup,
+    [PLAYER_ROLE.UNKNOWN]: WaitingForStartTextOnly,
   },
   [PHASE_NAME.DAY]: {
-    [PLAYER_ROLE.BODYGUARD]: DayPlayerView,
-    [PLAYER_ROLE.MODERATOR]: DayModeratorView,
-    [PLAYER_ROLE.SEER]: DayPlayerView,
-    [PLAYER_ROLE.VILLAGER]: DayPlayerView,
-    [PLAYER_ROLE.WEREWOLF]: DayPlayerView,
+    [PLAYER_ROLE.BODYGUARD]: DaytimeTextOnly,
+    [PLAYER_ROLE.MODERATOR]: LynchPickSinglePlayer,
+    [PLAYER_ROLE.SEER]: DaytimeTextOnly,
+    [PLAYER_ROLE.VILLAGER]: DaytimeTextOnly,
+    [PLAYER_ROLE.WEREWOLF]: DaytimeTextOnly,
   },
   [PHASE_NAME.SEER]: {
-    [PLAYER_ROLE.BODYGUARD]: SeerPhaseNonSeerView,
-    [PLAYER_ROLE.MODERATOR]: SeerPhaseNonSeerView,
-    [PLAYER_ROLE.SEER]: SeerPhaseSeerView,
-    [PLAYER_ROLE.VILLAGER]: SeerPhaseNonSeerView,
-    [PLAYER_ROLE.WEREWOLF]: SeerPhaseNonSeerView,
+    [PLAYER_ROLE.BODYGUARD]: NonSeerTextOnly,
+    [PLAYER_ROLE.MODERATOR]: NonSeerTextOnly,
+    [PLAYER_ROLE.SEER]: SeerPickSinglePlayer,
+    [PLAYER_ROLE.VILLAGER]: NonSeerTextOnly,
+    [PLAYER_ROLE.WEREWOLF]: NonSeerTextOnly,
   },
   [PHASE_NAME.BODYGUARD]: {
-    [PLAYER_ROLE.BODYGUARD]: BodyguardPhaseBodyguardView,
-    [PLAYER_ROLE.MODERATOR]: BodyguaredPhaseNonBodyguardView,
-    [PLAYER_ROLE.SEER]: BodyguaredPhaseNonBodyguardView,
-    [PLAYER_ROLE.VILLAGER]: BodyguaredPhaseNonBodyguardView,
-    [PLAYER_ROLE.WEREWOLF]: BodyguaredPhaseNonBodyguardView,
+    [PLAYER_ROLE.BODYGUARD]: BodyguardPickSinglePlayer,
+    [PLAYER_ROLE.MODERATOR]: NonBodyguardTextOnly,
+    [PLAYER_ROLE.SEER]: NonBodyguardTextOnly,
+    [PLAYER_ROLE.VILLAGER]: NonBodyguardTextOnly,
+    [PLAYER_ROLE.WEREWOLF]: NonBodyguardTextOnly,
   },
   [PHASE_NAME.WEREWOLF]: {
-    [PLAYER_ROLE.BODYGUARD]: WerewolfPhaseNonWerewolfView,
-    [PLAYER_ROLE.MODERATOR]: WerewolfPhaseNonWerewolfView,
-    [PLAYER_ROLE.SEER]: WerewolfPhaseNonWerewolfView,
-    [PLAYER_ROLE.VILLAGER]: WerewolfPhaseNonWerewolfView,
-    [PLAYER_ROLE.WEREWOLF]: WerewolfPhaseWerewolfView,
+    [PLAYER_ROLE.BODYGUARD]: NonWerewolfTextOnly,
+    [PLAYER_ROLE.MODERATOR]: NonWerewolfTextOnly,
+    [PLAYER_ROLE.SEER]: NonWerewolfTextOnly,
+    [PLAYER_ROLE.VILLAGER]: NonWerewolfTextOnly,
+    [PLAYER_ROLE.WEREWOLF]: WerewolfVoteSinglePlayer,
   },
   [PHASE_NAME.END]: {
-    [PLAYER_ROLE.BODYGUARD]: EndView,
-    [PLAYER_ROLE.MODERATOR]: EndView,
-    [PLAYER_ROLE.SEER]: EndView,
-    [PLAYER_ROLE.VILLAGER]: EndView,
-    [PLAYER_ROLE.WEREWOLF]: EndView,
+    [PLAYER_ROLE.BODYGUARD]: WinLoss,
+    [PLAYER_ROLE.MODERATOR]: WinLoss,
+    [PLAYER_ROLE.SEER]: WinLoss,
+    [PLAYER_ROLE.VILLAGER]: WinLoss,
+    [PLAYER_ROLE.WEREWOLF]: WinLoss,
   },
 };
 
-export const ViewController: React.FC<IPropsFromState> = (props) => {
+export const ViewController: React.FC<PropsFromState> = (props) => {
   console.log('RENDERING VIEW CONTROLLER', props);
 
   if (!props.phaseName) {
-    return <NoPhaseView />;
+    return <JoinOrCreate />;
   }
 
   if (props.phaseName && !props.role) {

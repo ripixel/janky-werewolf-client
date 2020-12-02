@@ -5,13 +5,13 @@ import { PHASE_NAME } from '../../../types/phase';
 import { IPlayer, PLAYER_ROLE } from '../../../types/player';
 import { logError } from '../../../utils/logger';
 
-export interface IPropsFromState {
+export interface PropsFromState {
   self: IPlayer;
   players: IPlayer[];
   phaseName: PHASE_NAME;
 }
 
-export const mapStateToProps = (state: IState): IPropsFromState => {
+export const mapStateToProps = (state: IState): PropsFromState => {
   if (!state.game) {
     throw new Error('No game yet initialised!');
   }

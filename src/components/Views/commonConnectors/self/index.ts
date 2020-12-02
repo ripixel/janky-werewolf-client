@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { IState } from '../../../../store/reducers';
 import { IPlayer } from '../../../../types/player';
 
-export interface IPropsFromState {
+export interface PropsFromState {
   self: IPlayer;
 }
 
-export const mapStateToProps = (state: IState): IPropsFromState => {
+export const mapStateToProps = (state: IState): PropsFromState => {
   if (!state.game) {
     throw new Error('No game yet initialised!');
   }

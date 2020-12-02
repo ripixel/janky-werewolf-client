@@ -17,10 +17,9 @@ However, it has the major drawback that the number of components grows linearly 
 Instead of the above, I will refactor the components so that:
 
 - Each specific piece of functionality will be its own component. Currently this comprises of:
-  - "You have joined the game, but it has not yet started"
+  - Text Only
   - Pick a single player that matches some critera, and perform an action immediately, or possibly perform an action immediately that isn't tied to a player
   - Pick a single player that matches some criteria, and vote on a specific player to perform an action that happens only when all voters agree
-  - "You have nothing to do, sit tight"
   - Town setup
   - Win/Loss
 
