@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { IVillageService, VillageService } from '../../service/Village';
+import VillageService from '../../service/Village';
 import WebSocketVillageProvider from '../../provider/Village/WebSocket';
-import { StoreInteractorService } from '../../service/StoreInteractor';
+import StoreInteractorService from '../../service/StoreInteractor';
 import store from '../../store';
 
-export const initVillageServiceContext = (): IVillageService =>
+export const initVillageServiceContext = (): VillageService =>
   new VillageService(
     new WebSocketVillageProvider(),
     new StoreInteractorService(store)
   );
 
-export const VillageServiceContext = React.createContext<IVillageService>(
+export const VillageServiceContext = React.createContext<VillageService>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   {} as any
 );

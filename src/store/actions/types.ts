@@ -1,5 +1,5 @@
-import { Action } from 'redux';
+import { Action as ReduxAction } from 'redux';
 
-export interface IAction<T = unknown> extends Action {
+export interface Action<T = unknown> extends ReduxAction {
   payload: T;
 }

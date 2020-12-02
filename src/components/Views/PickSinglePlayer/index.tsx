@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Button from '../../Button';
-import { IPlayer } from '../../../types/player';
+import { Player } from '../../../types/player';
 
 interface Props {
   title: string;
   instructions: string;
   onPlayerPick: (playerName: string) => void;
-  players: IPlayer[];
+  players: Player[];
   onSkipPlayerPick?: () => void;
   skipPlayerPickText?: string;
 }

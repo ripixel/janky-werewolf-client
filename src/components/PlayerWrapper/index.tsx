@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import connector, { PropsFromState } from './connector';
-import { PLAYER_ROLE, PLAYER_TEAM, IPlayer } from '../../types/player';
+import { PLAYER_ROLE, PLAYER_TEAM, Player } from '../../types/player';
 
 import styles from './styles.scss';
 import { PHASE_NAME } from '../../types/phase';
@@ -34,8 +34,8 @@ const TEAM_TEXT = {
 };
 
 const alertOnPlayerStateChanges = (
-  oldPlayers: IPlayer[],
-  newPlayers: IPlayer[]
+  oldPlayers: Player[],
+  newPlayers: Player[]
 ): void => {
   if (oldPlayers.length === 0) {
     return;
@@ -77,7 +77,7 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
     alertOnPlayerStateChanges(
       JSON.parse(
         window.localStorage.getItem('previousPlayersState') ?? '[]'
-      ) as IPlayer[],
+      ) as Player[],
       props.players
     );
 

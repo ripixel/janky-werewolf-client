@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IState } from '../../../../store/reducers';
+import { State } from '../../../../store/reducers';
 import { PHASE_NAME } from '../../../../types/phase';
 
 import { mapStateToProps } from '.';
@@ -7,7 +7,7 @@ import { mapStateToProps } from '.';
 describe('<Setup /> connector', () => {
   describe('mapStateToProps', () => {
     it('throws as expected when no game', () => {
-      const state: IState = {
+      const state: State = {
         user: {
           secret: '123',
         },
@@ -18,7 +18,7 @@ describe('<Setup /> connector', () => {
     });
 
     it('returns as expected when game present', () => {
-      const state: IState = {
+      const state: State = {
         user: {
           secret: '123',
         },

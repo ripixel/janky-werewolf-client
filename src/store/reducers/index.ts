@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import userReducer, { IUserState } from './user';
-import gameReducer, { IGameState } from './game';
+import userReducer, { UserState } from './user';
+import gameReducer, { GameState } from './game';
 
-export interface IState {
-  user: IUserState;
-  game: IGameState | null;
+export interface State {
+  user: UserState;
+  game: GameState | null;
 }
 
-export const rootReducer = combineReducers<IState>({
+export const rootReducer = combineReducers<State>({
   user: userReducer,
   game: gameReducer,
 });

@@ -4,7 +4,7 @@ import {
   configureSentryuserSecret,
   configureSentryLobbyId,
   initSentry,
-  ICustomHttpError,
+  CustomHttpError,
 } from '../sentry';
 
 import {
@@ -112,8 +112,8 @@ const runTests = (withSentry: boolean): void => {
       }
     });
 
-    describe('with ICustomHttpError', () => {
-      const error: ICustomHttpError = new Error('Oh no!');
+    describe('with CustomHttpError', () => {
+      const error: CustomHttpError = new Error('Oh no!');
       error.statusCode = 500;
 
       if (withSentry) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { VillageService } from '../../service/Village';
+import VillageService from '../../service/Village';
 import WebSocketVillageProvider from '../../provider/Village/WebSocket';
-import { StoreInteractorService } from '../../service/StoreInteractor';
+import StoreInteractorService from '../../service/StoreInteractor';
 import store from '../../store';
 
 import { initVillageServiceContext } from '.';

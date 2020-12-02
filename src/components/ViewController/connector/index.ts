@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { IState } from '../../../store/reducers';
+import { State } from '../../../store/reducers';
 import { PHASE_NAME } from '../../../types/phase';
 import { PLAYER_ROLE } from '../../../types/player';
 
@@ -9,7 +9,7 @@ export interface PropsFromState {
   role?: PLAYER_ROLE;
 }
 
-export const mapStateToProps = (state: IState): PropsFromState => {
+export const mapStateToProps = (state: State): PropsFromState => {
   const self = state.game?.players.find(
     (player) => player.name === state.user.name
   );

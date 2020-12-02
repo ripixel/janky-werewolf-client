@@ -1,11 +1,11 @@
 import { mapStateToProps } from '.';
-import { IState } from '../../../store/reducers';
+import { State } from '../../../store/reducers';
 import { PHASE_NAME } from '../../../types/phase';
 
 describe('<ViewController> connector', () => {
   describe('mapStateToProps', () => {
     it('returns as expected when no phase', () => {
-      const state: IState = {
+      const state: State = {
         user: {
           secret: '123',
         },
@@ -16,7 +16,7 @@ describe('<ViewController> connector', () => {
     });
 
     it('returns as expected when phase present', () => {
-      const state: IState = {
+      const state: State = {
         user: {
           secret: '123',
         },

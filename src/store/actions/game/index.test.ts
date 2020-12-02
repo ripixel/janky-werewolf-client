@@ -1,10 +1,10 @@
-import { IGameState } from '../../reducers/game';
+import { GameState } from '../../reducers/game';
 import { PHASE_NAME } from '../../../types/phase';
 import { initGame, updateGame, GAME_ACTION_TYPES } from '.';
 
 describe('Game Actions', () => {
   describe('initGame', () => {
-    const mockGameState: IGameState = {
+    const mockGameState: GameState = {
       lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,
@@ -23,7 +23,7 @@ describe('Game Actions', () => {
   });
 
   describe('updateGame', () => {
-    const mockGameState: IGameState = {
+    const mockGameState: GameState = {
       lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,

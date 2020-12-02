@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  IVillageProvider,
-  ICreateVillageData,
-  IJoinVillageData,
-  IStartGameData,
-  IVoteData,
+  VillageProvider,
+  CreateVillageData,
+  JoinVillageData,
+  StartGameData,
+  VoteData,
 } from '../types';
-import { IStoreInteractorService } from '../../../service/StoreInteractor';
-import { TPhases } from '../../../types/phase';
-import { IPlayer, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
-import { IGameState } from '../../../store/reducers/game';
+import { AbstractStoreInteractorService } from '../../../service/StoreInteractor';
+import { Phases } from '../../../types/phase';
+import { Player, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
+import { GameState } from '../../../store/reducers/game';
 
 enum SOCKET_ACTIONS {
   JOIN = 'join',
@@ -22,12 +22,12 @@ enum SOCKET_ACTIONS {
   SLEEP = 'sleep',
 }
 
-interface ISocketMessage<T extends SOCKET_ACTIONS, U = undefined> {
+interface SocketMessage<T extends SOCKET_ACTIONS, U = undefined> {
   action: T;
   data: U;
 }
 
-type TCreateMessage = ISocketMessage<
+type CreateMessage = SocketMessage<
   SOCKET_ACTIONS.JOIN,
   {
     name: string;
@@ -35,7 +35,7 @@ type TCreateMessage = ISocketMessage<
   }
 >;
 
-type TJoinMessage = ISocketMessage<
+type JoinMessage = SocketMessage<
   SOCKET_ACTIONS.JOIN,
   {
     name: string;
@@ -44,7 +44,7 @@ type TJoinMessage = ISocketMessage<
   }
 >;
 
-type TStartMessage = ISocketMessage<
+type StartMessage = SocketMessage<
   SOCKET_ACTIONS.START,
   {
     code: string;
@@ -52,7 +52,7 @@ type TStartMessage = ISocketMessage<
   }
 >;
 
-type TWerewolf = ISocketMessage<
+type Werewolf = SocketMessage<
   SOCKET_ACTIONS.WEREWOLF,
   {
     code: string;
@@ -60,7 +60,7 @@ type TWerewolf = ISocketMessage<
   }
 >;
 
-type TSeer = ISocketMessage<
+type Seer = SocketMessage<
   SOCKET_ACTIONS.SEER,
   {
     code: string;
@@ -68,7 +68,7 @@ type TSeer = ISocketMessage<
   }
 >;
 
-type TBodyguard = ISocketMessage<
+type Bodyguard = SocketMessage<
   SOCKET_ACTIONS.BODYGUARD,
   {
     code: string;
@@ -76,7 +76,7 @@ type TBodyguard = ISocketMessage<
   }
 >;
 
-type TLynch = ISocketMessage<
+type Lynch = SocketMessage<
   SOCKET_ACTIONS.LYNCH,
   {
     code: string;
@@ -84,34 +84,34 @@ type TLynch = ISocketMessage<
   }
 >;
 
-type TSleep = ISocketMessage<
+type Sleep = SocketMessage<
   SOCKET_ACTIONS.SLEEP,
   {
     code: string;
   }
 >;
 
-type TSocketMessages =
-  | TCreateMessage
-  | TJoinMessage
-  | TStartMessage
-  | TWerewolf
-  | TSeer
-  | TBodyguard
-  | TLynch
-  | TSleep;
+type SocketMessages =
+  | CreateMessage
+  | JoinMessage
+  | StartMessage
+  | Werewolf
+  | Seer
+  | Bodyguard
+  | Lynch
+  | Sleep;
 
-interface IMessageGameState {
+interface MessageGameState {
   game_state: {
     lobbyId: string;
-    phase: TPhases;
-    players: IPlayer[];
+    phase: Phases;
+    players: Player[];
   };
 }
 
-export class WebSocketVillageProvider implements IVillageProvider {
+export class WebSocketVillageProvider implements VillageProvider {
   socket?: WebSocket;
-  storeInteractor!: IStoreInteractorService;
+  storeInteractor!: AbstractStoreInteractorService;
   lobbyId?: string;
   gameInit: boolean;
   moderatorName?: string;
@@ -120,12 +120,12 @@ export class WebSocketVillageProvider implements IVillageProvider {
     this.gameInit = false;
   }
 
-  setInteractor(interactor: IStoreInteractorService): void {
+  setInteractor(interactor: AbstractStoreInteractorService): void {
     this.initSocket();
     this.storeInteractor = interactor;
   }
 
-  createVillage({ userName, userSecret }: ICreateVillageData): void {
+  createVillage({ userName, userSecret }: CreateVillageData): void {
     this.moderatorName = userName;
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.JOIN,
@@ -133,10 +133,10 @@ export class WebSocketVillageProvider implements IVillageProvider {
         name: userName,
         secret: userSecret,
       },
-    } as TCreateMessage);
+    } as CreateMessage);
   }
 
-  joinVillage({ userName, lobbyId, userSecret }: IJoinVillageData): void {
+  joinVillage({ userName, lobbyId, userSecret }: JoinVillageData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.JOIN,
       data: {
@@ -144,10 +144,10 @@ export class WebSocketVillageProvider implements IVillageProvider {
         secret: userSecret,
         code: lobbyId,
       },
-    } as TJoinMessage);
+    } as JoinMessage);
   }
 
-  startGame({ werewolves, seer, bodyguard }: IStartGameData): void {
+  startGame({ werewolves, seer, bodyguard }: StartGameData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.START,
       data: {
@@ -156,47 +156,47 @@ export class WebSocketVillageProvider implements IVillageProvider {
         seer,
         bodyguard,
       },
-    } as TStartMessage);
+    } as StartMessage);
   }
 
-  werewolfVoteForPlayer({ playerName }: IVoteData): void {
+  werewolfVoteForPlayer({ playerName }: VoteData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.WEREWOLF,
       data: {
         code: this.getLobbyId(),
         player: playerName,
       },
-    } as TWerewolf);
+    } as Werewolf);
   }
 
-  seerInspectPlayer({ playerName }: IVoteData): void {
+  seerInspectPlayer({ playerName }: VoteData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.SEER,
       data: {
         code: this.getLobbyId(),
         player: playerName,
       },
-    } as TSeer);
+    } as Seer);
   }
 
-  bodyguardSavePlayer({ playerName }: IVoteData): void {
+  bodyguardSavePlayer({ playerName }: VoteData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.BODYGUARD,
       data: {
         code: this.getLobbyId(),
         player: playerName,
       },
-    } as TBodyguard);
+    } as Bodyguard);
   }
 
-  lynchPlayer({ playerName }: IVoteData): void {
+  lynchPlayer({ playerName }: VoteData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.LYNCH,
       data: {
         code: this.getLobbyId(),
         player: playerName,
       },
-    } as TLynch);
+    } as Lynch);
   }
 
   sleepNow(): void {
@@ -205,7 +205,7 @@ export class WebSocketVillageProvider implements IVillageProvider {
       data: {
         code: this.getLobbyId(),
       },
-    } as TSleep);
+    } as Sleep);
   }
 
   private initSocket(): void {
@@ -217,7 +217,7 @@ export class WebSocketVillageProvider implements IVillageProvider {
     this.socket.onmessage = this.onSocketMessage.bind(this);
   }
 
-  private sendSocketMessage(message: TSocketMessages): void {
+  private sendSocketMessage(message: SocketMessages): void {
     if (!this.socket) {
       throw new Error(
         "No socket available - you haven't started or joiend a game"
@@ -228,7 +228,7 @@ export class WebSocketVillageProvider implements IVillageProvider {
 
   private onSocketMessage(event: MessageEvent): void {
     const gameState = this.transformSocketGameStateToLocal(
-      JSON.parse(event.data) as IMessageGameState
+      JSON.parse(event.data) as MessageGameState
     );
 
     this.lobbyId = gameState.lobbyId;
@@ -253,7 +253,7 @@ export class WebSocketVillageProvider implements IVillageProvider {
 
   private transformSocketGameStateToLocal({
     game_state,
-  }: IMessageGameState): IGameState {
+  }: MessageGameState): GameState {
     game_state.players.forEach(
       (player) =>
         (player.attributes = player.attributes

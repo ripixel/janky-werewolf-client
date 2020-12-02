@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { IAction } from '../../actions/types';
-import { USER_ACTION_TYPES, TSetNameAction } from '../../actions/user';
+import { Action } from '../../actions/types';
+import { USER_ACTION_TYPES, SetNameAction } from '../../actions/user';
 
-export interface IUserState {
+export interface UserState {
   secret: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
   name?: string; // defined when joining a game
 }
@@ -20,17 +20,17 @@ const getOrGenerateId = (): string => {
   return newId;
 };
 
-const getInitialState = (): IUserState => ({
+const getInitialState = (): UserState => ({
   secret: getOrGenerateId(),
 });
 
 export const userReducer = (
-  state: IUserState = getInitialState(),
-  action: IAction
-): IUserState => {
+  state: UserState = getInitialState(),
+  action: Action
+): UserState => {
   switch (action.type) {
     case USER_ACTION_TYPES.SET_NAME:
-      return { ...state, name: (action as TSetNameAction).payload };
+      return { ...state, name: (action as SetNameAction).payload };
     default:
       return state;
   }

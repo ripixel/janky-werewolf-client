@@ -10,7 +10,7 @@ import {
 
 import { Setup } from '.';
 import { VillageServiceContextProvider } from '../../../context/VillageService';
-import { IPlayer, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
+import { Player, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
 
 describe('<Setup />', () => {
   const baseProps = {
@@ -93,7 +93,7 @@ describe('<Setup />', () => {
   });
 
   describe('Start Game button', () => {
-    const getTestPlayer = (): IPlayer => ({
+    const getTestPlayer = (): Player => ({
       name:
         'Test Player ' +
         Math.random()

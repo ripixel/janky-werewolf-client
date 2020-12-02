@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 
-import { IState } from '../../../../../store/reducers';
-import { PHASE_NAME, IWerewolfPhaseData } from '../../../../../types/phase';
+import { State } from '../../../../../store/reducers';
+import { PHASE_NAME, WerewolfPhaseData } from '../../../../../types/phase';
 import { PLAYER_ROLE } from '../../../../../types/player';
 
 export interface PropsFromState {
   werewolfVotes: { [key: string]: number };
 }
 
-export const mapStateToProps = (state: IState): PropsFromState => {
+export const mapStateToProps = (state: State): PropsFromState => {
   if (!state.game) {
     throw new Error('No game yet initialised!');
   }
@@ -26,7 +26,7 @@ export const mapStateToProps = (state: IState): PropsFromState => {
     )
     .map((player) => player.name);
 
-  const phaseData = state.game.phase.data as IWerewolfPhaseData;
+  const phaseData = state.game.phase.data as WerewolfPhaseData;
 
   const werewolfVotes: { [key: string]: number } = {};
 

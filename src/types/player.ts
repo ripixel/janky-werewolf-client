@@ -13,13 +13,13 @@ export enum PLAYER_TEAM {
   EVIL = 'Evil',
 }
 
-interface IPlayerAttributes {
+interface PlayerAttributes {
   role: PLAYER_ROLE;
   team: PLAYER_TEAM;
   alive: boolean;
 }
 
-export interface IPlayer {
+export interface Player {
   name: string;
-  attributes: IPlayerAttributes;
+  attributes: PlayerAttributes;
 }

@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 
-import { IState } from '../../../store/reducers';
+import { State } from '../../../store/reducers';
 import { PHASE_NAME } from '../../../types/phase';
-import { IPlayer, PLAYER_ROLE } from '../../../types/player';
+import { Player, PLAYER_ROLE } from '../../../types/player';
 import { logError } from '../../../utils/logger';
 
 export interface PropsFromState {
-  self: IPlayer;
-  players: IPlayer[];
+  self: Player;
+  players: Player[];
   phaseName: PHASE_NAME;
 }
 
-export const mapStateToProps = (state: IState): PropsFromState => {
+export const mapStateToProps = (state: State): PropsFromState => {
   if (!state.game) {
     throw new Error('No game yet initialised!');
   }
