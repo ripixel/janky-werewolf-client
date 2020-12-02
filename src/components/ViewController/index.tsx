@@ -42,10 +42,12 @@ export const ViewController: React.FC<Props> = (props) => {
     return null;
   }
 
-  return (
+  return props.phaseName !== PHASE_NAME.LOBBY ? (
     <PlayerWrapper>
       <MatrixComponent />
     </PlayerWrapper>
+  ) : (
+    <MatrixComponent />
   );
 };
 
