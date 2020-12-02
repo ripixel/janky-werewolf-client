@@ -12,11 +12,9 @@ The Redux store and entire application state is also future-proofed, so as long 
 
 1. Modify the `ROLE_TEXT` constant in [PlayerWrapper](../src/components/PlayerWrapper/index.tsx) with the instructional text for your new role.
 
-1. If there are any new actions required for your role (for example), you will need to update both the [VillageService](../src/service/Village/index.ts) and [WebSocketVillageProvider](../src/provider/Village/WebSocket/index.ts). Especially in the web socket provider, note that you will need to add a new `type` that implements `ISocketMessage` - the types are all contained in the provider, so it should be fairly self-explanatory.
+1. If there are any new actions required for your role (for example), you will need to update both the [VillageService](../src/service/Village/index.ts) and [WebSocketVillageProvider](../src/provider/Village/WebSocket/index.ts). Especially in the web socket provider, note that you will need to add a new `type` that implements `SocketMessage` - the types are all contained in the provider, so it should be fairly self-explanatory.
 
-1. Create any relevant components for your new role. Generally this will be a "role-specific" component and a "not-that-role" component. See the [existing Views folder](../src/components/Views) for examples.
-
-   - _Note:_ This will change after the refactor described in the [Component Design Doc](component_design.md) has been completed.
+1. Create any relevant components for your new role. Generally this will usually be extending an existing functionality-based component, such as the [PickSinglePlayer](../src/components/Views/PickSinglePlayer) collection of components. See the [existing Views folder](../src/components/Views) for examples.
 
 1. Modify the [ViewController](../src/components/ViewController/index.tsx) by updating the `COMPONENT_MATRIX` with your new role for _all phases_, adding your new phase if required. You should be able to discern the pattern being used by the other phase/role combinations.
 
