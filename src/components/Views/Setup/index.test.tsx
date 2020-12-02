@@ -12,10 +12,31 @@ import { Setup } from '.';
 import { VillageServiceContextProvider } from '../../../context/VillageService';
 import { Player, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
 
+const getTestPlayer = (): Player => ({
+  name:
+    'Test Player ' +
+    Math.random()
+      .toString(36)
+      .substring(7),
+  attributes: {
+    alive: true,
+    role: PLAYER_ROLE.UNKNOWN,
+    team: PLAYER_TEAM.UNKNOWN,
+  },
+});
+
 describe('<Setup />', () => {
   const baseProps = {
     villageName: 'Test Village',
     lobbyId: '12test34',
+    moderator: {
+      name: 'Test Moderator',
+      attributes: {
+        alive: true,
+        role: PLAYER_ROLE.MODERATOR,
+        team: PLAYER_TEAM.UNKNOWN,
+      },
+    },
   };
 
   describe('renders as expected', () => {
@@ -29,6 +50,29 @@ describe('<Setup />', () => {
 
       expect(result.getByText('Start Game')).toBeInTheDocument();
     };
+
+    it('with no moderator', () => {
+      const mockVillageService: any = {
+        startGame: jest.fn(),
+      };
+
+      const result = render(
+        <VillageServiceContextProvider value={mockVillageService}>
+          <Setup
+            {...baseProps}
+            moderator={undefined}
+            players={[
+              getTestPlayer(),
+              getTestPlayer(),
+              getTestPlayer(),
+              getTestPlayer(),
+            ]}
+          />
+        </VillageServiceContextProvider>
+      );
+
+      expect(result.container).toBeEmptyDOMElement();
+    });
 
     // expectations are in expectStandard
     // eslint-disable-next-line jest/expect-expect
@@ -93,19 +137,6 @@ describe('<Setup />', () => {
   });
 
   describe('Start Game button', () => {
-    const getTestPlayer = (): Player => ({
-      name:
-        'Test Player ' +
-        Math.random()
-          .toString(36)
-          .substring(7),
-      attributes: {
-        alive: true,
-        role: PLAYER_ROLE.UNKNOWN,
-        team: PLAYER_TEAM.UNKNOWN,
-      },
-    });
-
     it('functions when deck setup is correct', async () => {
       const mockVillageService: any = {
         startGame: jest.fn(),
@@ -142,39 +173,6 @@ describe('<Setup />', () => {
     });
 
     describe('does not function when deck setup is incorrect', () => {
-      it('with no moderator', async () => {
-        const mockVillageService: any = {
-          startGame: jest.fn(),
-        };
-
-        const result = render(
-          <VillageServiceContextProvider value={mockVillageService}>
-            <Setup
-              {...baseProps}
-              players={[
-                getTestPlayer(),
-                getTestPlayer(),
-                getTestPlayer(),
-                getTestPlayer(),
-              ]}
-            />
-          </VillageServiceContextProvider>
-        );
-
-        fireEvent.change(result.getByPlaceholderText('Werewolves'), {
-          target: { value: '1' },
-        });
-
-        fireEvent.change(result.getByPlaceholderText('Villagers'), {
-          target: { value: '2' },
-        });
-        await result.findByDisplayValue('2');
-
-        fireEvent.click(result.getByText('Start Game'));
-
-        expect(mockVillageService.startGame).toHaveBeenCalledTimes(0);
-      });
-
       it('with no players', async () => {
         const mockVillageService: any = {
           startGame: jest.fn(),

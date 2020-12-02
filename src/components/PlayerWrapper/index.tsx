@@ -1,15 +1,23 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import connector, { PropsFromState } from './connector';
 import { PLAYER_ROLE, PLAYER_TEAM, Player } from '../../types/player';
 
 import styles from './styles.scss';
 import { PHASE_NAME } from '../../types/phase';
+import { connect } from 'react-redux';
+import { State } from '../../store/reducers';
+import {
+  getPhaseName,
+  getPlayersWithoutRole,
+  getSelf,
+} from '../../store/connectorHelpers';
 
-type Props = PropsFromState & {
-  children: React.ReactNode;
-};
+interface Props {
+  self?: Player;
+  players: Player[];
+  phaseName?: PHASE_NAME;
+}
 
 const ROLE_TEXT = {
   [PLAYER_ROLE.VILLAGER]: 'No special powers',
@@ -72,6 +80,10 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
   /**
    * This section is a dirty, dirty hack - but it will do for a quick and easy last-changed alert
    */
+
+  if (!props.self || !props.phaseName) {
+    throw new Error('No game yet initialised!');
+  }
 
   if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
     alertOnPlayerStateChanges(
@@ -151,4 +163,10 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
   );
 };
 
-export default connector(PlayerWrapper);
+export const mapStateToProps = (state: State): Props => ({
+  self: getSelf(state),
+  players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
+  phaseName: getPhaseName(state),
+});
+
+export default connect(mapStateToProps)(PlayerWrapper);

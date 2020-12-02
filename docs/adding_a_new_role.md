@@ -16,6 +16,6 @@ The Redux store and entire application state is also future-proofed, so as long 
 
 1. Create any relevant components for your new role. Generally this will usually be extending an existing functionality-based component, such as the [PickSinglePlayer](../src/components/Views/PickSinglePlayer) collection of components. See the [existing Views folder](../src/components/Views) for examples.
 
-1. Modify the [ViewController](../src/components/ViewController/index.tsx) by updating the `COMPONENT_MATRIX` with your new role for _all phases_, adding your new phase if required. You should be able to discern the pattern being used by the other phase/role combinations.
+1. Modify the [ViewController Component Matrix](../src/components/ViewController/matrix.ts) by updating the `COMPONENT_MATRIX` with your new role for _all phases_, adding your new phase if required. You should be able to discern the pattern being used by the other phase/role combinations.
 
 1. Ideally, write tests for any new functionality you have added (ie components, connectors, modifications to the Village service and WebSocket provider)

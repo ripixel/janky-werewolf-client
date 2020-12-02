@@ -1,10 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import VoteSinglePlayer from '..';
-import connector, { PropsFromState } from './connector';
 import { VillageServiceContext } from '../../../../context/VillageService';
+import { getWerewolfVotes } from '../../../../store/connectorHelpers';
+import { State } from '../../../../store/reducers';
 
-export const WerewolfVoteSinglePlayer: React.FC<PropsFromState> = ({
+export interface Props {
+  werewolfVotes: { [key: string]: number };
+}
+
+export const WerewolfVoteSinglePlayer: React.FC<Props> = ({
   werewolfVotes,
 }) => {
   const villageService = React.useContext(VillageServiceContext);
@@ -24,4 +30,8 @@ export const WerewolfVoteSinglePlayer: React.FC<PropsFromState> = ({
   );
 };
 
-export default connector(WerewolfVoteSinglePlayer);
+export const mapStateToProps = (state: State): Props => ({
+  werewolfVotes: getWerewolfVotes(state),
+});
+
+export default connect(mapStateToProps)(WerewolfVoteSinglePlayer);

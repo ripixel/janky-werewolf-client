@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
 import PickSinglePlayer from '..';
 import { VillageServiceContext } from '../../../../context/VillageService';
-import connector, { PropsFromState } from '../../commonConnectors/players';
+import { getAllPlayers } from '../../../../store/connectorHelpers';
+import { State } from '../../../../store/reducers';
+import { Player } from '../../../../types/player';
 
-export const BodyguardPickSinglePlayer: React.FC<PropsFromState> = ({
-  players,
-}) => {
+interface Props {
+  players: Player[];
+}
+
+export const BodyguardPickSinglePlayer: React.FC<Props> = ({ players }) => {
   const villageService = useContext(VillageServiceContext);
 
   return (
@@ -19,4 +24,8 @@ export const BodyguardPickSinglePlayer: React.FC<PropsFromState> = ({
   );
 };
 
-export default connector(BodyguardPickSinglePlayer);
+export const mapStateToProps = (state: State): Props => ({
+  players: getAllPlayers(state, true),
+});
+
+export default connect(mapStateToProps)(BodyguardPickSinglePlayer);

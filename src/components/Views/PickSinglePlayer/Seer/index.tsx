@@ -1,11 +1,18 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
 import PickSinglePlayer from '..';
 import { VillageServiceContext } from '../../../../context/VillageService';
 import { PLAYER_TEAM } from '../../../../types/player';
-import connector, { PropsFromState } from '../../commonConnectors/players';
+import { getAllPlayers } from '../../../../store/connectorHelpers';
+import { State } from '../../../../store/reducers';
+import { Player } from '../../../../types/player';
 
-export const SeerPickSinglePlayer: React.FC<PropsFromState> = ({ players }) => {
+interface Props {
+  players: Player[];
+}
+
+export const SeerPickSinglePlayer: React.FC<Props> = ({ players }) => {
   const villageService = useContext(VillageServiceContext);
 
   return (
@@ -22,4 +29,8 @@ export const SeerPickSinglePlayer: React.FC<PropsFromState> = ({ players }) => {
   );
 };
 
-export default connector(SeerPickSinglePlayer);
+export const mapStateToProps = (state: State): Props => ({
+  players: getAllPlayers(state, true),
+});
+
+export default connect(mapStateToProps)(SeerPickSinglePlayer);

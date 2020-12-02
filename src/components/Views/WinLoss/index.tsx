@@ -1,8 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import connector, { PropsFromState } from './connector';
+import { State } from '../../../store/reducers';
+import { EndPhaseData } from '../../../types/phase';
+import { PLAYER_TEAM } from '../../../types/player';
 
-export const WinLoss: React.FC<PropsFromState> = (props) => {
+export interface Props {
+  winner: PLAYER_TEAM.EVIL | PLAYER_TEAM.GOOD;
+}
+
+export const WinLoss: React.FC<Props> = (props) => {
   // If we're rendering this, the game is over. Clear the lastLobbyId from localstorage
   // so that the restart screen appears
   window.localStorage.removeItem('lastLobbyId');
@@ -15,4 +22,10 @@ export const WinLoss: React.FC<PropsFromState> = (props) => {
   );
 };
 
-export default connector(WinLoss);
+export const mapStateToProps = (state: State): Props => {
+  return {
+    winner: (state.game?.phase.data as EndPhaseData).winner,
+  };
+};
+
+export default connect(mapStateToProps)(WinLoss);

@@ -1,15 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { VillageServiceContext } from '../../../context/VillageService';
 import NumberInput from '../../Input/Number';
 import CheckboxInput from '../../Input/Checkbox';
 import Button from '../../Button';
 
-import connector, { PropsFromState } from './connector';
-
 import styles from './styles.scss';
+import { Player, PLAYER_ROLE } from '../../../types/player';
+import { State } from '../../../store/reducers';
+import {
+  getPlayersWithoutRole,
+  getPlayersWithRole,
+} from '../../../store/connectorHelpers';
+import { logError } from '../../../utils/logger';
 
-type Props = PropsFromState;
+interface Props {
+  villageName?: string;
+  lobbyId?: string;
+  moderator?: Player;
+  players: Player[];
+}
 
 export const Setup: React.FC<Props> = (props) => {
   const [villagersCount, setVillagersCount] = React.useState(0);
@@ -21,6 +32,13 @@ export const Setup: React.FC<Props> = (props) => {
   const onClick = (): void => {
     villageService.startGame(werewolvesCount, seerEnabled, bodyguardEnabled);
   };
+
+  if (!props.villageName || !props.lobbyId || !props.moderator) {
+    logError(
+      new Error('Missing villageName, lobbyId, or moderator for Setup view')
+    );
+    return null;
+  }
 
   const bodyguardsCount = bodyguardEnabled ? 1 : 0;
   const seersCount = seerEnabled ? 1 : 0;
@@ -98,4 +116,16 @@ export const Setup: React.FC<Props> = (props) => {
   );
 };
 
-export default connector(Setup);
+export const mapStateToProps = (state: State): Props => {
+  const moderators = getPlayersWithRole(state, PLAYER_ROLE.MODERATOR);
+
+  return {
+    villageName: state.game?.villageName,
+    lobbyId: state.game?.lobbyId,
+    moderator:
+      moderators && moderators.length === 1 ? moderators[0] : undefined,
+    players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR),
+  };
+};
+
+export default connect(mapStateToProps)(Setup);

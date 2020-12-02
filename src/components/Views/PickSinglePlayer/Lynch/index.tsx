@@ -1,24 +1,24 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
 import PickSinglePlayer from '..';
 import { VillageServiceContext } from '../../../../context/VillageService';
-import { PLAYER_TEAM } from '../../../../types/player';
-import connector, { PropsFromState } from '../../commonConnectors/players';
+import { getAllPlayers } from '../../../../store/connectorHelpers';
+import { State } from '../../../../store/reducers';
+import { Player } from '../../../../types/player';
 
-export const LynchPickSinglePlayer: React.FC<PropsFromState> = ({
-  players,
-}) => {
+interface Props {
+  players: Player[];
+}
+
+export const LynchPickSinglePlayer: React.FC<Props> = ({ players }) => {
   const villageService = useContext(VillageServiceContext);
 
   return (
     <PickSinglePlayer
       title='You are the Moderator'
       instructions='Click on a player to lynch them'
-      players={players.filter(
-        (player) =>
-          player.attributes.alive &&
-          player.attributes.team === PLAYER_TEAM.UNKNOWN
-      )}
+      players={players.filter((player) => player.attributes.alive)}
       onPlayerPick={villageService.seerInspectPlayer}
       onSkipPlayerPick={villageService.sleepNow}
       skipPlayerPickText='Sleep Without Lynching'
@@ -26,4 +26,8 @@ export const LynchPickSinglePlayer: React.FC<PropsFromState> = ({
   );
 };
 
-export default connector(LynchPickSinglePlayer);
+export const mapStateToProps = (state: State): Props => ({
+  players: getAllPlayers(state, true),
+});
+
+export default connect(mapStateToProps)(LynchPickSinglePlayer);
