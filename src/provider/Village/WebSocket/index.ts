@@ -209,11 +209,12 @@ export class WebSocketVillageProvider implements VillageProvider {
   }
 
   private initSocket(): void {
-    if (!process.env.WEBSOCKET_URL) {
+    let websocketUrl = localStorage.getItem('WEBSOCKET_URL') || process.env.WEBSOCKET_URL;
+    if (!websocketUrl) {
       throw new Error('No WEBSOCKET_URL defined in env vars');
     }
 
-    this.socket = new WebSocket(process.env.WEBSOCKET_URL);
+    this.socket = new WebSocket(websocketUrl);
     this.socket.onmessage = this.onSocketMessage.bind(this);
   }
 
