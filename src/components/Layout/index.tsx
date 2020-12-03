@@ -9,11 +9,9 @@ export const Layout: React.FC = (props) => (
     <div className={styles.header}>
       <h1>
         <img src={favicon} />
-        {
-        !localStorage.getItem('WEBSOCKET_URL')
-        ? 'Janky Werewolf'
-        : 'You are currently playing against a non-production version of the game'
-        }
+        {!localStorage.getItem('WEBSOCKET_URL')
+          ? 'Janky Werewolf'
+          : 'You are currently playing against a non-production version of the game'}
       </h1>
     </div>
     <div className={styles.content}>

@@ -209,8 +209,8 @@ export class WebSocketVillageProvider implements VillageProvider {
   }
 
   private initSocket(): void {
-    const websocketUrl = localStorage.getItem('WEBSOCKET_URL') ||
-      process.env.WEBSOCKET_URL;
+    const websocketUrl =
+      localStorage.getItem('WEBSOCKET_URL') || process.env.WEBSOCKET_URL;
     if (!websocketUrl) {
       throw new Error('No WEBSOCKET_URL defined in env vars');
     }
