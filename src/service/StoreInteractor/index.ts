@@ -1,31 +1,31 @@
 import { Store } from 'redux';
 
-import { IState } from '../../store/reducers';
-import { IGameState } from '../../store/reducers/game';
+import { State } from '../../store/reducers';
+import { GameState } from '../../store/reducers/game';
 import { initGame, updateGame } from '../../store/actions/game';
-import { IAction } from '../../store/actions/types';
-import { IUserState } from '../../store/reducers/user';
+import { Action } from '../../store/actions/types';
+import { UserState } from '../../store/reducers/user';
 import { setName } from '../../store/actions/user';
 
-export interface IStoreInteractorService {
-  initGame: (gameState: IGameState) => void;
-  updateGame: (gameState: IGameState) => void;
+export interface AbstractStoreInteractorService {
+  initGame: (gameState: GameState) => void;
+  updateGame: (gameState: GameState) => void;
   setUserName: (name: string) => void;
-  getUser: () => IUserState;
+  getUser: () => UserState;
 }
 
-export class StoreInteractorService implements IStoreInteractorService {
-  store: Store<IState, IAction>;
+export class StoreInteractorService implements AbstractStoreInteractorService {
+  store: Store<State, Action>;
 
-  constructor(store: Store<IState, IAction>) {
+  constructor(store: Store<State, Action>) {
     this.store = store;
   }
 
-  initGame(gameState: IGameState): void {
+  initGame(gameState: GameState): void {
     this.store.dispatch(initGame(gameState));
   }
 
-  updateGame(gameState: IGameState): void {
+  updateGame(gameState: GameState): void {
     this.store.dispatch(updateGame(gameState));
   }
 
@@ -33,7 +33,9 @@ export class StoreInteractorService implements IStoreInteractorService {
     this.store.dispatch(setName(name));
   }
 
-  getUser(): IUserState {
+  getUser(): UserState {
     return this.store.getState().user;
   }
 }
+
+export default StoreInteractorService;

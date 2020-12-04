@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IVillageProvider } from '../../provider/Village/types';
-import { IStoreInteractorService } from '../StoreInteractor';
+import { VillageProvider } from '../../provider/Village/types';
+import { AbstractStoreInteractorService } from '../StoreInteractor';
 import { logError } from '../../utils/logger';
 
-export interface IVillageService {
+export interface AbstractVillageService {
   createVillage: (userName: string) => void;
   joinVillage: (userName: string, lobbyId: string) => void;
   startGame: (werewolves: number, seer: boolean, bodyguard: boolean) => void;
@@ -14,17 +14,18 @@ export interface IVillageService {
   sleepNow: () => void;
 }
 
-export class VillageService implements IVillageService {
-  villageProvider: IVillageProvider;
-  storeInteractor: IStoreInteractorService;
+export class VillageService implements AbstractVillageService {
+  villageProvider: VillageProvider;
+  storeInteractor: AbstractStoreInteractorService;
 
   constructor(
-    villageProvider: IVillageProvider,
-    storeInteractor: IStoreInteractorService
+    villageProvider: VillageProvider,
+    storeInteractor: AbstractStoreInteractorService
   ) {
     this.villageProvider = villageProvider;
     this.storeInteractor = storeInteractor;
     this.villageProvider.setInteractor(storeInteractor);
+    this.onError.bind(this);
   }
 
   createVillage(userName: string): void {
@@ -104,3 +105,5 @@ export class VillageService implements IVillageService {
     logError(error);
   }
 }
+
+export default VillageService;

@@ -1,7 +1,7 @@
 import userReducer from './user';
 import gameReducer from './game';
 
-import rootReducer, { IState } from '.';
+import rootReducer, { State } from '.';
 
 jest.mock('./user', () => jest.fn((): object => ({})));
 jest.mock('./game', () => jest.fn((): object => ({})));
@@ -11,7 +11,7 @@ describe('store > root reducer', () => {
     const state = {
       user: {},
       game: {},
-    } as IState;
+    } as State;
     const action = { type: 'UNKNOWN' };
     rootReducer(state, action);
 

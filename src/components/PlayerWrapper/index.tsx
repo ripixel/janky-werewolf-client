@@ -1,15 +1,23 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import connector, { IPropsFromState } from './connector';
-import { PLAYER_ROLE, PLAYER_TEAM, IPlayer } from '../../types/player';
+import { PLAYER_ROLE, PLAYER_TEAM, Player } from '../../types/player';
 
 import styles from './styles.scss';
 import { PHASE_NAME } from '../../types/phase';
+import { connect } from 'react-redux';
+import { State } from '../../store/reducers';
+import {
+  getPhaseName,
+  getPlayersWithoutRole,
+  getSelf,
+} from '../../store/connectorHelpers';
 
-type TProps = IPropsFromState & {
-  children: React.ReactNode;
-};
+interface Props {
+  self?: Player;
+  players: Player[];
+  phaseName?: PHASE_NAME;
+}
 
 const ROLE_TEXT = {
   [PLAYER_ROLE.VILLAGER]: 'No special powers',
@@ -34,8 +42,8 @@ const TEAM_TEXT = {
 };
 
 const alertOnPlayerStateChanges = (
-  oldPlayers: IPlayer[],
-  newPlayers: IPlayer[]
+  oldPlayers: Player[],
+  newPlayers: Player[]
 ): void => {
   if (oldPlayers.length === 0) {
     return;
@@ -68,16 +76,20 @@ const alertOnPlayerStateChanges = (
   }
 };
 
-export const PlayerWrapper: React.FC<TProps> = (props) => {
+export const PlayerWrapper: React.FC<Props> = (props) => {
   /**
    * This section is a dirty, dirty hack - but it will do for a quick and easy last-changed alert
    */
+
+  if (!props.self || !props.phaseName) {
+    throw new Error('No game yet initialised!');
+  }
 
   if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
     alertOnPlayerStateChanges(
       JSON.parse(
         window.localStorage.getItem('previousPlayersState') ?? '[]'
-      ) as IPlayer[],
+      ) as Player[],
       props.players
     );
 
@@ -151,4 +163,10 @@ export const PlayerWrapper: React.FC<TProps> = (props) => {
   );
 };
 
-export default connector(PlayerWrapper);
+export const mapStateToProps = (state: State): Props => ({
+  self: getSelf(state),
+  players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
+  phaseName: getPhaseName(state),
+});
+
+export default connect(mapStateToProps)(PlayerWrapper);

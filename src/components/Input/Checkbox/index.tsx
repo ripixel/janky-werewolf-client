@@ -1,13 +1,13 @@
 import React from 'react';
 
-interface IProps {
+interface Props {
   name?: string;
   checked: boolean;
   onChange: (value: boolean) => void;
   disabled?: boolean;
 }
 
-export const CheckboxInput: React.FC<IProps> = (props) => {
+export const CheckboxInput: React.FC<Props> = (props) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (!props.disabled) {
       props.onChange(event.target.checked);

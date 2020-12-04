@@ -6,7 +6,7 @@ import {
   setContext,
 } from '@sentry/browser';
 
-export interface ICustomHttpError extends Error {
+export interface CustomHttpError extends Error {
   statusCode?: number;
 }
 
@@ -34,7 +34,7 @@ export const configureSentryLobbyId = (code: string): void => {
   });
 };
 
-export const captureException = (err: ICustomHttpError): void => {
+export const captureException = (err: CustomHttpError): void => {
   withScope((scope) => {
     if (err.statusCode) {
       scope.setExtra('statusCode', err.statusCode);

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createStore } from 'redux';
-import rootReducer, { IState } from './reducers';
-import { IAction } from './actions/types';
+import rootReducer, { State } from './reducers';
+import { Action } from './actions/types';
 
-export const store = createStore<IState, IAction, unknown, unknown>(
+export const store = createStore<State, Action, unknown, unknown>(
   rootReducer,
   // Enable Redux Devtools
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&

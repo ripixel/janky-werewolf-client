@@ -9,34 +9,34 @@ export enum PHASE_NAME {
   END = 'End',
 }
 
-export interface IPhase<T extends PHASE_NAME, U = undefined> {
+export interface Phase<T extends PHASE_NAME, U = undefined> {
   name: T;
   data?: U;
 }
 
-export interface IWerewolfPhaseData {
+export interface WerewolfPhaseData {
   [key: string]: string;
 }
 
-export interface IBodyguardPhaseData {
+export interface BodyguardPhaseData {
   last_saved: string; // sometimes this comes back, sometimes it doesn't... will investigate
 }
 
-export interface IEndPhaseData {
+export interface EndPhaseData {
   winner: PLAYER_TEAM.EVIL | PLAYER_TEAM.GOOD;
 }
 
-type TLobbyPhase = IPhase<PHASE_NAME.LOBBY>;
-type TDayPhase = IPhase<PHASE_NAME.DAY>;
-type TSeerPhase = IPhase<PHASE_NAME.SEER>;
-type TWerewolfPhase = IPhase<PHASE_NAME.WEREWOLF, IWerewolfPhaseData>;
-type TBodyguardPhase = IPhase<PHASE_NAME.BODYGUARD>;
-type TEndPhase = IPhase<PHASE_NAME.END, IEndPhaseData>;
+type LobbyPhase = Phase<PHASE_NAME.LOBBY>;
+type DayPhase = Phase<PHASE_NAME.DAY>;
+type SeerPhase = Phase<PHASE_NAME.SEER>;
+type WerewolfPhase = Phase<PHASE_NAME.WEREWOLF, WerewolfPhaseData>;
+type BodyguardPhase = Phase<PHASE_NAME.BODYGUARD>;
+type EndPhase = Phase<PHASE_NAME.END, EndPhaseData>;
 
-export type TPhases =
-  | TLobbyPhase
-  | TDayPhase
-  | TSeerPhase
-  | TWerewolfPhase
-  | TBodyguardPhase
-  | TEndPhase;
+export type Phases =
+  | LobbyPhase
+  | DayPhase
+  | SeerPhase
+  | WerewolfPhase
+  | BodyguardPhase
+  | EndPhase;

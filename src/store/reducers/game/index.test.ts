@@ -1,9 +1,9 @@
 import { PHASE_NAME } from '../../../types/phase';
-import { GAME_ACTION_TYPES, TInitGameAction } from '../../actions/game';
-import gameReducer, { IGameState } from '.';
+import { GAME_ACTION_TYPES, InitGameAction } from '../../actions/game';
+import gameReducer, { GameState } from '.';
 
 describe('store > reducers > game', () => {
-  const mockGameState: IGameState = {
+  const mockGameState: GameState = {
     lobbyId: '123',
     villageName: 'Test Village',
     players: [],
@@ -25,7 +25,7 @@ describe('store > reducers > game', () => {
   });
 
   describe(`with ${GAME_ACTION_TYPES.INIT_GAME} action`, () => {
-    const mockAction: TInitGameAction = {
+    const mockAction: InitGameAction = {
       type: GAME_ACTION_TYPES.INIT_GAME,
       payload: { ...mockGameState, villageName: 'Another Village' },
     };
@@ -39,7 +39,7 @@ describe('store > reducers > game', () => {
   });
 
   describe(`with ${GAME_ACTION_TYPES.INIT_GAME} action`, () => {
-    const mockAction: TInitGameAction = {
+    const mockAction: InitGameAction = {
       type: GAME_ACTION_TYPES.UPDATE_GAME,
       payload: { ...mockGameState, villageName: 'Another Village' },
     };

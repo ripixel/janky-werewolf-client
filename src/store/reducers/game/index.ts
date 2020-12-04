@@ -1,32 +1,32 @@
-import { IPlayer } from '../../../types/player';
-import { TPhases } from '../../../types/phase';
+import { Player } from '../../../types/player';
+import { Phases } from '../../../types/phase';
 import {
   GAME_ACTION_TYPES,
-  TInitGameAction,
-  TUpdateGameAction,
+  InitGameAction,
+  UpdateGameAction,
 } from '../../actions/game';
-import { IAction } from '../../actions/types';
+import { Action } from '../../actions/types';
 
-export interface IGameState {
+export interface GameState {
   lobbyId: string; // the game join code used
   villageName: string;
-  players: IPlayer[];
-  phase: TPhases;
+  players: Player[];
+  phase: Phases;
 }
 
 export const gameReducer = (
-  state: IGameState | null = null, // possibly null, as game is not present before joining
-  action: IAction
-): IGameState | null => {
+  state: GameState | null = null, // possibly null, as game is not present before joining
+  action: Action
+): GameState | null => {
   switch (action.type) {
     case GAME_ACTION_TYPES.INIT_GAME:
-      return state ? state : { ...(action as TInitGameAction).payload };
+      return state ? state : { ...(action as InitGameAction).payload };
     case GAME_ACTION_TYPES.UPDATE_GAME:
       if (!state) {
         throw new Error('No game exists to update - needs init first');
       }
 
-      return (action as TUpdateGameAction).payload;
+      return (action as UpdateGameAction).payload;
     default:
       return state;
   }

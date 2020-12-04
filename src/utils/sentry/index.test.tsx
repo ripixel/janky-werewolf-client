@@ -10,7 +10,7 @@ import {
   configureSentryLobbyId,
   initSentry,
   captureException as localCaptureException,
-  ICustomHttpError,
+  CustomHttpError,
 } from '.';
 
 jest.mock('@sentry/browser', () => ({
@@ -85,7 +85,7 @@ describe('Sentry Utility', () => {
     });
 
     it('should set extra data if status code exists', () => {
-      const error: ICustomHttpError = new Error('TEST');
+      const error: CustomHttpError = new Error('TEST');
       error.statusCode = 500;
 
       localCaptureException(error);

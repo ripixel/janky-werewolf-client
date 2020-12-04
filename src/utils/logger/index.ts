@@ -5,7 +5,7 @@ import {
   configureSentryuserSecret,
   configureSentryLobbyId,
   initSentry,
-  ICustomHttpError,
+  CustomHttpError,
 } from '../sentry';
 
 const isDev = (): boolean => process.env.NODE_ENV === 'development';
@@ -47,7 +47,7 @@ export const logWarn = (message: string, data?: any): void => {
   }
 };
 
-export const logError = (err: Error | ICustomHttpError): void => {
+export const logError = (err: Error | CustomHttpError): void => {
   if (isDev()) {
     console.error(err);
   }

@@ -11,9 +11,9 @@ Redux will be used for global state management, however for things that are not 
 ### Root State
 
 ```typescript
-interface IState {
-  user: IUserState;
-  game?: IGameState;
+interface State {
+  user: UserState;
+  game?: GameState;
 }
 ```
 
@@ -22,7 +22,7 @@ interface IState {
 The user currently accessing the application.
 
 ```typescript
-interface IUserState {
+interface UserState {
   id: string; // generated and stored in localStorage, will be a guid - specific to each device. Used to identify user to the server
   name?: string; // defined when joining a game
 }
@@ -46,16 +46,16 @@ enum PLAYER_TEAM {
   EVIL = 'EVIL',
 }
 
-interface IPlayerAttributes {
+interface PlayerAttributes {
   role: PLAYER_ROLE;
   team: PLAYER_TEAM;
   alive: boolean;
 }
 
-interface IPlayer {
+interface Player {
   id: string; // *NOT* a user ID, is a *player* ID
   name: string;
-  attributes?: IPlayerAttributes; // Optional, as moderator will not have it
+  attributes?: PlayerAttributes; // Optional, as moderator will not have it
 }
 ```
 
@@ -73,9 +73,9 @@ enum PHASE_NAME {
   END = 'END',
 }
 
-interface IPhase<T> {
+interface Phase<T> {
   name: PHASE_NAME;
-  data: T; // will be defined on an each-phase basis, ie ILobbyData | IWelcomeData | ...etc;
+  data: T; // will be defined on an each-phase basis, ie LobbyData | WelcomeData | ...etc;
 }
 ```
 
@@ -85,11 +85,11 @@ Main game state.
 
 ```typescript
 // will be null/undefined prior to joining a game
-interface IGameState {
+interface GameState {
   lobbyId: string; // the game join code used
   villageName: string;
-  moderator?: IPlayer; // optional as initially there will not be a moderator until one is promoted
-  players: IPlayer[];
-  phase: IPhase;
+  moderator?: Player; // optional as initially there will not be a moderator until one is promoted
+  players: Player[];
+  phase: Phase;
 }
 ```

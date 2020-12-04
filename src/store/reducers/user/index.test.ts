@@ -1,4 +1,4 @@
-import userReducer, { IUserState } from '.';
+import userReducer, { UserState } from '.';
 import { USER_ACTION_TYPES } from '../../actions/user';
 
 jest.mock('uuid', () => ({
@@ -32,7 +32,7 @@ describe('store > reducers > user', () => {
 
   describe('with an unknown action', () => {
     const action = { type: 'UNKNOWN', payload: undefined };
-    const state: IUserState = {
+    const state: UserState = {
       secret: '123',
     };
 
@@ -43,7 +43,7 @@ describe('store > reducers > user', () => {
 
   describe(`with ${USER_ACTION_TYPES.SET_NAME} action`, () => {
     const action = { type: USER_ACTION_TYPES.SET_NAME, payload: 'dave' };
-    const state: IUserState = {
+    const state: UserState = {
       secret: '123',
     };
 
