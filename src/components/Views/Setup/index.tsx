@@ -31,7 +31,12 @@ export const Setup: React.FC<Props> = (props) => {
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = (): void => {
-    villageService.startGame(werewolvesCount, seerEnabled, bodyguardEnabled, lycanEnabled);
+    villageService.startGame(
+      werewolvesCount,
+      seerEnabled,
+      bodyguardEnabled,
+      lycanEnabled
+    );
   };
 
   if (!props.villageName || !props.lobbyId || !props.moderator) {
