@@ -169,7 +169,7 @@ describe('<Setup />', () => {
       fireEvent.click(result.getByText('Start Game'));
 
       expect(mockVillageService.startGame).toHaveBeenCalledTimes(1);
-      expect(mockVillageService.startGame).toHaveBeenCalledWith(1, true, false);
+      expect(mockVillageService.startGame).toHaveBeenCalledWith(1, true, false, false);
     });
 
     describe('does not function when deck setup is incorrect', () => {
