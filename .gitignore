@@ -70,3 +70,6 @@ public/api-docs.html
 
 # Firebase cache
 .firebase/
+
+# vscode
+.vscode

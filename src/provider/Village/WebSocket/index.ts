@@ -147,7 +147,7 @@ export class WebSocketVillageProvider implements VillageProvider {
     } as JoinMessage);
   }
 
-  startGame({ werewolves, seer, bodyguard }: StartGameData): void {
+  startGame({ werewolves, seer, bodyguard, lycan }: StartGameData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.START,
       data: {
@@ -155,6 +155,7 @@ export class WebSocketVillageProvider implements VillageProvider {
         werewolves,
         seer,
         bodyguard,
+        lycan,
       },
     } as StartMessage);
   }

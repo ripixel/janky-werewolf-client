@@ -27,10 +27,11 @@ export const Setup: React.FC<Props> = (props) => {
   const [werewolvesCount, setWerewolvesCount] = React.useState(0);
   const [seerEnabled, setSeerEnabled] = React.useState(true);
   const [bodyguardEnabled, setBodyguardEnabled] = React.useState(false);
+  const [lycanEnabled, setLycanEnabled] = React.useState(false);
   const villageService = React.useContext(VillageServiceContext);
 
   const onClick = (): void => {
-    villageService.startGame(werewolvesCount, seerEnabled, bodyguardEnabled);
+    villageService.startGame(werewolvesCount, seerEnabled, bodyguardEnabled, lycanEnabled);
   };
 
   if (!props.villageName || !props.lobbyId || !props.moderator) {
@@ -42,8 +43,9 @@ export const Setup: React.FC<Props> = (props) => {
 
   const bodyguardsCount = bodyguardEnabled ? 1 : 0;
   const seersCount = seerEnabled ? 1 : 0;
+  const lycansCount = lycanEnabled ? 1 : 0;
 
-  const goodCount = villagersCount + seersCount + bodyguardsCount;
+  const goodCount = villagersCount + seersCount + bodyguardsCount + lycansCount;
   const evilCount = werewolvesCount;
   const totalCount = goodCount + evilCount;
 
@@ -105,6 +107,15 @@ export const Setup: React.FC<Props> = (props) => {
             name='Bodyguards'
             checked={bodyguardEnabled}
             onChange={setBodyguardEnabled}
+          />
+        </div>
+
+        <div className={styles.flexTogether}>
+          <label htmlFor='Lycans'>Lycan:</label>
+          <CheckboxInput
+            name='Lycans'
+            checked={lycanEnabled}
+            onChange={setLycanEnabled}
           />
         </div>
       </div>

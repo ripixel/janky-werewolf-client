@@ -6,7 +6,7 @@ import { logError } from '../../utils/logger';
 export interface AbstractVillageService {
   createVillage: (userName: string) => void;
   joinVillage: (userName: string, lobbyId: string) => void;
-  startGame: (werewolves: number, seer: boolean, bodyguard: boolean) => void;
+  startGame: (werewolves: number, seer: boolean, bodyguard: boolean, lycan: boolean) => void;
   werewolfVoteForPlayer: (playerName: string) => void;
   seerInspectPlayer: (playerName: string) => void;
   bodyguardSavePlayer: (playerName: string) => void;
@@ -53,9 +53,9 @@ export class VillageService implements AbstractVillageService {
     }
   }
 
-  startGame(werewolves: number, seer: boolean, bodyguard: boolean): void {
+  startGame(werewolves: number, seer: boolean, bodyguard: boolean, lycan: boolean): void {
     try {
-      this.villageProvider.startGame({ werewolves, seer, bodyguard });
+      this.villageProvider.startGame({ werewolves, seer, bodyguard, lycan });
     } catch (error) {
       this.onError(error);
     }

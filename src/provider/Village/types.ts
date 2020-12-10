@@ -15,6 +15,7 @@ export interface StartGameData {
   werewolves: number;
   seer: boolean;
   bodyguard: boolean;
+  lycan: boolean;
 }
 
 export interface VoteData {
