@@ -5,6 +5,7 @@ export enum PLAYER_ROLE {
   WEREWOLF = 'Werewolf',
   MODERATOR = 'Mod',
   BODYGUARD = 'Bodyguard',
+  LYCAN = 'Lycan',
 }
 
 export enum PLAYER_TEAM {
