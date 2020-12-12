@@ -31,12 +31,13 @@ export const ViewController: React.FC<Props> = (props) => {
   }
 
   const MatrixComponent =
-    COMPONENT_MATRIX[props.phaseName][props.self.attributes.role];
+    COMPONENT_MATRIX[props.phaseName][props.self.attributes.role] ||
+    COMPONENT_MATRIX[props.phaseName].default;
 
   if (!MatrixComponent) {
     logError(
       new Error(
-        `No component found for phase ${props.phaseName} with role ${props.self?.attributes.role}`
+        `No component found for phase ${props.phaseName} with role ${props.self?.attributes.role}, and no default set`
       )
     );
     return null;
