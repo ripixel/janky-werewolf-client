@@ -27,6 +27,7 @@ export const COMPONENT_MATRIX: {
     [PLAYER_ROLE.MODERATOR]: LynchPickSinglePlayer,
     [PLAYER_ROLE.SEER]: DaytimeTextOnly,
     [PLAYER_ROLE.VILLAGER]: DaytimeTextOnly,
+    [PLAYER_ROLE.LYCAN]: DaytimeTextOnly,
     [PLAYER_ROLE.WEREWOLF]: DaytimeTextOnly,
   },
   [PHASE_NAME.SEER]: {
@@ -34,6 +35,7 @@ export const COMPONENT_MATRIX: {
     [PLAYER_ROLE.MODERATOR]: NonSeerTextOnly,
     [PLAYER_ROLE.SEER]: SeerPickSinglePlayer,
     [PLAYER_ROLE.VILLAGER]: NonSeerTextOnly,
+    [PLAYER_ROLE.LYCAN]: NonSeerTextOnly,
     [PLAYER_ROLE.WEREWOLF]: NonSeerTextOnly,
   },
   [PHASE_NAME.BODYGUARD]: {
@@ -41,6 +43,7 @@ export const COMPONENT_MATRIX: {
     [PLAYER_ROLE.MODERATOR]: NonBodyguardTextOnly,
     [PLAYER_ROLE.SEER]: NonBodyguardTextOnly,
     [PLAYER_ROLE.VILLAGER]: NonBodyguardTextOnly,
+    [PLAYER_ROLE.LYCAN]: NonBodyguardTextOnly,
     [PLAYER_ROLE.WEREWOLF]: NonBodyguardTextOnly,
   },
   [PHASE_NAME.WEREWOLF]: {
@@ -48,6 +51,7 @@ export const COMPONENT_MATRIX: {
     [PLAYER_ROLE.MODERATOR]: NonWerewolfTextOnly,
     [PLAYER_ROLE.SEER]: NonWerewolfTextOnly,
     [PLAYER_ROLE.VILLAGER]: NonWerewolfTextOnly,
+    [PLAYER_ROLE.LYCAN]: NonWerewolfTextOnly,
     [PLAYER_ROLE.WEREWOLF]: WerewolfVoteSinglePlayer,
   },
   [PHASE_NAME.END]: {
@@ -55,6 +59,7 @@ export const COMPONENT_MATRIX: {
     [PLAYER_ROLE.MODERATOR]: WinLoss,
     [PLAYER_ROLE.SEER]: WinLoss,
     [PLAYER_ROLE.VILLAGER]: WinLoss,
+    [PLAYER_ROLE.LYCAN]: WinLoss,
     [PLAYER_ROLE.WEREWOLF]: WinLoss,
   },
 };
