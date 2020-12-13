@@ -43,7 +43,7 @@ const TEAM_TEXT = {
     'You should never see this. If you do, tell James/Mike',
 };
 
-const alertOnPlayerStateChanges = (
+export const alertOnPlayerStateChanges = (
   oldPlayers: Player[],
   newPlayers: Player[]
 ): void => {
