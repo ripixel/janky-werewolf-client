@@ -5,7 +5,7 @@ jest.mock('uuid', () => ({
   v4: (): string => 'test-guid-secret',
 }));
 
-describe('store > reducers > user', () => {
+describe('Store > Reducers > User', () => {
   describe('initial state', () => {
     const action = { type: 'UNKNOWN', payload: undefined };
 

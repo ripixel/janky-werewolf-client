@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { NumberInput } from '.';
 
-describe('<NumberInput>', () => {
+describe('Components > Input > Number', () => {
   describe('should render correctly', () => {
     it('with no placeholder', () => {
       const mockOnChange = jest.fn();

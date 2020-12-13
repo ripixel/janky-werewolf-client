@@ -2,7 +2,7 @@
 
 import {
   captureException,
-  configureSentryuserSecret,
+  configureSentryUserSecret,
   configureSentryLobbyId,
   initSentry,
   CustomHttpError,
@@ -23,7 +23,7 @@ export const initLogger = (): void => {
 
 export const configureLoggeruserSecret = (userSecret: string): void => {
   if (useSentry()) {
-    configureSentryuserSecret(userSecret);
+    configureSentryUserSecret(userSecret);
   }
 };
 

@@ -6,7 +6,7 @@ import { Layout } from '.';
 
 jest.mock('../../../public/assets/favicon.png', () => 'favicon/path.png');
 
-describe('<Layout>', () => {
+describe('Components > Layout', () => {
   it('renders as expected', () => {
     const result = render(
       <Layout>
@@ -16,5 +16,6 @@ describe('<Layout>', () => {
 
     expect(result.getByText('Janky Werewolf')).toBeInTheDocument();
     expect(result.getByText('Test')).toBeInTheDocument();
+    expect(result.getByText('test_ver')).toBeInTheDocument();
   });
 });

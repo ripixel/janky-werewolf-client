@@ -6,7 +6,7 @@ import {
   setContext,
 } from '@sentry/browser';
 import {
-  configureSentryuserSecret,
+  configureSentryUserSecret,
   configureSentryLobbyId,
   initSentry,
   captureException as localCaptureException,
@@ -37,12 +37,12 @@ describe('Sentry Utility', () => {
     });
   });
 
-  describe('configureSentryuserSecret', () => {
+  describe('configureSentryUserSecret', () => {
     beforeEach(() => {
       (setUser as jest.Mock).mockReset();
     });
     it('should call sentry with proper data', () => {
-      configureSentryuserSecret('12345');
+      configureSentryUserSecret('12345');
 
       expect(setUser as jest.Mock).toHaveBeenCalledWith({
         id: '12345',

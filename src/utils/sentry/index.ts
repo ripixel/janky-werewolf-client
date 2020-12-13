@@ -24,7 +24,7 @@ export const initSentry = (
   });
 };
 
-export const configureSentryuserSecret = (userSecret: string): void => {
+export const configureSentryUserSecret = (userSecret: string): void => {
   setUser({ id: userSecret });
 };
 

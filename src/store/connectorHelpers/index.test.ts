@@ -1,0 +1,243 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  getAllPlayers,
+  getPhaseName,
+  getPlayersWithoutRole,
+  getPlayersWithRole,
+  getSelf,
+  getWerewolfVotes,
+} from '.';
+import { PLAYER_ROLE } from '../../types/player';
+
+describe('Store > Connector Helpers', () => {
+  describe('getSelf', () => {
+    it('returns self when present', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+            },
+          ],
+        },
+        user: {
+          name: 'dave',
+        },
+      } as any;
+
+      const result = getSelf(mockState);
+
+      expect(result).toEqual(mockState.game.players[0]);
+    });
+
+    it('returns undefined when cannot find self', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+            },
+          ],
+        },
+        user: {
+          name: 'tom',
+        },
+      } as any;
+
+      const result = getSelf(mockState);
+
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('getAllPlayers', () => {
+    it('returns all players', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+            },
+            {
+              name: 'tom',
+            },
+          ],
+        },
+      } as any;
+
+      const result = getAllPlayers(mockState);
+
+      expect(result).toEqual(mockState.game.players);
+    });
+  });
+
+  describe('getPlayersWithRole', () => {
+    it('returns all players with the desired role', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.MODERATOR },
+            },
+          ],
+        },
+      } as any;
+
+      const result = getPlayersWithRole(mockState, PLAYER_ROLE.SEER);
+
+      expect(result).toEqual([
+        mockState.game.players[0],
+        mockState.game.players[1],
+      ]);
+    });
+
+    it('returns an empty array if no players match', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.MODERATOR },
+            },
+          ],
+        },
+      } as any;
+
+      const result = getPlayersWithRole(mockState, PLAYER_ROLE.VILLAGER);
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getPlayersWithoutRole', () => {
+    it('returns all players without the desired role', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.MODERATOR },
+            },
+          ],
+        },
+      } as any;
+
+      const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.MODERATOR);
+
+      expect(result).toEqual([
+        mockState.game.players[0],
+        mockState.game.players[1],
+      ]);
+    });
+
+    it('returns an empty array if no players match', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+          ],
+        },
+      } as any;
+
+      const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.SEER);
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getPhaseName', () => {
+    it('returns the phase name', () => {
+      const mockState = {
+        game: {
+          phase: {
+            name: 'day',
+          },
+        },
+      } as any;
+
+      const result = getPhaseName(mockState);
+
+      expect(result).toEqual('day');
+    });
+  });
+
+  describe('getWerewolfVotes', () => {
+    it('returns the formatted werewolf votes excluding mods and werewolves', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.MODERATOR, alive: true },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.WEREWOLF, alive: true },
+            },
+            {
+              name: 'mike',
+              attributes: { role: PLAYER_ROLE.WEREWOLF, alive: true },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.VILLAGER, alive: true },
+            },
+            {
+              name: 'harry',
+              attributes: { role: PLAYER_ROLE.BODYGUARD, alive: true },
+            },
+            {
+              name: 'james',
+              attributes: { role: PLAYER_ROLE.BODYGUARD, alive: false },
+            },
+          ],
+          phase: {
+            data: {
+              tom: 'harry',
+              mike: 'alex',
+            },
+          },
+        },
+      } as any;
+
+      const result = getWerewolfVotes(mockState);
+
+      expect(result).toEqual({
+        harry: 1,
+        alex: 1,
+      });
+    });
+  });
+});

@@ -1,6 +1,6 @@
 import { USER_ACTION_TYPES, setName } from '.';
 
-describe('User Actions', () => {
+describe('Store > Actions > User', () => {
   describe('setName', () => {
     it('returns as expected', () => {
       expect(setName('dave')).toEqual({

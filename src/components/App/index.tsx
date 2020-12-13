@@ -7,10 +7,10 @@ import {
   VillageServiceContextProvider,
   initVillageServiceContext,
 } from '../../context/VillageService';
+import ViewController from '../ViewController';
 
 import './reset.scss';
 import './styles.scss';
-import ViewController from '../ViewController';
 
 export const App: React.FC = () => (
   <VillageServiceContextProvider value={initVillageServiceContext()}>

@@ -16,7 +16,7 @@ jest.mock('../../provider/Village/WebSocket');
 jest.mock('../../service/StoreInteractor');
 jest.mock('../../store');
 
-describe('VillageServiceContext', () => {
+describe('Context > VillageService', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

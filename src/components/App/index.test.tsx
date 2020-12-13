@@ -6,32 +6,54 @@ import App from '.';
 import { render } from '@testing-library/react';
 
 // Mock components with a testids
-jest.mock(
-  '../Layout',
-  () => (props: { children: React.ReactNode }): JSX.Element => {
-    return <div data-testid='layout'>{props.children}</div>;
-  }
-);
+jest.mock('../../store', () => 'storemock');
+jest.mock('../Layout', () => (props: any): JSX.Element => {
+  return <div data-testid='layout'>{props.children}</div>;
+});
 jest.mock('../ViewController', () => (): JSX.Element => (
   <div data-testid='viewcontroller' />
 ));
-
-// Mock the redux provider with a testid and throw an error if no Store prop passed so test fails
 jest.mock('react-redux', () => ({
   Provider: (props: any): JSX.Element => {
-    if (!props.store) {
-      throw new Error('No Store passed');
-    }
-    return <div data-testid='provider'>{props.children}</div>;
+    return (
+      <div data-testid='reduxprovider' data-store={props.store}>
+        {props.children}
+      </div>
+    );
   },
 }));
+jest.mock('../../context/VillageService', () => ({
+  VillageServiceContextProvider: (props: any): JSX.Element => {
+    return (
+      <div data-testid='villageservicecontextprovider' data-value={props.value}>
+        {props.children}
+      </div>
+    );
+  },
+  initVillageServiceContext: (): string => 'initVillageServiceContextReturn',
+}));
 
-describe('<App>', () => {
+describe('Components > App', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('renders as expected', () => {
     const result = render(<App />);
 
+    expect(
+      result.getByTestId('villageservicecontextprovider')
+    ).toBeInTheDocument();
+    expect(result.getByTestId('villageservicecontextprovider')).toHaveAttribute(
+      'data-value',
+      'initVillageServiceContextReturn'
+    );
     expect(result.getByTestId('layout')).toBeInTheDocument();
     expect(result.getByTestId('viewcontroller')).toBeInTheDocument();
-    expect(result.getByTestId('provider')).toBeInTheDocument();
+    expect(result.getByTestId('reduxprovider')).toBeInTheDocument();
+    expect(result.getByTestId('reduxprovider')).toHaveAttribute(
+      'data-store',
+      'storemock'
+    );
   });
 });
