@@ -6,7 +6,7 @@ store; // stops no-unused-vars issue
 jest.mock('redux');
 jest.mock('./reducers', () => 'rootReducer');
 
-describe('store', () => {
+describe('Store', () => {
   it('inits correctly', () => {
     expect(createStore as jest.Mock).toHaveBeenCalledTimes(1);
     expect(createStore as jest.Mock).toHaveBeenCalledWith(

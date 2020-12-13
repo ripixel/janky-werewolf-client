@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { Button } from '.';
 
-describe('<Button>', () => {
+describe('Components > Button', () => {
   it('should render correctly', () => {
     const mockOnClick = jest.fn();
     const result = render(<Button onClick={mockOnClick}>Test</Button>);

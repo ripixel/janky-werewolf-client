@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { CheckboxInput } from '.';
 
-describe('<CheckboxInput>', () => {
+describe('Components > Input > Checkbox', () => {
   it('should render correctly', () => {
     const mockOnChange = jest.fn();
     const result = render(

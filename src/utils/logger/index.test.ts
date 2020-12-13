@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-commented-out-tests */
 import {
   captureException,
-  configureSentryuserSecret,
+  configureSentryUserSecret,
   configureSentryLobbyId,
   initSentry,
   CustomHttpError,
@@ -57,14 +57,14 @@ const runTests = (withSentry: boolean): void => {
       it('configures sentry', () => {
         configureLoggeruserSecret('123');
 
-        expect(configureSentryuserSecret).toHaveBeenCalledTimes(1);
-        expect(configureSentryuserSecret).toHaveBeenCalledWith('123');
+        expect(configureSentryUserSecret).toHaveBeenCalledTimes(1);
+        expect(configureSentryUserSecret).toHaveBeenCalledWith('123');
       });
     } else {
       it('does not configure sentry', () => {
         configureLoggeruserSecret('123');
 
-        expect(configureSentryuserSecret).toHaveBeenCalledTimes(0);
+        expect(configureSentryUserSecret).toHaveBeenCalledTimes(0);
       });
     }
   });
@@ -137,7 +137,7 @@ const runTests = (withSentry: boolean): void => {
 describe('Logger Utility', () => {
   beforeEach(() => {
     (captureException as jest.Mock).mockReset();
-    (configureSentryuserSecret as jest.Mock).mockReset();
+    (configureSentryUserSecret as jest.Mock).mockReset();
     (configureSentryLobbyId as jest.Mock).mockReset();
     (initSentry as jest.Mock).mockReset();
 

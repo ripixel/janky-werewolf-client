@@ -2,7 +2,7 @@ import { GameState } from '../../reducers/game';
 import { PHASE_NAME } from '../../../types/phase';
 import { initGame, updateGame, GAME_ACTION_TYPES } from '.';
 
-describe('Game Actions', () => {
+describe('Store > Actions > Game', () => {
   describe('initGame', () => {
     const mockGameState: GameState = {
       lobbyId: '12test34',

@@ -6,7 +6,7 @@ import rootReducer, { State } from '.';
 jest.mock('./user', () => jest.fn((): object => ({})));
 jest.mock('./game', () => jest.fn((): object => ({})));
 
-describe('store > root reducer', () => {
+describe('Store > Reducers (Root)', () => {
   it('passes actions to all combined reducers', () => {
     const state = {
       user: {},

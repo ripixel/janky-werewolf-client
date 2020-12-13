@@ -101,7 +101,7 @@ type SocketMessages =
   | Lynch
   | Sleep;
 
-interface MessageGameState {
+export interface MessageGameState {
   game_state: {
     lobbyId: string;
     phase: Phases;
@@ -110,11 +110,11 @@ interface MessageGameState {
 }
 
 export class WebSocketVillageProvider implements VillageProvider {
-  socket?: WebSocket;
-  storeInteractor!: AbstractStoreInteractorService;
-  lobbyId?: string;
-  gameInit: boolean;
-  moderatorName?: string;
+  private socket?: WebSocket;
+  private storeInteractor!: AbstractStoreInteractorService;
+  private lobbyId?: string;
+  private gameInit: boolean;
+  private moderatorName?: string;
 
   constructor() {
     this.gameInit = false;
@@ -230,6 +230,7 @@ export class WebSocketVillageProvider implements VillageProvider {
   }
 
   private onSocketMessage(event: MessageEvent): void {
+    console.error('MESSAGE RECEIVED');
     const gameState = this.transformSocketGameStateToLocal(
       JSON.parse(event.data) as MessageGameState
     );
@@ -267,6 +268,8 @@ export class WebSocketVillageProvider implements VillageProvider {
               team: PLAYER_TEAM.UNKNOWN,
             })
     );
+
+    console.info('name', this.moderatorName);
 
     if (this.moderatorName) {
       const self = game_state.players.find(

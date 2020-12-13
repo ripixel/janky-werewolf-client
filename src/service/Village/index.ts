@@ -34,28 +34,24 @@ export class VillageService implements AbstractVillageService {
   }
 
   createVillage(userName: string): void {
-    try {
+    this.runSafe(() => {
       this.storeInteractor.setUserName(userName);
       this.villageProvider.createVillage({
         userName,
         userSecret: this.storeInteractor.getUser().secret,
       });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   joinVillage(userName: string, lobbyId: string): void {
-    try {
+    this.runSafe(() => {
       this.storeInteractor.setUserName(userName);
       this.villageProvider.joinVillage({
         lobbyId,
         userName,
         userSecret: this.storeInteractor.getUser().secret,
       });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   startGame(
@@ -64,55 +60,51 @@ export class VillageService implements AbstractVillageService {
     bodyguard: boolean,
     lycan: boolean
   ): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.startGame({ werewolves, seer, bodyguard, lycan });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   werewolfVoteForPlayer(playerName: string): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.werewolfVoteForPlayer({ playerName });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   seerInspectPlayer(playerName: string): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.seerInspectPlayer({ playerName });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   bodyguardSavePlayer(playerName: string): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.bodyguardSavePlayer({ playerName });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   lynchPlayer(playerName: string): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.lynchPlayer({ playerName });
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   sleepNow(): void {
-    try {
+    this.runSafe(() => {
       this.villageProvider.sleepNow();
-    } catch (error) {
-      this.onError(error);
-    }
+    });
   }
 
   private onError(error: Error): void {
     logError(error);
+  }
+
+  private runSafe(toRun: () => void): void {
+    try {
+      toRun();
+    } catch (error) {
+      this.onError(error);
+    }
   }
 }
 
