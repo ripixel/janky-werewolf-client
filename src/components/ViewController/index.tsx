@@ -25,23 +25,14 @@ export const ViewController: React.FC<Props> = (props) => {
     return <JoinOrCreate />;
   }
 
-  if (!props.self?.attributes.role) {
-    logError(new Error('Phase exists but player does not have a role'));
+  if (!props.self) {
+    logError(new Error('Phase exists but no self given'));
     return null;
   }
 
-  const MatrixComponent =
-    COMPONENT_MATRIX[props.phaseName][props.self.attributes.role] ||
-    COMPONENT_MATRIX[props.phaseName].default;
-
-  if (!MatrixComponent) {
-    logError(
-      new Error(
-        `No component found for phase ${props.phaseName} with role ${props.self?.attributes.role}, and no default set`
-      )
-    );
-    return null;
-  }
+  const MatrixComponent = (COMPONENT_MATRIX[props.phaseName][
+    props.self.attributes.role
+  ] || COMPONENT_MATRIX[props.phaseName].default) as React.FC<{}>;
 
   return props.phaseName !== PHASE_NAME.LOBBY ? (
     <PlayerWrapper>
