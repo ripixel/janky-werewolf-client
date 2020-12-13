@@ -15,51 +15,30 @@ import WinLoss from '../Views/WinLoss';
 
 export const COMPONENT_MATRIX: {
   [key in PHASE_NAME]: {
-    [key in PLAYER_ROLE]?: React.FC<{}>;
+    [key in PLAYER_ROLE | 'default']?: React.FC<{}>;
   };
 } = {
   [PHASE_NAME.LOBBY]: {
     [PLAYER_ROLE.MODERATOR]: Setup,
-    [PLAYER_ROLE.UNKNOWN]: WaitingForStartTextOnly,
+    default: WaitingForStartTextOnly,
   },
   [PHASE_NAME.DAY]: {
-    [PLAYER_ROLE.BODYGUARD]: DaytimeTextOnly,
     [PLAYER_ROLE.MODERATOR]: LynchPickSinglePlayer,
-    [PLAYER_ROLE.SEER]: DaytimeTextOnly,
-    [PLAYER_ROLE.VILLAGER]: DaytimeTextOnly,
-    [PLAYER_ROLE.LYCAN]: DaytimeTextOnly,
-    [PLAYER_ROLE.WEREWOLF]: DaytimeTextOnly,
+    default: DaytimeTextOnly,
   },
   [PHASE_NAME.SEER]: {
-    [PLAYER_ROLE.BODYGUARD]: NonSeerTextOnly,
-    [PLAYER_ROLE.MODERATOR]: NonSeerTextOnly,
     [PLAYER_ROLE.SEER]: SeerPickSinglePlayer,
-    [PLAYER_ROLE.VILLAGER]: NonSeerTextOnly,
-    [PLAYER_ROLE.LYCAN]: NonSeerTextOnly,
-    [PLAYER_ROLE.WEREWOLF]: NonSeerTextOnly,
+    default: NonSeerTextOnly,
   },
   [PHASE_NAME.BODYGUARD]: {
     [PLAYER_ROLE.BODYGUARD]: BodyguardPickSinglePlayer,
-    [PLAYER_ROLE.MODERATOR]: NonBodyguardTextOnly,
-    [PLAYER_ROLE.SEER]: NonBodyguardTextOnly,
-    [PLAYER_ROLE.VILLAGER]: NonBodyguardTextOnly,
-    [PLAYER_ROLE.LYCAN]: NonBodyguardTextOnly,
-    [PLAYER_ROLE.WEREWOLF]: NonBodyguardTextOnly,
+    default: NonBodyguardTextOnly,
   },
   [PHASE_NAME.WEREWOLF]: {
-    [PLAYER_ROLE.BODYGUARD]: NonWerewolfTextOnly,
-    [PLAYER_ROLE.MODERATOR]: NonWerewolfTextOnly,
-    [PLAYER_ROLE.SEER]: NonWerewolfTextOnly,
-    [PLAYER_ROLE.VILLAGER]: NonWerewolfTextOnly,
-    [PLAYER_ROLE.LYCAN]: NonWerewolfTextOnly,
     [PLAYER_ROLE.WEREWOLF]: WerewolfVoteSinglePlayer,
+    default: NonWerewolfTextOnly,
   },
   [PHASE_NAME.END]: {
-    [PLAYER_ROLE.BODYGUARD]: WinLoss,
-    [PLAYER_ROLE.MODERATOR]: WinLoss,
-    [PLAYER_ROLE.SEER]: WinLoss,
-    [PLAYER_ROLE.VILLAGER]: WinLoss,
-    [PLAYER_ROLE.LYCAN]: WinLoss,
-    [PLAYER_ROLE.WEREWOLF]: WinLoss,
+    default: WinLoss,
   },
 };
