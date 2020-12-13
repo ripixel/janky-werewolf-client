@@ -4,6 +4,7 @@ module.exports = {
   setupFiles: ['./jest.setup.ts'],
   roots: ['<rootDir>/src'],
   collectCoverageFrom: [
+    // Ignore coverage for certain files, such as node_modules, types, and development helpers
     'src/**/*.{js,jsx,ts,tsx}',
     '!**/node_modules/**',
     '!src/index.tsx',
