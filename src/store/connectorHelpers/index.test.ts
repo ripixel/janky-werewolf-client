@@ -69,6 +69,28 @@ describe('Store > Connector Helpers', () => {
 
       expect(result).toEqual(mockState.game.players);
     });
+
+    it('excludes self when requested', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+            },
+            {
+              name: 'tom',
+            },
+          ],
+        },
+        user: {
+          name: 'dave',
+        },
+      } as any;
+
+      const result = getAllPlayers(mockState, true);
+
+      expect(result).toEqual([mockState.game.players[1]]);
+    });
   });
 
   describe('getPlayersWithRole', () => {
@@ -124,6 +146,34 @@ describe('Store > Connector Helpers', () => {
 
       expect(result).toEqual([]);
     });
+
+    it('excludes self when requested', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.MODERATOR },
+            },
+          ],
+        },
+        user: {
+          name: 'tom',
+        },
+      } as any;
+
+      const result = getPlayersWithRole(mockState, PLAYER_ROLE.SEER, true);
+
+      expect(result).toEqual([mockState.game.players[0]]);
+    });
   });
 
   describe('getPlayersWithoutRole', () => {
@@ -174,6 +224,38 @@ describe('Store > Connector Helpers', () => {
       const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.SEER);
 
       expect(result).toEqual([]);
+    });
+
+    it('excludes self when requested', () => {
+      const mockState = {
+        game: {
+          players: [
+            {
+              name: 'dave',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'tom',
+              attributes: { role: PLAYER_ROLE.SEER },
+            },
+            {
+              name: 'alex',
+              attributes: { role: PLAYER_ROLE.MODERATOR },
+            },
+          ],
+        },
+        user: {
+          name: 'tom',
+        },
+      } as any;
+
+      const result = getPlayersWithoutRole(
+        mockState,
+        PLAYER_ROLE.MODERATOR,
+        true
+      );
+
+      expect(result).toEqual([mockState.game.players[0]]);
     });
   });
 
@@ -238,6 +320,24 @@ describe('Store > Connector Helpers', () => {
         harry: 1,
         alex: 1,
       });
+    });
+
+    it('returns an empty object if no players', () => {
+      const mockState = {
+        game: {
+          players: [],
+          phase: {
+            data: {
+              tom: 'harry',
+              mike: 'alex',
+            },
+          },
+        },
+      } as any;
+
+      const result = getWerewolfVotes(mockState);
+
+      expect(result).toEqual({});
     });
   });
 });

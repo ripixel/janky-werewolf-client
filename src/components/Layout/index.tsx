@@ -11,7 +11,7 @@ export const Layout: React.FC = (props) => (
         <img src={favicon} />
         {!localStorage.getItem('WEBSOCKET_URL')
           ? 'Janky Werewolf'
-          : 'You are currently playing against a non-production version of the game'}
+          : 'You are currently playing against a non-production version of Janky Werewolf'}
       </h1>
     </div>
     <div className={styles.content}>
