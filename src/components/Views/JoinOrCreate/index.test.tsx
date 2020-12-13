@@ -6,7 +6,7 @@ import { render, fireEvent } from '@testing-library/react';
 import { JoinOrCreate } from '.';
 import { VillageServiceContextProvider } from '../../../context/VillageService';
 
-describe('<JoinOrCreate />', () => {
+describe('Components > Views > JoinOrCreate', () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
