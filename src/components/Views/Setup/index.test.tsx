@@ -8,9 +8,19 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
-import { Setup } from '.';
 import { VillageServiceContextProvider } from '../../../context/VillageService';
 import { Player, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
+import {
+  getPlayersWithoutRole,
+  getPlayersWithRole,
+} from '../../../store/connectorHelpers';
+
+import { mapStateToProps, Setup } from '.';
+
+jest.mock('../../../store/connectorHelpers', () => ({
+  getPlayersWithoutRole: jest.fn((): string => 'players-without-role'),
+  getPlayersWithRole: jest.fn((): string[] => ['players-with-role-1']),
+}));
 
 const getTestPlayer = (): Player => ({
   name:
@@ -38,6 +48,10 @@ describe('<Setup />', () => {
       },
     },
   };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   describe('renders as expected', () => {
     const expectStandard = (result: RenderResult<typeof queries>): void => {
@@ -337,6 +351,74 @@ describe('<Setup />', () => {
         fireEvent.click(result.getByText('Start Game'));
 
         expect(mockVillageService.startGame).toHaveBeenCalledTimes(0);
+      });
+    });
+  });
+
+  describe('mapStateToProps', () => {
+    describe('returns correct props', () => {
+      it('when a moderator is found', () => {
+        const mockState = {
+          some: 'mock-state',
+          game: {
+            villageName: 'villageName-test',
+            lobbyId: '1234',
+          },
+        } as any;
+
+        const result = mapStateToProps(mockState);
+
+        expect(getPlayersWithRole).toHaveBeenCalledTimes(1);
+        expect(getPlayersWithRole).toHaveBeenCalledWith(
+          mockState,
+          PLAYER_ROLE.MODERATOR
+        );
+
+        expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
+        expect(getPlayersWithoutRole).toHaveBeenCalledWith(
+          mockState,
+          PLAYER_ROLE.MODERATOR
+        );
+
+        expect(result).toEqual({
+          lobbyId: '1234',
+          moderator: 'players-with-role-1',
+          players: 'players-without-role',
+          villageName: 'villageName-test',
+        });
+      });
+
+      it("when a moderator isn't found", () => {
+        (getPlayersWithRole as jest.Mock).mockReturnValueOnce([]);
+
+        const mockState = {
+          some: 'mock-state',
+          game: {
+            villageName: 'villageName-test',
+            lobbyId: '1234',
+          },
+        } as any;
+
+        const result = mapStateToProps(mockState);
+
+        expect(getPlayersWithRole).toHaveBeenCalledTimes(1);
+        expect(getPlayersWithRole).toHaveBeenCalledWith(
+          mockState,
+          PLAYER_ROLE.MODERATOR
+        );
+
+        expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
+        expect(getPlayersWithoutRole).toHaveBeenCalledWith(
+          mockState,
+          PLAYER_ROLE.MODERATOR
+        );
+
+        expect(result).toEqual({
+          lobbyId: '1234',
+          moderator: undefined,
+          players: 'players-without-role',
+          villageName: 'villageName-test',
+        });
       });
     });
   });
