@@ -269,8 +269,6 @@ export class WebSocketVillageProvider implements VillageProvider {
             })
     );
 
-    console.info('name', this.moderatorName);
-
     if (this.moderatorName) {
       const self = game_state.players.find(
         (player) => player.name === this.moderatorName

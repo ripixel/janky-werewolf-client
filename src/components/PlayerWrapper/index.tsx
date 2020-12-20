@@ -89,8 +89,6 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
   }
 
   if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
-    console.info('oldPlayers', props.oldPlayers);
-    console.info('players', props.players);
     alertOnPlayerStateChanges(props.oldPlayers, props.players);
   }
 

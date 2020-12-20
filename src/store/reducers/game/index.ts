@@ -21,10 +21,8 @@ export const gameReducer = (
 ): GameState | null => {
   switch (action.type) {
     case GAME_ACTION_TYPES.INIT_GAME:
-      console.info('Init message');
       return state ? state : { ...(action as InitGameAction).payload };
     case GAME_ACTION_TYPES.UPDATE_GAME:
-      console.info('Update message');
       if (!state) {
         throw new Error('No game exists to update - needs init first');
       }
