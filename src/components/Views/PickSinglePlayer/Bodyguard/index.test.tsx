@@ -81,9 +81,10 @@ describe('Components > Views > PickSinglePlayer > Bodyguard', () => {
 
       expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
       expect(getPlayersWithoutRole).toHaveBeenCalledWith(
-        mockState,
         PLAYER_ROLE.MODERATOR,
-        true
+        true,
+        undefined,
+        undefined
       );
 
       expect(result).toEqual({

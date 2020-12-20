@@ -16,6 +16,7 @@ import {
 interface Props {
   self?: Player;
   players: Player[];
+  oldPlayers: Player[];
   phaseName?: PHASE_NAME;
 }
 
@@ -88,17 +89,9 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
   }
 
   if (props.self.attributes.role !== PLAYER_ROLE.MODERATOR) {
-    alertOnPlayerStateChanges(
-      JSON.parse(
-        window.localStorage.getItem('previousPlayersState') ?? '[]'
-      ) as Player[],
-      props.players
-    );
-
-    window.localStorage.setItem(
-      'previousPlayersState',
-      JSON.stringify(props.players)
-    );
+    console.info('oldPlayers', props.oldPlayers);
+    console.info('players', props.players);
+    alertOnPlayerStateChanges(props.oldPlayers, props.players);
   }
 
   let aliveStatus = '';
@@ -171,7 +164,18 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
 
 export const mapStateToProps = (state: State): Props => ({
   self: getSelf(state),
-  players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
+  players: getPlayersWithoutRole(
+    PLAYER_ROLE.MODERATOR,
+    true,
+    state.user?.name,
+    state.game?.players
+  ),
+  oldPlayers: getPlayersWithoutRole(
+    PLAYER_ROLE.MODERATOR,
+    true,
+    state.user?.name,
+    state.game?.oldPlayers
+  ),
   phaseName: getPhaseName(state),
 });
 

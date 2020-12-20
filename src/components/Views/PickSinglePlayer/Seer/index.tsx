@@ -32,7 +32,12 @@ export const SeerPickSinglePlayer: React.FC<Props> = ({ players }) => {
 };
 
 export const mapStateToProps = (state: State): Props => ({
-  players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
+  players: getPlayersWithoutRole(
+    PLAYER_ROLE.MODERATOR,
+    true,
+    state.user?.name,
+    state.game?.players
+  ),
 });
 
 export default connect(mapStateToProps)(SeerPickSinglePlayer);

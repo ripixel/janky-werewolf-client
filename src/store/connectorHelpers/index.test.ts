@@ -197,7 +197,12 @@ describe('Store > Connector Helpers', () => {
         },
       } as any;
 
-      const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.MODERATOR);
+      const result = getPlayersWithoutRole(
+        PLAYER_ROLE.MODERATOR,
+        undefined,
+        undefined,
+        mockState.game.players
+      );
 
       expect(result).toEqual([
         mockState.game.players[0],
@@ -221,7 +226,12 @@ describe('Store > Connector Helpers', () => {
         },
       } as any;
 
-      const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.SEER);
+      const result = getPlayersWithoutRole(
+        PLAYER_ROLE.SEER,
+        undefined,
+        undefined,
+        mockState.game.players
+      );
 
       expect(result).toEqual([]);
     });
@@ -250,9 +260,10 @@ describe('Store > Connector Helpers', () => {
       } as any;
 
       const result = getPlayersWithoutRole(
-        mockState,
         PLAYER_ROLE.MODERATOR,
-        true
+        true,
+        mockState.user.name,
+        mockState.game.players
       );
 
       expect(result).toEqual([mockState.game.players[0]]);

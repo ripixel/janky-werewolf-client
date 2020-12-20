@@ -79,9 +79,10 @@ describe('Components > Views > PickSinglePlayer > Seer', () => {
 
       expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
       expect(getPlayersWithoutRole).toHaveBeenCalledWith(
-        mockState,
         PLAYER_ROLE.MODERATOR,
-        true
+        true,
+        undefined,
+        undefined
       );
 
       expect(result).toEqual({

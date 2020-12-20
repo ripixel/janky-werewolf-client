@@ -12,6 +12,7 @@ export interface GameState {
   villageName: string;
   players: Player[];
   phase: Phases;
+  oldPlayers?: Player[];
 }
 
 export const gameReducer = (
@@ -20,13 +21,18 @@ export const gameReducer = (
 ): GameState | null => {
   switch (action.type) {
     case GAME_ACTION_TYPES.INIT_GAME:
+      console.info('Init message');
       return state ? state : { ...(action as InitGameAction).payload };
     case GAME_ACTION_TYPES.UPDATE_GAME:
+      console.info('Update message');
       if (!state) {
         throw new Error('No game exists to update - needs init first');
       }
 
-      return (action as UpdateGameAction).payload;
+      return {
+        ...(action as UpdateGameAction).payload,
+        oldPlayers: state.players,
+      };
     default:
       return state;
   }

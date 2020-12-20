@@ -23,7 +23,13 @@ describe('Components > PlayerWrapper', () => {
   describe('renders as expected', () => {
     it('throws an error if no self given', () => {
       expect(() =>
-        render(<PlayerWrapper players={[]} phaseName={PHASE_NAME.LOBBY} />)
+        render(
+          <PlayerWrapper
+            players={[]}
+            oldPlayers={[]}
+            phaseName={PHASE_NAME.LOBBY}
+          />
+        )
       ).toThrow('No game yet initialised!');
     });
 
@@ -32,6 +38,7 @@ describe('Components > PlayerWrapper', () => {
         render(
           <PlayerWrapper
             players={[]}
+            oldPlayers={[]}
             self={{
               attributes: {
                 alive: true,
@@ -49,6 +56,7 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
+          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -69,6 +77,7 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
+          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -90,6 +99,7 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
+          oldPlayers={[]}
           self={{
             attributes: {
               alive: false,
@@ -114,6 +124,7 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
+          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -137,6 +148,16 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[
+            {
+              attributes: {
+                alive: true,
+                role: PLAYER_ROLE.BODYGUARD,
+                team: PLAYER_TEAM.GOOD,
+              },
+              name: 'dave',
+            },
+          ]}
+          oldPlayers={[
             {
               attributes: {
                 alive: true,
@@ -180,11 +201,12 @@ describe('Components > PlayerWrapper', () => {
 
       expect(getSelf).toHaveBeenCalledTimes(1);
       expect(getSelf).toHaveBeenCalledWith(mockState);
-      expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
+      expect(getPlayersWithoutRole).toHaveBeenCalledTimes(2);
       expect(getPlayersWithoutRole).toHaveBeenCalledWith(
-        mockState,
         PLAYER_ROLE.MODERATOR,
-        true
+        true,
+        undefined,
+        undefined
       );
       expect(getPhaseName).toHaveBeenCalledTimes(1);
       expect(getPhaseName).toHaveBeenCalledWith(mockState);
@@ -192,6 +214,7 @@ describe('Components > PlayerWrapper', () => {
       expect(result).toEqual({
         self: 'self',
         players: 'players-without-role',
+        oldPlayers: 'players-without-role',
         phaseName: 'phase-name',
       });
     });

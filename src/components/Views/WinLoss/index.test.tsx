@@ -24,15 +24,10 @@ describe('Components > Views > WinLoss', () => {
 
   it('clears local storage items on render', () => {
     window.localStorage.setItem('lastLobbyId', 'lastLobbyId-test');
-    window.localStorage.setItem(
-      'previousPlayersState',
-      'previousPlayersState-test'
-    );
 
     render(<WinLoss winner={PLAYER_TEAM.GOOD} />);
 
     expect(window.localStorage.getItem('lastLobbyId')).toBeNull();
-    expect(window.localStorage.getItem('previousPlayersState')).toBeNull();
   });
 
   describe('mapStateToProps', () => {
