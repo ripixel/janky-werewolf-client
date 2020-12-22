@@ -221,11 +221,7 @@ describe('Store > Connector Helpers', () => {
         },
       } as any;
 
-      const result = getPlayersWithoutRole(
-        mockState,
-        PLAYER_ROLE.SEER,
-        undefined
-      );
+      const result = getPlayersWithoutRole(mockState, PLAYER_ROLE.SEER);
 
       expect(result).toEqual([]);
     });

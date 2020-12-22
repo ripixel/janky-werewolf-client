@@ -140,7 +140,7 @@ export const mapStateToProps = (state: State): Props => {
     lobbyId: state.game?.lobbyId,
     moderator:
       moderators && moderators.length === 1 ? moderators[0] : undefined,
-    players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, undefined),
+    players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR),
   };
 };
 

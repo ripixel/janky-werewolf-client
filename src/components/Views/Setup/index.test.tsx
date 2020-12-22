@@ -377,8 +377,7 @@ describe('<Setup />', () => {
         expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
         expect(getPlayersWithoutRole).toHaveBeenCalledWith(
           mockState,
-          PLAYER_ROLE.MODERATOR,
-          undefined
+          PLAYER_ROLE.MODERATOR
         );
 
         expect(result).toEqual({
@@ -411,8 +410,7 @@ describe('<Setup />', () => {
         expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
         expect(getPlayersWithoutRole).toHaveBeenCalledWith(
           mockState,
-          PLAYER_ROLE.MODERATOR,
-          undefined
+          PLAYER_ROLE.MODERATOR
         );
 
         expect(result).toEqual({
