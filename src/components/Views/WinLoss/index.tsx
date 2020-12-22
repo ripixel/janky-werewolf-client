@@ -13,7 +13,6 @@ export const WinLoss: React.FC<Props> = (props) => {
   // If we're rendering this, the game is over. Clear the lastLobbyId from localstorage
   // so that the restart screen appears
   window.localStorage.removeItem('lastLobbyId');
-  window.localStorage.removeItem('previousPlayersState');
 
   return (
     <React.Fragment>

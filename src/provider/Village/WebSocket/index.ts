@@ -223,7 +223,7 @@ export class WebSocketVillageProvider implements VillageProvider {
   private sendSocketMessage(message: SocketMessages): void {
     if (!this.socket) {
       throw new Error(
-        "No socket available - you haven't started or joiend a game"
+        "No socket available - you haven't started or joined a game"
       );
     }
     this.socket.send(JSON.stringify(message));
@@ -268,8 +268,6 @@ export class WebSocketVillageProvider implements VillageProvider {
               team: PLAYER_TEAM.UNKNOWN,
             })
     );
-
-    console.info('name', this.moderatorName);
 
     if (this.moderatorName) {
       const self = game_state.players.find(

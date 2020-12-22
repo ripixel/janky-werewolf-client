@@ -39,13 +39,14 @@ export const getPlayersWithRole = (
     }) || []
   );
 
-export const getPlayersWithoutRole = (
-  state: State,
+const playersWithoutRole = (
   role: PLAYER_ROLE,
-  excludeSelf = false
+  excludeSelf = false,
+  userName?: string,
+  players?: Player[]
 ): Player[] =>
   sortPlayersByName(
-    state.game?.players.filter((player) => {
+    players?.filter((player) => {
       const matchesRole = player.attributes.role !== role;
 
       if (!matchesRole) {
@@ -53,11 +54,30 @@ export const getPlayersWithoutRole = (
       }
 
       if (excludeSelf) {
-        return player.name !== state.user.name;
+        return player.name !== userName;
       }
 
       return true;
     }) || []
+  );
+
+export const getPlayersWithoutRole = (
+  state: State,
+  role: PLAYER_ROLE,
+  excludeSelf = false
+): Player[] =>
+  playersWithoutRole(role, excludeSelf, state.user?.name, state.game?.players);
+
+export const getOldPlayersWithoutRole = (
+  state: State,
+  role: PLAYER_ROLE,
+  excludeSelf = false
+): Player[] =>
+  playersWithoutRole(
+    role,
+    excludeSelf,
+    state.user?.name,
+    state.game?.oldPlayers
   );
 
 export const getPhaseName = (state: State): PHASE_NAME | undefined =>

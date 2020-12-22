@@ -12,6 +12,7 @@ export interface GameState {
   villageName: string;
   players: Player[];
   phase: Phases;
+  oldPlayers?: Player[];
 }
 
 export const gameReducer = (
@@ -26,7 +27,10 @@ export const gameReducer = (
         throw new Error('No game exists to update - needs init first');
       }
 
-      return (action as UpdateGameAction).payload;
+      return {
+        ...(action as UpdateGameAction).payload,
+        oldPlayers: [...state.players],
+      };
     default:
       return state;
   }
