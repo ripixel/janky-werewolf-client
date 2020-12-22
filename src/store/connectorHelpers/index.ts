@@ -39,7 +39,7 @@ export const getPlayersWithRole = (
     }) || []
   );
 
-export const getPlayersWithoutRole = (
+const playersWithoutRole = (
   role: PLAYER_ROLE,
   excludeSelf = false,
   userName?: string,
@@ -59,6 +59,25 @@ export const getPlayersWithoutRole = (
 
       return true;
     }) || []
+  );
+
+export const getPlayersWithoutRole = (
+  state: State,
+  role: PLAYER_ROLE,
+  excludeSelf = false
+): Player[] =>
+  playersWithoutRole(role, excludeSelf, state.user?.name, state.game?.players);
+
+export const getOldPlayersWithoutRole = (
+  state: State,
+  role: PLAYER_ROLE,
+  excludeSelf = false
+): Player[] =>
+  playersWithoutRole(
+    role,
+    excludeSelf,
+    state.user?.name,
+    state.game?.oldPlayers
   );
 
 export const getPhaseName = (state: State): PHASE_NAME | undefined =>

@@ -8,6 +8,7 @@ import { PHASE_NAME } from '../../types/phase';
 import { connect } from 'react-redux';
 import { State } from '../../store/reducers';
 import {
+  getOldPlayersWithoutRole,
   getPhaseName,
   getPlayersWithoutRole,
   getSelf,
@@ -162,18 +163,8 @@ export const PlayerWrapper: React.FC<Props> = (props) => {
 
 export const mapStateToProps = (state: State): Props => ({
   self: getSelf(state),
-  players: getPlayersWithoutRole(
-    PLAYER_ROLE.MODERATOR,
-    true,
-    state.user?.name,
-    state.game?.players
-  ),
-  oldPlayers: getPlayersWithoutRole(
-    PLAYER_ROLE.MODERATOR,
-    true,
-    state.user?.name,
-    state.game?.oldPlayers
-  ),
+  players: getPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
+  oldPlayers: getOldPlayersWithoutRole(state, PLAYER_ROLE.MODERATOR, true),
   phaseName: getPhaseName(state),
 });
 

@@ -8,6 +8,7 @@ import { PHASE_NAME } from '../../types/phase';
 import {
   getPhaseName,
   getPlayersWithoutRole,
+  getOldPlayersWithoutRole,
   getSelf,
 } from '../../store/connectorHelpers';
 
@@ -16,6 +17,7 @@ import { alertOnPlayerStateChanges, mapStateToProps, PlayerWrapper } from '.';
 jest.mock('../../store/connectorHelpers', () => ({
   getPhaseName: jest.fn((): string => 'phase-name'),
   getPlayersWithoutRole: jest.fn((): string => 'players-without-role'),
+  getOldPlayersWithoutRole: jest.fn((): string => 'old-players-without-role'),
   getSelf: jest.fn((): string => 'self'),
 }));
 
@@ -201,12 +203,17 @@ describe('Components > PlayerWrapper', () => {
 
       expect(getSelf).toHaveBeenCalledTimes(1);
       expect(getSelf).toHaveBeenCalledWith(mockState);
-      expect(getPlayersWithoutRole).toHaveBeenCalledTimes(2);
+      expect(getPlayersWithoutRole).toHaveBeenCalledTimes(1);
       expect(getPlayersWithoutRole).toHaveBeenCalledWith(
+        mockState,
         PLAYER_ROLE.MODERATOR,
-        true,
-        undefined,
-        undefined
+        true
+      );
+      expect(getOldPlayersWithoutRole).toHaveBeenCalledTimes(1);
+      expect(getOldPlayersWithoutRole).toHaveBeenCalledWith(
+        mockState,
+        PLAYER_ROLE.MODERATOR,
+        true
       );
       expect(getPhaseName).toHaveBeenCalledTimes(1);
       expect(getPhaseName).toHaveBeenCalledWith(mockState);
@@ -214,7 +221,7 @@ describe('Components > PlayerWrapper', () => {
       expect(result).toEqual({
         self: 'self',
         players: 'players-without-role',
-        oldPlayers: 'players-without-role',
+        oldPlayers: 'old-players-without-role',
         phaseName: 'phase-name',
       });
     });

@@ -29,7 +29,7 @@ export const gameReducer = (
 
       return {
         ...(action as UpdateGameAction).payload,
-        oldPlayers: state.players,
+        oldPlayers: [...state.players],
       };
     default:
       return state;
