@@ -6,6 +6,7 @@ import {
   JoinVillageData,
   StartGameData,
   VoteData,
+  SeerData,
 } from '../types';
 import { AbstractStoreInteractorService } from '../../../service/StoreInteractor';
 import { Phases } from '../../../types/phase';
@@ -170,7 +171,7 @@ export class WebSocketVillageProvider implements VillageProvider {
     } as Werewolf);
   }
 
-  seerInspectPlayer({ playerName }: VoteData): void {
+  seerInspectPlayer({ playerName }: SeerData): void {
     this.sendSocketMessage({
       action: SOCKET_ACTIONS.SEER,
       data: {

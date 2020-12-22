@@ -27,6 +27,8 @@ export const SeerPickSinglePlayer: React.FC<Props> = ({ players }) => {
       onPlayerPick={(playerName: string): void =>
         villageService.seerInspectPlayer(playerName)
       }
+      skipPlayerPickText='Skip checking a player'
+      onSkipPlayerPick={(): void => villageService.seerInspectPlayer()}
     />
   );
 };

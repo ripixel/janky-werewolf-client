@@ -52,7 +52,7 @@ describe('Components > Views > PickSinglePlayer > Seer', () => {
     expect(result.getByText('alex')).toBeInTheDocument();
   });
 
-  it('handles clicking on a player correclty', () => {
+  it('handles clicking on a player correctly', () => {
     const mockVillageService = {
       seerInspectPlayer: jest.fn(),
     } as any;
@@ -67,6 +67,23 @@ describe('Components > Views > PickSinglePlayer > Seer', () => {
 
     expect(mockVillageService.seerInspectPlayer).toHaveBeenCalledTimes(1);
     expect(mockVillageService.seerInspectPlayer).toHaveBeenCalledWith('alex');
+  });
+
+  it('handles clicking on skip correctly', () => {
+    const mockVillageService = {
+      seerInspectPlayer: jest.fn(),
+    } as any;
+
+    const result = render(
+      <VillageServiceContextProvider value={mockVillageService}>
+        <SeerPickSinglePlayer {...baseProps} />
+      </VillageServiceContextProvider>
+    );
+
+    fireEvent.click(result.getByText('Skip checking a player'));
+
+    expect(mockVillageService.seerInspectPlayer).toHaveBeenCalledTimes(1);
+    expect(mockVillageService.seerInspectPlayer).toHaveBeenCalledWith();
   });
 
   describe('mapStateToProps', () => {
