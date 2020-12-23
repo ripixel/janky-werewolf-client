@@ -8,11 +8,10 @@ import { PHASE_NAME } from '../../types/phase';
 import {
   getPhaseName,
   getPlayersWithoutRole,
-  getOldPlayersWithoutRole,
   getSelf,
 } from '../../store/connectorHelpers';
 
-import { alertOnPlayerStateChanges, mapStateToProps, PlayerWrapper } from '.';
+import { mapStateToProps, PlayerWrapper } from '.';
 
 jest.mock('../../store/connectorHelpers', () => ({
   getPhaseName: jest.fn((): string => 'phase-name'),
@@ -25,13 +24,7 @@ describe('Components > PlayerWrapper', () => {
   describe('renders as expected', () => {
     it('throws an error if no self given', () => {
       expect(() =>
-        render(
-          <PlayerWrapper
-            players={[]}
-            oldPlayers={[]}
-            phaseName={PHASE_NAME.LOBBY}
-          />
-        )
+        render(<PlayerWrapper players={[]} phaseName={PHASE_NAME.LOBBY} />)
       ).toThrow('No game yet initialised!');
     });
 
@@ -40,7 +33,6 @@ describe('Components > PlayerWrapper', () => {
         render(
           <PlayerWrapper
             players={[]}
-            oldPlayers={[]}
             self={{
               attributes: {
                 alive: true,
@@ -58,7 +50,6 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
-          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -79,7 +70,6 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
-          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -101,7 +91,6 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
-          oldPlayers={[]}
           self={{
             attributes: {
               alive: false,
@@ -126,7 +115,6 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[]}
-          oldPlayers={[]}
           self={{
             attributes: {
               alive: true,
@@ -150,16 +138,6 @@ describe('Components > PlayerWrapper', () => {
       const result = render(
         <PlayerWrapper
           players={[
-            {
-              attributes: {
-                alive: true,
-                role: PLAYER_ROLE.BODYGUARD,
-                team: PLAYER_TEAM.GOOD,
-              },
-              name: 'dave',
-            },
-          ]}
-          oldPlayers={[
             {
               attributes: {
                 alive: true,
@@ -209,133 +187,14 @@ describe('Components > PlayerWrapper', () => {
         PLAYER_ROLE.MODERATOR,
         true
       );
-      expect(getOldPlayersWithoutRole).toHaveBeenCalledTimes(1);
-      expect(getOldPlayersWithoutRole).toHaveBeenCalledWith(
-        mockState,
-        PLAYER_ROLE.MODERATOR,
-        true
-      );
       expect(getPhaseName).toHaveBeenCalledTimes(1);
       expect(getPhaseName).toHaveBeenCalledWith(mockState);
 
       expect(result).toEqual({
         self: 'self',
         players: 'players-without-role',
-        oldPlayers: 'old-players-without-role',
         phaseName: 'phase-name',
       });
-    });
-  });
-
-  describe('alertOnPlayerStateChanges', () => {
-    let alertSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      jest.resetAllMocks();
-      alertSpy = jest.spyOn(window, 'alert');
-    });
-
-    it('does not alert when no changes', () => {
-      const oldPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-      ];
-      const newPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-      ];
-
-      alertOnPlayerStateChanges(oldPlayers, newPlayers);
-
-      expect(alertSpy).toHaveBeenCalledTimes(0);
-    });
-
-    it('alerts changes about death', () => {
-      const oldPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-        {
-          name: 'tom',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-      ];
-      const newPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.BODYGUARD,
-            team: PLAYER_TEAM.GOOD,
-            alive: false,
-          },
-        },
-      ];
-
-      alertOnPlayerStateChanges(oldPlayers, newPlayers);
-
-      expect(alertSpy).toHaveBeenCalledTimes(1);
-      expect(alertSpy).toHaveBeenCalledWith(
-        'dave is now dead! They were a Bodyguard.'
-      );
-    });
-
-    it('alerts changes about team revealing', () => {
-      const oldPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-        {
-          name: 'tom',
-          attributes: {
-            role: PLAYER_ROLE.UNKNOWN,
-            team: PLAYER_TEAM.UNKNOWN,
-            alive: true,
-          },
-        },
-      ];
-      const newPlayers = [
-        {
-          name: 'dave',
-          attributes: {
-            role: PLAYER_ROLE.BODYGUARD,
-            team: PLAYER_TEAM.GOOD,
-            alive: true,
-          },
-        },
-      ];
-
-      alertOnPlayerStateChanges(oldPlayers, newPlayers);
-
-      expect(alertSpy).toHaveBeenCalledTimes(1);
-      expect(alertSpy).toHaveBeenCalledWith(
-        '[ONLY TO YOU] You now know that dave is Good.'
-      );
     });
   });
 });
