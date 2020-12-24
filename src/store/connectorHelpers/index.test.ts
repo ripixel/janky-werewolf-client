@@ -5,9 +5,11 @@ import {
   getPlayersWithoutRole,
   getPlayersWithRole,
   getSelf,
+  getUnreadAlerts,
   getWerewolfVotes,
 } from '.';
 import { PLAYER_ROLE } from '../../types/player';
+import { ALERT_ICON } from '../reducers/game';
 
 describe('Store > Connector Helpers', () => {
   describe('getSelf', () => {
@@ -338,6 +340,49 @@ describe('Store > Connector Helpers', () => {
       const result = getWerewolfVotes(mockState);
 
       expect(result).toEqual({});
+    });
+  });
+
+  describe('getUnreadAlerts', () => {
+    it('returns applicable alerts', () => {
+      const mockState = {
+        game: {
+          alerts: [
+            // Should be ignored because the subject is the user
+            {
+              title: 'Test Title',
+              content: 'Test Content',
+              icon: ALERT_ICON.DEATH,
+              subject: 'Dave',
+              id: 'test-id-1',
+            },
+            // Should be ignored because dismissed = true
+            {
+              title: 'Test Title',
+              content: 'Test Content',
+              icon: ALERT_ICON.DEATH,
+              subject: 'James',
+              id: 'test-id-2',
+              dismissed: true,
+            },
+            // Applicable
+            {
+              title: 'Test Title',
+              content: 'Test Content',
+              icon: ALERT_ICON.DEATH,
+              subject: 'Mike',
+              id: 'test-id-3',
+            },
+          ],
+        },
+        user: {
+          name: 'Dave',
+        },
+      } as any;
+
+      const result = getUnreadAlerts(mockState);
+
+      expect(result).toEqual([mockState.game.alerts[2]]);
     });
   });
 });

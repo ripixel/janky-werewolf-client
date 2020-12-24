@@ -8,6 +8,7 @@ import {
   initVillageServiceContext,
 } from '../../context/VillageService';
 import ViewController from '../ViewController';
+import Alerts from '../Alerts';
 
 import './reset.scss';
 import './styles.scss';
@@ -16,6 +17,7 @@ export const App: React.FC = () => (
   <VillageServiceContextProvider value={initVillageServiceContext()}>
     <ReduxProvider store={store}>
       <Layout>
+        <Alerts />
         <ViewController />
       </Layout>
     </ReduxProvider>

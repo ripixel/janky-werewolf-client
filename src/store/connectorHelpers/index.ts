@@ -2,6 +2,7 @@ import { PHASE_NAME, WerewolfPhaseData } from '../../types/phase';
 import { Player, PLAYER_ROLE } from '../../types/player';
 import { logError } from '../../utils/logger';
 import { State } from '../reducers';
+import { Alert } from '../reducers/game';
 
 export const getSelf = (state: State): Player | undefined =>
   state.game?.players.find((player) => player.name === state.user.name);
@@ -68,18 +69,6 @@ export const getPlayersWithoutRole = (
 ): Player[] =>
   playersWithoutRole(role, excludeSelf, state.user?.name, state.game?.players);
 
-export const getOldPlayersWithoutRole = (
-  state: State,
-  role: PLAYER_ROLE,
-  excludeSelf = false
-): Player[] =>
-  playersWithoutRole(
-    role,
-    excludeSelf,
-    state.user?.name,
-    state.game?.oldPlayers
-  );
-
 export const getPhaseName = (state: State): PHASE_NAME | undefined =>
   state.game?.phase.name;
 
@@ -114,3 +103,8 @@ export const getWerewolfVotes = (state: State): { [key: string]: number } => {
 
   return werewolfVotes;
 };
+
+export const getUnreadAlerts = (state: State): Alert[] | undefined =>
+  state.game?.alerts.filter(
+    (alert) => !alert.dismissed && alert.subject !== state.user.name
+  );
