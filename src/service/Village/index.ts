@@ -71,7 +71,7 @@ export class VillageService implements AbstractVillageService {
     });
   }
 
-  seerInspectPlayer(playerName: string): void {
+  seerInspectPlayer(playerName?: string): void {
     this.runSafe(() => {
       this.villageProvider.seerInspectPlayer({ playerName });
     });
