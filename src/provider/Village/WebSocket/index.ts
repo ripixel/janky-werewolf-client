@@ -11,7 +11,6 @@ import {
 import { AbstractStoreInteractorService } from '../../../service/StoreInteractor';
 import { Phases } from '../../../types/phase';
 import { Player, PLAYER_ROLE, PLAYER_TEAM } from '../../../types/player';
-import { GameState } from '../../../store/reducers/game';
 
 enum SOCKET_ACTIONS {
   JOIN = 'join',
@@ -108,6 +107,12 @@ export interface MessageGameState {
     phase: Phases;
     players: Player[];
   };
+}
+export interface GameStateFromSocket {
+  lobbyId: string; // the game join code used
+  villageName: string;
+  players: Player[];
+  phase: Phases;
 }
 
 export class WebSocketVillageProvider implements VillageProvider {
@@ -258,7 +263,7 @@ export class WebSocketVillageProvider implements VillageProvider {
 
   private transformSocketGameStateToLocal({
     game_state,
-  }: MessageGameState): GameState {
+  }: MessageGameState): GameStateFromSocket {
     game_state.players.forEach(
       (player) =>
         (player.attributes = player.attributes

@@ -1,15 +1,15 @@
 import { Store } from 'redux';
 
 import { State } from '../../store/reducers';
-import { GameState } from '../../store/reducers/game';
 import { initGame, updateGame } from '../../store/actions/game';
 import { Action } from '../../store/actions/types';
 import { UserState } from '../../store/reducers/user';
 import { setName } from '../../store/actions/user';
+import { GameStateFromSocket } from '../../provider/Village/WebSocket';
 
 export interface AbstractStoreInteractorService {
-  initGame: (gameState: GameState) => void;
-  updateGame: (gameState: GameState) => void;
+  initGame: (gameState: GameStateFromSocket) => void;
+  updateGame: (gameState: GameStateFromSocket) => void;
   setUserName: (name: string) => void;
   getUser: () => UserState;
 }
@@ -21,11 +21,11 @@ export class StoreInteractorService implements AbstractStoreInteractorService {
     this.store = store;
   }
 
-  initGame(gameState: GameState): void {
+  initGame(gameState: GameStateFromSocket): void {
     this.store.dispatch(initGame(gameState));
   }
 
-  updateGame(gameState: GameState): void {
+  updateGame(gameState: GameStateFromSocket): void {
     this.store.dispatch(updateGame(gameState));
   }
 

@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars, react/display-name */
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
+import { render } from '@testing-library/react';
 
 import App from '.';
-import { render } from '@testing-library/react';
 
 // Mock components with a testids
 jest.mock('../../store', () => 'storemock');
+jest.mock('../Alerts', () => (): JSX.Element => {
+  return <div data-testid='alerts' />;
+});
 jest.mock('../Layout', () => (props: any): JSX.Element => {
   return <div data-testid='layout'>{props.children}</div>;
 });
@@ -49,6 +52,7 @@ describe('Components > App', () => {
       'initVillageServiceContextReturn'
     );
     expect(result.getByTestId('layout')).toBeInTheDocument();
+    expect(result.getByTestId('alerts')).toBeInTheDocument();
     expect(result.getByTestId('viewcontroller')).toBeInTheDocument();
     expect(result.getByTestId('reduxprovider')).toBeInTheDocument();
     expect(result.getByTestId('reduxprovider')).toHaveAttribute(

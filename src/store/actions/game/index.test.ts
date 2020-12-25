@@ -1,10 +1,10 @@
-import { GameState } from '../../reducers/game';
 import { PHASE_NAME } from '../../../types/phase';
-import { initGame, updateGame, GAME_ACTION_TYPES } from '.';
+import { initGame, updateGame, GAME_ACTION_TYPES, dismissAlert } from '.';
+import { GameStateFromSocket } from '../../../provider/Village/WebSocket';
 
 describe('Store > Actions > Game', () => {
   describe('initGame', () => {
-    const mockGameState: GameState = {
+    const mockGameState: GameStateFromSocket = {
       lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,
@@ -23,7 +23,7 @@ describe('Store > Actions > Game', () => {
   });
 
   describe('updateGame', () => {
-    const mockGameState: GameState = {
+    const mockGameState: GameStateFromSocket = {
       lobbyId: '12test34',
       phase: {
         name: PHASE_NAME.LOBBY,
@@ -37,6 +37,17 @@ describe('Store > Actions > Game', () => {
       expect(updateGame(mockGameState)).toEqual({
         type: GAME_ACTION_TYPES.UPDATE_GAME,
         payload: { ...mockGameState },
+      });
+    });
+  });
+
+  describe('dismissAlert', () => {
+    it('returns as expected', () => {
+      expect(dismissAlert('test-id')).toEqual({
+        type: GAME_ACTION_TYPES.DISMISS_ALERT,
+        payload: {
+          alertId: 'test-id',
+        },
       });
     });
   });
