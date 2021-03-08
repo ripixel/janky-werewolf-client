@@ -12,5 +12,22 @@
   </head>
   <body>
     <main role="main" id="root"></main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: 'AIzaSyC3hygm7c-bwrnBvYih8HsCevy5eXn5CFY',
+        authDomain: 'janky-werewolf-client.firebaseapp.com',
+        databaseURL: 'https://janky-werewolf-client.firebaseio.com',
+        projectId: 'janky-werewolf-client',
+        storageBucket: 'janky-werewolf-client.appspot.com',
+        messagingSenderId: '856004805177',
+        appId: '1:856004805177:web:9738b3c3ffdf9d139b03e8',
+        measurementId: 'G-LHKJSLJ943',
+      };
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
   </body>
 </html>
