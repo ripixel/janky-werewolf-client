@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "janky-werewolf-client"
+  },
+  "targets": {
+    "janky-werewolf-client": {
+      "hosting": {
+        "production": [
+          "janky-werewolf-client"
+        ],
+        "staging": [
+          "janky-werewolf-client-staging"
+        ]
+      }
+    }
+  }
+}
